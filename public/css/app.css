@@ -13207,6 +13207,25 @@ a.text-muted:hover {
   background-color: #235a71 !important;
 }
 
+.background-success {
+  background-color: #FA0018;
+}
+
+.background-primary {
+  background-color: #00B0F9;
+}
+
+.side-tab {
+  -webkit-writing-mode: vertical-rl;
+      -ms-writing-mode: tb-rl;
+          writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.button-disable {
+  background-color: #16252c !important;
+}
+
 /*!
  * Bootstrap v4.4.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors

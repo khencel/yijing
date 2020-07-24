@@ -62,5 +62,9 @@ class Trigram extends Model
     public function triDeity(){
         return $this->hasMany(TrigramDeity::class);
     }
+
+    public function journal(){
+        return $this->belongsTo(Journal::class);
+    }
     
 }

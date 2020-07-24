@@ -19,19 +19,27 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// Admin middleware
+Route::group(['middleware' => ['auth' => 'admin']], function(){
+    Route::get('/hexagram', function(){
+        return view('hex/index');
+    });
+
+    Route::get('/trigram', function(){
+        return view('tri/index');
+    });
+
+    Route::get('/announcement', function(){
+        return view('announcement');
+    });
+
+    Route::get('user/users',function(){
+        return view('user-management/user/index');
+    });
+});
+
+
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('user/users',function(){
-    return view('user-management/user/index');
-});
-
-Route::get('/hexagram', function(){
-    return view('hex/index');
-});
-
-Route::get('/trigram', function(){
-    return view('tri/index');
-});
 
 Route::get('/profile' , function(){
     if(Gate::denies('manage-users')){
@@ -53,6 +61,23 @@ Route::get('/tri', function(){
     return view('tri/trigram');
 });
 
+Route::get('/diaries', function(){
+    return view('diary');
+});
+
+Route::get('/consult/user/{id}/{schedule_id}', 'ConsultantController@consultUser');
+
+
+Route::get('/schedule', function(){
+    return view('schedule');
+});
+
+Route::get('/scheduleConsultant', function(){
+    return view('scheduleConsultant');
+});
+
+
+Route::get('/dailyHex', 'DailyHexHistoryController@index');
 
 Route::get('/hex/{id}', 'ConsultantController@hex');
 
@@ -63,9 +88,7 @@ Route::get('email/verify/{id}','EmailVerificationController@verify');
 
 
 
-
-
-
+// Commands
 Route::get('/db-seed', function() {
     $output = [];
     \Artisan::call('db:seed', $output);
@@ -106,6 +129,16 @@ Route::get('/cache-clear', function() {
     $output = [];
     \Artisan::call('cache:clear', $output);
     dd($output);
+});
+
+Route::get('/queue-work', function() {
+    $output = [];
+    \Artisan::call('queue:work', $output);
+    dd($output);
+});
+
+Route::get('sample', function(){
+    return view('sample');
 });
 
 

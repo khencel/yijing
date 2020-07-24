@@ -58,6 +58,15 @@ Route::middleware('auth:api')->group(function(){
     Route::post('user/bookNow','API\UserController@bookNow');
     Route::post('user/check','API\UserController@check');
     Route::get('user/schedule','API\UserController@schedule');
+    Route::get('user/attribute','API\UserController@attribute');
+    Route::get('user/payment','API\UserController@payment');
+
+    Route::get('consultant/journal/{id}','API\JournalController@customerJournal');
+    // Journal
+    Route::resources([
+        'journal' => 'API\JournalController',
+        'announcement' => 'API\AnnouncementController'
+    ]);
    
 });
 

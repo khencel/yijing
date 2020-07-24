@@ -7,6 +7,18 @@ use Illuminate\Http\Request;
 use App\Hexagram;
 use App\User;
 use App\DailyHex;
+use App\Nobleman;
+use App\Opening;
+use App\Weather;
+use App\Luck;
+use App\Wealth;
+use App\Relationship;
+use App\Business;
+use App\Family;
+use App\Legal;
+use App\Travel;
+use App\Health;
+use App\Property;
 
 class HexagramController extends Controller
 {
@@ -39,7 +51,7 @@ class HexagramController extends Controller
      */
     public function show($id)
     {
-        return Hexagram::find($id);
+        return Hexagram::with('nobleman','opening','weather','luck','wealth','relationship','business','family','legal','travel','health','properties')->find($id);
     }
 
     /**
@@ -51,8 +63,11 @@ class HexagramController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
+
         $hex = request()->validate([
             'name' => 'required',
+            'meaning' => 'required',
             'opening' => 'required',
             'nobleman' => 'required',
             'weather' => 'required',
@@ -67,7 +82,88 @@ class HexagramController extends Controller
             'property' => 'required',
         ]);
 
-        Hexagram::find($id)->update($hex);
+
+        if(request()->photo == null){
+            $name = "";
+        }else{
+            $photo = Hexagram::find($id);
+
+            $existingPhoto = public_path('/storage/img/').$photo->photo;
+            if(File_exists($existingPhoto)){
+                @unlink($existingPhoto);
+            }
+
+            $name = time().'.' . explode('/', explode(':', substr($request->photo, 0, strpos($request->photo, ';')))[1])[1]; 
+            \Image::make($request->photo)->save(public_path('/storage/img/').$name);
+        }
+
+        
+
+        Hexagram::find($id)->update([
+            'meaning' => request()->meaning,
+            'photo' => $name
+        ]);
+
+        Nobleman::where('hexagram_id',$id)->update([
+            'description' => request()->nobleman,
+            'rating' => request()->nobleman_rating,
+        ]);
+
+        Opening::where('hexagram_id',$id)->update([
+            'description' => request()->opening,
+            'rating' => request()->opening_rating,
+        ]);
+
+        Weather::where('hexagram_id',$id)->update([
+            'description' => request()->weather,
+            'rating' => request()->weather_rating,
+        ]);
+
+        Luck::where('hexagram_id',$id)->update([
+            'description' => request()->general,
+            'rating' => request()->general_rating,
+        ]);
+
+        Wealth::where('hexagram_id',$id)->update([
+            'description' => request()->wealth,
+            'rating' => request()->wealth_rating,
+        ]);
+
+        Relationship::where('hexagram_id',$id)->update([
+            'description' => request()->relationship,
+            'rating' => request()->relationship_rating,
+        ]);
+
+        Business::where('hexagram_id',$id)->update([
+            'description' => request()->business,
+            'rating' => request()->business_rating,
+        ]);
+
+        Family::where('hexagram_id',$id)->update([
+            'description' => request()->family,
+            'rating' => request()->family_rating,
+        ]);
+
+        Legal::where('hexagram_id',$id)->update([
+            'description' => request()->legal,
+            'rating' => request()->legal_rating,
+        ]);
+
+        Travel::where('hexagram_id',$id)->update([
+            'description' => request()->travel,
+            'rating' => request()->travel_rating,
+        ]);
+
+        Health::where('hexagram_id',$id)->update([
+            'description' => request()->health,
+            'rating' => request()->health_rating,
+        ]);
+
+        Property::where('hexagram_id',$id)->update([
+            'description' => request()->property,
+            'rating' => request()->property_rating,
+        ]);
+
     }
 
     /**
@@ -107,80 +203,10 @@ class HexagramController extends Controller
 
         $x = rand(1,12);
 
-        $attribute = $this->randomAttr($x,$attr);
 
         return response()->json([
             'hexagram' => $hex,
-            'attribute' => $attribute
         ]);
     }
-
-
-    public function randomAttr($x, $attr){
-        $attribute_label = "";
-        $value = "";
-        switch ($x) {
-            case 1:
-                $attribute_label = "Business";
-                $value = $attr['business'];
-                break;
-            case 2:
-                $attribute_label = "Opening";
-                $value = $attr['business'];
-                break;
-            case 3:
-                $attribute_label = "Nobleman";
-                $value = $attr['business'];
-                break;
-            case 4:
-                $attribute_label = "Weather";
-                $value = $attr['business'];
-                break;
-            case 5:
-                $attribute_label = "General";
-                $value = $attr['business'];
-                break;
-            case 6:
-                $attribute_label = "Wealth";
-                $value = $attr['business'];
-                break;
-
-            case 7:
-                $attribute_label = "Relationship";
-                $value = $attr['business'];
-                break;
-
-            case 8:
-                $attribute_label = "Family";
-                $value = $attr['business'];
-                break;
-
-            case 9:
-                $attribute_label = "Legal";
-                $value = $attr['business'];
-                break;
-
-            case 10:
-                $attribute_label = "Travel";
-                $value = $attr['business'];
-                break;
-
-            case 11:
-                $attribute_label = "Health";
-                $value = $attr['business'];
-                break;
-
-            case 12:
-                $attribute_label = "Property";
-                $value = $attr['business'];
-                break;
-        }
-
-        return response()->json([
-            'label' => $attribute_label,
-            'value' => $value
-        ]);
-    }
-
 
 }

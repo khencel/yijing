@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Rules\PasswordValidation;
 use App\UserRole;
 use App\Schedule;
+use App\Attribute;
 
 class UserController extends Controller
 {
@@ -132,5 +133,14 @@ class UserController extends Controller
             return Schedule::with('consultant')->where('user_id',\Auth::user()->id)->get();
         };   
         return Schedule::with('appointmentUser')->where('consultant_id',\Auth::user()->id)->get();
+    }
+
+    public function attribute(){
+        return Attribute::all();
+    }
+
+    public function payment(){
+       $user = \Auth::user();
+       $user->update(['is_subscriber'=>1]);
     }
 }

@@ -41,7 +41,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
       background: #68CD86;
       border-left-color: #42A85F;
     }
+  },
+
+  #fileLabel{
+    padding: 10px;
+    display: table;
+    color: #fff;
   }
+
+  input[type="file"] {
+      display: none;
+  }
+
 </style>
 <body class="hold-transition sidebar-mini">
 
@@ -80,7 +91,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar  elevation-4" style="background: black">
     <!-- Brand Logo -->
     <a href="/home" class="brand-link">
       {{-- <img src="{{ asset('img/sample.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
@@ -148,6 +159,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
           </li>
+          <li class="nav-item ">
+            <a href="/announcement" class="nav-link {{ request()->is('announcement')?'active':''}}">
+              <i class="nav-icon fas fa-arrows-alt cyan"></i>
+              <p>
+                Announcement
+              </p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a href="/dailyHex" class="nav-link {{ request()->is('dailyHex')?'active':''}}">
+              <i class="nav-icon fas fa-arrows-alt cyan"></i>
+              <p>
+                Daily Hexagram
+              </p>
+            </a>
+          </li>
           @endcan
           <li class="nav-item ">
             <a href="/hex" class="nav-link {{ request()->is('hex')?'active':''}}">
@@ -162,6 +189,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <i class="nav-icon fas fa-th purple"></i>
               <p>
                 Trigram
+              </p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a href="/scheduleConsultant" class="nav-link {{ request()->is('scheduleConsultant')?'active':''}}">
+              <i class="nav-icon fas fa-th purple"></i>
+              <p>
+                Schedule
               </p>
             </a>
           </li>

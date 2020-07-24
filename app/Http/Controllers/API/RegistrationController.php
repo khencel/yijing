@@ -5,14 +5,18 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Mail\WelcomeMail;
-use Illuminate\Support\Facades\Mail;
+use App\Jobs\WelcomeEmailJob;
+
 use Illuminate\Support\Str;
+use App\Rules\PasswordFormat;
+// use App\Mail\WelcomeMail;
+
 use App\User;
 use App\UserRole;
 
 class RegistrationController extends Controller
 {
+   
     /**
      * Display a listing of the resource.
      *
@@ -31,12 +35,13 @@ class RegistrationController extends Controller
      */
     public function store(Request $request)
     {
+        
         request()->validate([
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'country' => 'required',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|min:8|confirmed',
+            'password' => ['required','confirmed',new PasswordFormat],
         ]);
 
         $user = User::create([
@@ -55,9 +60,9 @@ class RegistrationController extends Controller
             'user_id' => $user->id
         ]);
 
-       
+       dispatch(new WelcomeEmailJob($user));
     
-        Mail::to($user->email)->queue(new WelcomeMail($user));
+        // \Mail::to($user->email)->send(new WelcomeMail($user));
 
     }
 

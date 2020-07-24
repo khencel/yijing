@@ -51,14 +51,10 @@
         </div>
     </div>
     <div class="col-md-5 text-white p-5">
-        <strong>{{attribute}}</strong>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet sed id dolorem vitae fugit quaerat harum nulla, pariatur perferendis fuga, qui similique consequatur sit? Impedit omnis repellat magni velit deserunt!</p>
-
+        <p><strong>{{dailyHexName}} Meaning</strong></p>
         <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui hic voluptates possimus repudiandae provident accusantium tempore dolores laudantium libero ipsam tempora sed, doloremque error obcaecati porro debitis saepe explicabo dignissimos!
+            {{meaning}}
         </p>
-
-
     </div>
 </div>
                     
@@ -75,13 +71,12 @@
             return {
                 dailies:'',
                 dailyHexName:'',
+                meaning:'',
                 month:'',
                 date:'',
                 day:'',
                 months:["January","February","March","April","May","June","July","August","September","October","November","December"],
                 days:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-                attribute:'',
-                value: '',
             }
         },
         methods:{
@@ -96,8 +91,8 @@
                 .then(response => {
                     this.dailies = response.data.hexagram.hexagram.code.split("");
                     this.dailyHexName = response.data.hexagram.hexagram.name;
-                    this.attribute  = response.data.attribute.original.label;
-                    this.value = response.data.attribute.original.value;
+                    this.meaning = response.data.hexagram.hexagram.meaning;
+                    
                 });
             }
         },

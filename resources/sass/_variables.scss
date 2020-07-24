@@ -97,8 +97,6 @@ $cyan: #6cb2eb;
 	}
 }
 
-
-
 .button-success{
     background-color: #FA0018 !important;
     border: none;
@@ -122,3 +120,26 @@ $cyan: #6cb2eb;
 .button-primary:hover{
    background-color: #235a71 !important;
 }
+
+.background-success{
+	background-color: #FA0018;
+}
+
+.background-primary{
+	background-color: #00B0F9;
+}
+
+.side-tab{
+	writing-mode: vertical-rl;
+	-webkit-transform: rotate(180deg);   
+	-moz-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	-o-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
+
+.button-disable{
+	background-color: #16252c !important;
+}
+
+

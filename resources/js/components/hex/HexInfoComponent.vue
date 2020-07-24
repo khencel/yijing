@@ -46,7 +46,7 @@
         </div>
         <div class="text-center mt-5">
             <h3>Focus Point</h3>
-            <span v-for="(item, index) in focust" :key="index" style="cursor:pointer" :class="focustPoint == item.value?'badge badge-primary p-3 mr-1':'badge badge-success p-2 mr-1'" v-text="item.value" @click="btnFocust(item.value)"></span>
+            <span v-for="(item, index) in focust" :key="index" style="cursor:pointer" :class="focustPoint == item.value?'badge badge-primary p-3 mr-1':'badge badge-success p-2 mr-1'" v-text="item.name" @click="btnFocust(item.value)"></span>
         </div>
         <hr>
         <div class="row mb-2">
@@ -54,24 +54,25 @@
                 Opening
             </div>
             <div class="col-md-10">
-                <p v-if="hex.opening == null">
+                <p v-if="opening == ''">
                     No record...
                 </p>
                 <p v-else>
-                    {{hex.opening}}
+                    {{opening}}
                 </p>
             </div>
         </div>
+
         <div class="row mb-2">
             <div class="col-md-2 label">
                 Nobleman
             </div>
             <div class="col-md-10">
-                <p v-if="hex.nobleman == null">
+                 <p v-if="nobleman == ''">
                     No record...
                 </p>
                 <p v-else>
-                    {{hex.nobleman}}
+                    {{nobleman}}
                 </p>
             </div>
         </div>
@@ -81,25 +82,25 @@
                 Weather
             </div>
             <div class="col-md-10">
-                <p v-if="hex.weather == null">
+                <p v-if="weather == ''">
                     No record...
                 </p>
                 <p v-else>
-                    {{hex.weather}}
+                    {{weather}}
                 </p>
             </div>
         </div>
 
         <div class="row mb-2">
             <div class="col-md-2 label">
-                General
+                General Luck
             </div>
             <div class="col-md-10">
-                <p v-if="hex.general == null">
+                 <p v-if="luck == ''">
                     No record...
                 </p>
                 <p v-else>
-                    {{hex.general}}
+                    {{luck}}
                 </p>
             </div>
         </div>
@@ -109,11 +110,11 @@
                 Wealth
             </div>
             <div class="col-md-10">
-                <p v-if="hex.wealth == null">
+                 <p v-if="wealth == ''">
                     No record...
                 </p>
                 <p v-else>
-                    {{hex.wealth}}
+                    {{wealth}}
                 </p>
             </div>
         </div>
@@ -123,11 +124,11 @@
                 Relationship
             </div>
             <div class="col-md-10">
-                 <p v-if="hex.relationship == null">
+                 <p v-if="relationship == ''">
                     No record...
                 </p>
                 <p v-else>
-                    {{hex.relationship}}
+                    {{relationship}}
                 </p>
             </div>
         </div>
@@ -137,11 +138,11 @@
                 Business
             </div>
             <div class="col-md-10">
-                 <p v-if="hex.business == null">
+                 <p v-if="business == ''">
                     No record...
                 </p>
                 <p v-else>
-                    {{hex.business}}
+                    {{business}}
                 </p>
             </div>
         </div>
@@ -151,25 +152,25 @@
                 Family
             </div>
             <div class="col-md-10">
-                <p v-if="hex.family == null">
+                <p v-if="family == ''">
                     No record...
                 </p>
                 <p v-else>
-                    {{hex.family}}
+                    {{family}}
                 </p>
             </div>
         </div>
 
         <div class="row mb-2">
             <div class="col-md-2 label">
-                Legal
+                Legal Matters
             </div>
             <div class="col-md-10">
-                <p v-if="hex.legal == null">
+                <p v-if="legal == ''">
                     No record...
                 </p>
                 <p v-else>
-                    {{hex.legal}}
+                    {{legal}}
                 </p>
             </div>
         </div>
@@ -179,11 +180,11 @@
                 Travel
             </div>
             <div class="col-md-10">
-                <p v-if="hex.travel == null">
+                <p v-if="travel == ''">
                     No record...
                 </p>
                 <p v-else>
-                    {{hex.travel}}
+                    {{travel}}
                 </p>
             </div>
         </div>
@@ -193,11 +194,11 @@
                 Health
             </div>
             <div class="col-md-10">
-                 <p v-if="hex.health == null">
+                <p v-if="health == ''">
                     No record...
                 </p>
                 <p v-else>
-                    {{hex.health}}
+                    {{health}}
                 </p>
             </div>
         </div>
@@ -207,11 +208,11 @@
                 Property
             </div>
             <div class="col-md-10">
-                 <p v-if="hex.property == null">
+                <p v-if="properties == ''">
                     No record...
                 </p>
                 <p v-else>
-                    {{hex.property}}
+                    {{properties}}
                 </p>
             </div>
         </div>
@@ -241,25 +242,43 @@
                 hexFocust:{},
                 focust:[
                     {
-                        value:1
+                        name:'1',
+                        value:6
                     },
                     {
-                        value:2
-                    },
-                    {
-                        value:3
-                    },
-                    {
-                        value:4
-                    },
-                    {
+                        name:'2',
                         value:5
                     },
                     {
-                        value:6
+                        name:'3',
+                        value:4
+                    },
+                    {
+                        name:'4',
+                        value:3
+                    },
+                    {
+                        name:'5',
+                        value:2
+                    },
+                    {
+                        name:'6',
+                        value:1
                     },
                 ],
                 focustPoint:'',
+                opening:'',
+                nobleman:'',
+                weather:'',
+                luck:'',
+                wealth:'',
+                relationship:'',
+                business:'',
+                family:'',
+                legal:'',
+                travel:'',
+                health:'',
+                properties:''
             }
         },
         methods:{
@@ -267,7 +286,18 @@
                 axios.get('/api/hex/show/'+this.id+"?api_token="+window.token)
                 .then(response => {
                     this.hex = response.data;
-                    
+                    this.opening = response.data.opening[0].description;
+                    this.nobleman = response.data.nobleman[0].description;
+                    this.weather = response.data.weather[0].description;
+                    this.luck = response.data.luck[0].description;
+                    this.wealth = response.data.wealth[0].description;
+                    this.relationship = response.data.relationship[0].description;
+                    this.business = response.data.business[0].description;
+                    this.family = response.data.family[0].description;
+                    this.legal = response.data.legal[0].description;
+                    this.travel = response.data.travel[0].description;
+                    this.health = response.data.health[0].description;
+                    this.properties = response.data.properties[0].description;
                     this.name = response.data.name;
                     this.hexagram = response.data.code;
                     this.arrayHex = response.data.code.split("");
@@ -280,6 +310,7 @@
                 this.transformName = [];
                 this.isFocust = true;
                 var hex = this.hexagram.split("");
+                
                 this.focustPoint = value;
                 if(hex[value-1] == 1){
                     hex[value-1] = "2";
@@ -287,8 +318,9 @@
                     hex[value-1] = "3";
                 }
                 this.hexFocust = hex;
+
                 this.transformHex = this.hexFocust;
-                
+        
                 this.transformHex.forEach(element => {
                     if(element == 2){
                         element = "0";

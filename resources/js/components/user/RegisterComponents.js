@@ -22,3 +22,8 @@ Vue.component(
     'consultant-user',
     require("../user/ConsultantComponent").default
 );
+
+Vue.component(
+    'schedule-user',
+    require("../user/ScheduleComponent").default
+);

@@ -32,7 +32,9 @@ require("./components/user/RegisterComponents");
 require("./components/user-management/RegisterComponents");
 require("./components/hex/RegisterComponents");
 require("./components/tri/RegistrationComponents");
-
+require("./components/diaries/RegistrationComponent");
+require("./components/announcement/RegisterComponents");
+require("./components/consultant/RegisterComponents");
 const app = new Vue({
     el: '#app',
 });

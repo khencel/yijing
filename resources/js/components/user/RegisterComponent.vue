@@ -44,7 +44,7 @@
 
             </div>
         </div>
-
+        <div class="text-right"><small>Password must be at least 8 characters long, contain a number and an uppercase letter</small></div>
         <div class="form-group row">
             <label for="password" class="col-md-4 col-form-label ">Password</label>
 
@@ -65,7 +65,7 @@
         <div class="text-right">
             <span v-show="isLoading"><RiseLoader></RiseLoader></span>
             <div v-show="!isLoading">
-                <button class="btn btn-success" @click="register">Register</button>
+                <button class="button-success" @click="register">Register</button>
             </div>
         </div>
    </div>
@@ -73,10 +73,13 @@
 
 <script>
     import RiseLoader from 'vue-spinner/src/RiseLoader.vue'
+    import VueSweetalert2 from 'vue-sweetalert2';
+    Vue.use(VueSweetalert2);
     export default {
         components: {
             RiseLoader
         },
+        
         data(){
             return{
                 errors:{},
@@ -94,27 +97,20 @@
         },
         methods:{
             register(){
-                this.isLoading = true;
+                
                 axios.post('api/user/registration',this.form)
                 .then(response => {
-                    this.errors = [];
-                    this.isLoading = false;
-                    this.form.country = "";
-                    this.form.firstname = "";
-                    this.form.lastname = "";
-                    this.form.email = "";
-                    this.form.password = "";
-                    this.form.password_confirmation = "";
                     
-                    this.$notify({
-                        group: 'notification',
-                        type: 'success',
+                    this.$swal({
+                        icon: 'success',
                         title: 'You are now registered',
-                        text: 'Please verify your email'
+                        text: 'Please verify your account. Login to your email and click the validate account',
+                    }).then((result) => {
+                        window.location = "/login";
                     });
+
                 })
                 .catch(error => {
-                    this.isLoading = false;
                     this.errors = error.response.data.errors;
                 });
             }

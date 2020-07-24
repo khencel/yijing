@@ -13,15 +13,15 @@
     </div>
     <div class="mt-2">
         <label for="date">Date:</label>
-        <input type="date" class="form-control" v-model="form.date" :min="currentDate">
+        <input type="date" class="form-control" id="select-date" v-model="form.date" :min="currentDate">
         <span class="font-italic text-danger" v-if="errors.date" v-text="errors.date[0]"></span>
     </div>
     <div class="mt-2">
         <label for="time">Time:</label>
         <select name="" id="" class="form-control" v-model="form.time">
             <option value="" disabled hidden>Select Time</option>
-            <option v-for="(item, index) in time" :key="index">
-                {{item}}
+            <option v-for="(item, index) in time" :key="index" :value="item.value">
+                {{item.time}}
             </option>
         </select>
         <span class="font-italic text-danger" v-if="errors.time" v-text="errors.time[0]"></span>
@@ -42,21 +42,66 @@
             return{
                 available:false,
                 time:[
-                    "8:00am",
-                    "9:00am",
-                    "10:00am",
-                    "11:00am",
-                    "12:00am",
-                    "1:00pm",
-                    "2:00pm",
-                    "3:00pm",
-                    "4:00pm",
-                    "5:00pm",
-                    "6:00pm",
-                    "7:00pm",
-                    "8:00pm",
-                    "9:00pm",
-                    "10:00pm",
+                    {
+                        time:"8:00am",
+                        value:'8'
+                    },
+                    {
+                        time:"9:00am",
+                        value:'9'
+                    },
+                    {
+                        time:"10:00am",
+                        value:'10'
+                    },
+                    {
+                        time:"11:00am",
+                        value:'11'
+                    },
+                    {
+                        time:"12:00pm",
+                        value:'12'
+                    },
+                    {
+                        time:"1:00pm",
+                        value:'13'
+                    },
+                    {
+                        time:"2:00pm",
+                        value:'14'
+                    },
+                    {
+                        time:"3:00pm",
+                        value:'15'
+                    },
+                    {
+                        time:"4:00pm",
+                        value:'16'
+                    },
+                    {
+                        time:"5:00pm",
+                        value:'17'
+                    },
+                    {
+                        time:"6:00pm",
+                        value:'18'
+                    },
+                    {
+                        time:"7:00pm",
+                        value:'19'
+                    },
+                    {
+                        time:"8:00pm",
+                        value:'20'
+                    },
+                    {
+                        time:"9:00pm",
+                        value:'21'
+                    },
+                    {
+                        time:"10:00pm",
+                        value:'22'
+                    },
                 ],
                 currentDate:'',
                 errors:{},
@@ -70,6 +115,23 @@
         },
         methods:{
             check(){
+                var current = new Date();
+                var selectedDate = new Date(document.getElementById('select-date').value);
+                var validHour = current.getHours()+2;
+
+                if(current.getDate() == selectedDate.getDate() && validHour >= this.form.time){
+                    this.$notify({
+                        group: 'notification',
+                        type: 'error',
+                        title: 'Invalid Time',
+                        text: 'Please time must be 2 hours before.'
+                    });
+                }else{
+                    this.approveTime();
+                }
+            },
+
+            approveTime(){
                 axios.post('/api/user/check?api_token='+window.token,this.form)
                 .then(response => {
                     this.errors = [];
@@ -95,6 +157,7 @@
                     this.errors = error.response.data.errors;
                 });
             },
+            
             bookNow(){
                 axios.post('/api/user/bookNow?api_token='+window.token,this.form)
                 .then(response => {
@@ -106,7 +169,7 @@
                         title: 'Schedule',
                         text: 'Your Schedule has been booked'
                     });
-                    window.location = "/profile";
+                    window.location = "/schedule";
                 })
                 .catch(error => {
                     this.errors = error.response.data.errors;
@@ -124,7 +187,8 @@
                 }
                 this.currentDate = y+"-"+m+"-"+d
                 
-            }
+            },
+        
         },
         mounted() {
             this.getCurrentDate();

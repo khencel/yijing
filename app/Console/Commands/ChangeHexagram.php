@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\DailyHex;
+use App\DailyHexHistory;
 
 class ChangeHexagram extends Command
 {
@@ -38,11 +39,17 @@ class ChangeHexagram extends Command
      */
     public function handle()
     {
-        $currentDate = date('Y-m-d');
+        $currentDate = date('F-d-Y');
+        
         $day = date('d', strtotime($currentDate. ' + 1 days'));
         $hex_id = rand(1,64);
         DailyHex::find($day)->update([
             'hexagram_id' => $hex_id
+        ]);
+
+        DailyHexHistory::create([
+            'hexagram_id' =>$hex_id,
+            'date' => $currentDate
         ]);
     }
 }

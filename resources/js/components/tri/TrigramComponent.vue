@@ -15,7 +15,7 @@
                         <td>{{trigram.id}}</td>
                         <td>{{trigram.name}}</td>
                         <td class="text-right">
-                            <button class="btn btn-primary" @click="modalTrigram(trigram.id)"><i class="fas fa-pencil-alt"></i></button>
+                            <button class="btn btn-primary" @click="modalTrigram(trigram.id)"><i class="fas fa-pencil-alt"></i>Edit</button>
                         </td>
                     </tr>
                 </tbody>

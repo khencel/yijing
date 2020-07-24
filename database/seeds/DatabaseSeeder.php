@@ -15,6 +15,20 @@ use App\Animal;
 use App\Sickness;
 use App\Color;
 use App\Deity;
+use App\Attribute;
+use App\Nobleman;
+use App\Opening;
+use App\Weather;
+use App\Luck;
+use App\Wealth;
+use App\Relationship;
+use App\Business;
+use App\Family;
+use App\Legal;
+use App\Travel;
+use App\Health;
+use App\Property;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -40,6 +54,20 @@ class DatabaseSeeder extends Seeder
         $this->createSickness();
         $this->createColor();
         $this->createDeity();
+        $this->createAttribute();
+        $this->createNobleman();
+        $this->createOpening();
+        $this->createWeather();
+        $this->createLuck();
+        $this->createWealth();
+        $this->createRelationship();
+        $this->createBusiness();
+        $this->createFamily();
+        $this->createLegal();
+        $this->createTravel();
+        $this->createHealth();
+        $this->createProperty();
+        
         
     }
 
@@ -335,7 +363,7 @@ class DatabaseSeeder extends Seeder
                 'firstname' => "Maricel",
                 'lastname' => "Alaiza",
               
-                'email' => "maricel.alaiza@gmail.com",
+                'email' => "angon_maricel@yahoo.com",
                 'email_verified_at' => now(),
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
                 'api_token' => Str::random(60),
@@ -401,12 +429,12 @@ class DatabaseSeeder extends Seeder
                 'code' => '000',
             ],
             [
-                'name' => 'Xun Gua (East)',
-                'code' => '110',
+                'name' => 'Zhen Gua (East)',
+                'code' => '001',
             ],
             [
-                'name' => 'Zhen Gua (Southeast)',
-                'code' => '001',
+                'name' => 'Xun Gua (SouthEast)',
+                'code' => '110',
             ],
             [
                 'name' => 'Qian Gua (Northwest)',
@@ -1079,5 +1107,259 @@ class DatabaseSeeder extends Seeder
                 'name' => "Hook"
             ],
         ]);
+    }
+
+    public function createAttribute(){
+        Attribute::insert([
+            [
+                'attribute' => 'Business Opening',
+                'is_hex' => 1
+            ],
+            [
+                'attribute' => 'Nobleman',
+                'is_hex' => 1
+            ],
+            [
+                'attribute' => 'Weather',
+                'is_hex' => 1
+            ],
+            [
+                'attribute' => 'General Luck',
+                'is_hex' => 1
+            ],
+            [
+                'attribute' => 'Wealth',
+                'is_hex' => 1
+            ],
+            [
+                'attribute' => 'Relationship',
+                'is_hex' => 1
+            ],
+            [
+                'attribute' => 'Business',
+                'is_hex' => 1
+            ],
+            [
+                'attribute' => 'Family',
+                'is_hex' => 1
+            ],
+            [
+                'attribute' => 'Legal Matters',
+                'is_hex' => 1
+            ],
+            [
+                'attribute' => 'Examination',
+                'is_hex' => 1
+            ],
+            [
+                'attribute' => 'Travel',
+                'is_hex' => 1
+            ],
+            [
+                'attribute' => 'Health',
+                'is_hex' => 1
+            ],
+            [
+                'attribute' => 'Lost Property',
+                'is_hex' => 1
+            ],
+            [
+                'attribute' => 'Nature',
+                'is_hex' => 0
+            ],
+            [
+                'attribute' => 'Element',
+                'is_hex' => 0
+            ],
+            [
+                'attribute' => 'Number',
+                'is_hex' => 0
+            ],
+            [
+                'attribute' => 'People',
+                'is_hex' => 0
+            ],
+            [
+                'attribute' => 'Body Part',
+                'is_hex' => 0
+            ],
+            [
+                'attribute' => 'Animal',
+                'is_hex' => 0
+            ],
+            [
+                'attribute' => 'Sickness',
+                'is_hex' => 0
+            ],
+            [
+                'attribute' => 'Color',
+                'is_hex' => 0
+            ],
+            [
+                'attribute' => 'Shape',
+                'is_hex' => 0
+            ],
+            [
+                'attribute' => 'Deity',
+                'is_hex' => 0
+            ],
+            [
+                'attribute' => 'Door',
+                'is_hex' => 0
+            ],
+            [
+                'attribute' => 'Star',
+                'is_hex' => 0
+            ],
+            [
+                'attribute' => 'Direction',
+                'is_hex' => 0
+            ],
+        ]);
+    }
+
+    public function createNobleman(){
+        for($i=1;$i<=64;$i++){
+            Nobleman::insert([
+                [
+                    'hexagram_id' => $i,
+                    'description' => '',
+                    'rating' => 0
+                ]
+            ]);
+        }
+        
+    }
+
+    public function createOpening(){
+        for($i=1;$i<=64;$i++){
+            Opening::insert([
+                [
+                    'hexagram_id' => $i,
+                    'description' => '',
+                    'rating' => 0
+                ]
+            ]);
+        }
+    }
+
+    public function createWeather(){
+        for($i=1;$i<=64;$i++){
+            Weather::insert([
+                [
+                    'hexagram_id' => $i,
+                    'description' => '',
+                    'rating' => 0
+                ]
+            ]);
+        }
+    }
+
+    public function createLuck(){
+        for($i=1;$i<=64;$i++){
+            Luck::insert([
+                [
+                    'hexagram_id' => $i,
+                    'description' => '',
+                    'rating' => 0
+                ]
+            ]);
+        }
+    }
+
+    public function createWealth(){
+        for($i=1;$i<=64;$i++){
+            Wealth::insert([
+                [
+                    'hexagram_id' => $i,
+                    'description' => '',
+                    'rating' => 0
+                ]
+            ]);
+        }
+    }
+
+    public function createRelationship(){
+        for($i=1;$i<=64;$i++){
+            Relationship::insert([
+                [
+                    'hexagram_id' => $i,
+                    'description' => '',
+                    'rating' => 0
+                ]
+            ]);
+        }
+    }
+
+    public function createBusiness(){
+        for($i=1;$i<=64;$i++){
+            Business::insert([
+                [
+                    'hexagram_id' => $i,
+                    'description' => '',
+                    'rating' => 0
+                ]
+            ]);
+        }
+    }
+
+    public function createFamily(){
+        for($i=1;$i<=64;$i++){
+            Family::insert([
+                [
+                    'hexagram_id' => $i,
+                    'description' => '',
+                    'rating' => 0
+                ]
+            ]);
+        }
+    }
+
+    public function createLegal(){
+        for($i=1;$i<=64;$i++){
+            Legal::insert([
+                [
+                    'hexagram_id' => $i,
+                    'description' => '',
+                    'rating' => 0
+                ]
+            ]);
+        }
+    }
+
+    public function createTravel(){
+        for($i=1;$i<=64;$i++){
+            Travel::insert([
+                [
+                    'hexagram_id' => $i,
+                    'description' => '',
+                    'rating' => 0
+                ]
+            ]);
+        }
+    }
+
+    public function createHealth(){
+        for($i=1;$i<=64;$i++){
+            Health::insert([
+                [
+                    'hexagram_id' => $i,
+                    'description' => '',
+                    'rating' => 0
+                ]
+            ]);
+        }
+    }
+
+    public function createProperty(){
+        for($i=1;$i<=64;$i++){
+            Property::insert([
+                [
+                    'hexagram_id' => $i,
+                    'description' => '',
+                    'rating' => 0
+                ]
+            ]);
+        }
     }
 }

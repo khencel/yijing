@@ -33,7 +33,8 @@ class HomeController extends Controller
             return view('homeAdmin');
         }
         auth()->logout();
-        return "Please Verified your Email";
+        
+        return view('notVerify');
         
     }
 }

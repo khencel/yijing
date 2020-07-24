@@ -12,7 +12,7 @@
                        <option value="consultant">Consultant</option>
                    </select>
                </div>
-               <button class="btn btn-success mr-2" @click="addUserModal">Add User</button>
+               <button class="button-success mr-2" @click="addUserModal">Add User</button>
            </div>
         </div>
     </div>
@@ -21,16 +21,24 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        <th>Is Active</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Address</th>
                         <th>Role</th>
                         <th>Status</th>
-                        <th>Action</th>
+                        <th class="text-right">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="user in users" :key="user.id" >
+                        <td>
+                            <span style="cursor:pointer" @click="isBan(user.id,user.isBan)">
+                                <svg style="width:24px;height:24px" viewBox="0 0 24 24" title="deactivated">
+                                    <path :fill="user.isBan==0?'green':'red'" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                                </svg>
+                            </span>
+                        </td>
                         <td>{{user.firstname}}</td>
                         <td>{{user.lastname}}</td>
                         <td>{{user.country}}</td>
@@ -40,7 +48,16 @@
                             </span>
                         </td>
                         <td :class="user.is_subscriber==1?'text-success':'text-danger'" v-text="user.is_subscriber==1?'Subscriber':'Not Subscriber'"></td>
-                        <td><button class="btn btn-primary" @click="modalUser(user.id)">View</button></td>
+                        
+                        <td class="text-right">
+                            <button class="button-primary" @click="modalUser(user.id)">
+                                <svg style="width:20px;height:20px" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z" />
+                                </svg>
+                                View
+                            </button>
+                        </td>
+                       
                     </tr>
                 </tbody>
             </table>
@@ -93,7 +110,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" v-show="form.id != 1" class="btn btn-secondary mr-auto" data-dismiss="modal" @click="btnDelete">Delete</button>
+                    <button type="button" v-show="form.id != 1 && editMode" class="btn btn-secondary mr-auto" data-dismiss="modal" @click="btnDelete">Delete</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" v-show="form.is_admin != 1 && editMode" class="btn btn-primary" @click="btnUpdate">Save changes</button>
                     <button type="button" v-show="!editMode" class="btn btn-success" @click="addUser">Add User</button>
@@ -226,6 +243,26 @@
                         this.users = this.filterUser;
                     });
                 }
+            },
+
+            isBan(id,status){
+                this.$swal({
+                title: 'Are you sure?',
+                text: status==0?"You want to deactivate this user":"You want to activate this user",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: status==0?'Yes, deactivate this user!':'Yes, activate this user!'
+                }).then((result) => {
+                    if (result.value) {
+                        this.$swal(
+                        status==0?'Deactivated!':'Activated',
+                        status==0?'This user has been Deactivated.':'This user has been Activated',
+                        'success'
+                        )
+                    }
+                })
             }
         },
         mounted() {

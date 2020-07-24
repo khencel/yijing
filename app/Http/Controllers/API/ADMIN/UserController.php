@@ -43,13 +43,13 @@ class UserController extends Controller
 
         $userCreated = User::create(
             [
-                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'email_verified_at' => date("Y-m-d"),
                 'api_token' => Str::random(60),
                 'is_subscriber' => 1,
             ]+$user);
 
         $userCreated->roles()->sync(request()->role);
-
+        
     }
 
     /**
@@ -121,5 +121,4 @@ class UserController extends Controller
         }
         return UserRole::with('user.roles')->where('role_id',$type)->get();
     }
-
 }

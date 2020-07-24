@@ -16,29 +16,30 @@
 <template>
 <div>
     <div class="row justify-content-center">
-        <div class="col-4">
+        <div class="col-3">
             <img class="img-fluid" src="img/Home_logo.png" alt="">
         </div>
     </div>
-    <div class="text-center mt-5">
+    <div class="text-center mt-2">
         <span class="font-format"><h1>{{type}}</h1></span>
     </div>
-    <div class="mt-5 mb-5">
-        <span v-show="isLoading"><RiseLoader></RiseLoader></span>
+    <div class="" v-show="isLoading" style="height:300px;">
+        <span><RiseLoader></RiseLoader></span>
     </div>
     <div class="row justify-content-center">
-        <div class="col-md-5 col-7">
+        <div class="col-md-4 col-7">
             <div class="text-center" v-for="(result, index) in results" :key="index">
-                <img :class="index==2?'mb-5 w-100 hex-img':'mb-3 w-100 hex-img'" style="height:50px" v-show="result == 1" src="img/solidLine.png"  alt="">
-                <img :class="index==2?'mb-5 w-100':'mb-3 w-100'" style="height:50px" v-show="result == 0" src="img/brokenLine.png" alt="">
-                <img :class="index==2?'mb-5 w-100':'mb-3 w-100'" style="height:50px" v-show="result == 4" src="img/brokenCircle.png" alt="">
-                <img :class="index==2?'mb-5 w-100':'mb-3 w-100'" style="height:50px" v-show="result == 3" src="img/solidLinefocus.png" alt="">
+                <img :class="index==2?'mb-4 w-100 hex-img':'mb-1 w-100 hex-img'" style="height:50px" v-show="result == 1" src="img/solidLine.png"  alt="">
+                <img :class="index==2?'mb-4 w-100':'mb-1 w-100'" style="height:50px" v-show="result == 0" src="img/brokenLine.png" alt="">
+                <img :class="index==2?'mb-4 w-100':'mb-1 w-100'" style="height:50px" v-show="result == 4" src="img/brokenCircle.png" alt="">
+                <img :class="index==2?'mb-4 w-100':'mb-1 w-100'" style="height:50px" v-show="result == 3" src="img/solidLinefocus.png" alt="">
             </div>
             <div class="text-center">
                 <h1>{{name}}</h1>
+                <p>{{meaning}}</p>
             </div>
         </div>
-        <div v-show="subscriber" class="col-md-2">
+        <div v-show="isCast && !isLoading" class="col-md-2">
             <svg class="d-sm-none d-md-block d-none mx-auto" style="width:60%;margin-top:100%;" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z" />
             </svg>
@@ -47,15 +48,25 @@
                 <path fill="currentColor" d="M9,4H15V12H19.84L12,19.84L4.16,12H9V4Z" />
             </svg>
         </div>
-        <div v-show="subscriber && type != 'Trigram'" class="col-md-5 col-7">
+        <div v-show="subscriber && type != 'Trigram'" class="col-md-4 col-7">
             <div class="text-center" v-for="(transform, index) in transforms" :key="index">
-                <img :class="index==2?'mb-5 w-100':'mb-3 w-100'" style="height:50px" v-show="transform == 1" src="img/solidLine.png"  alt="">
-                <img :class="index==2?'mb-5 w-100':'mb-3 w-100'" style="height:50px" v-show="transform == 0" src="img/brokenLine.png" alt="">
+                <img :class="index==2?'mb-4 w-100':'mb-1 w-100'" style="height:50px" v-show="transform == 1" src="img/solidLine.png"  alt="">
+                <img :class="index==2?'mb-4 w-100':'mb-1 w-100'" style="height:50px" v-show="transform == 0" src="img/brokenLine.png" alt="">
             </div>
             <div class="text-center">
                 <h1>{{transformName}}</h1>
+                <p>
+                    {{transformMeaning}}
+                </p>
             </div>
         </div>
+
+        <div v-show="isCast && !subscriber && !isLoading" class="col-md-4 col-7 text-center pt-5">
+            <img src="img/password.png" alt="" style="width:50%">
+            <br>
+            <button class="button-primary mt-5 mb-5" @click="btnSubscribe">SUBSCRIBE NOW</button>
+        </div>
+
     </div>
     <div class="text-center">
         <button class="button-primary font-format" @click="btnCast">Cast Now</button>
@@ -76,6 +87,40 @@
     <div class="text-center">
         <a href="/book" class="btn btn-success">SCHEDULE A CONSULT</a>
     </div>
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Payment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class=" p-2"><h3>Premium</h3></div>
+                <div class="p-2">
+                    <ul>
+                        <li>Sample included</li>
+                        <li>Sample included</li>
+                        <li>Sample included</li>
+                        <li>Sample included</li>
+                        <li>Sample included</li>
+                    </ul>
+                </div>
+                <div class="pl-2" >
+                    <span class="font-weight-bold">$</span>
+                    <span class="font-weight-bold" style="font-size:25px;">15/</span>
+                    <span><strong>year</strong></span>
+                </div>
+                <div id="paypal-button-container"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
 </div>
 </template>
 
@@ -92,17 +137,22 @@
                 results:'',
                 transforms:'',
                 name:'',
+                meaning:'',
                 transformName:'',
+                transformMeaning:'',
                 subscriber: false,
+                isCast: false,
             }
         },
         methods:{
             
             btnCastType(castType){
+                this.isCast = false;
                 this.results = "";
                 this.transforms = "";
                 this.name = "";
                 this.transformName = "";
+                this.transformMeaning = "";
                 this.subscriber = false;
                 if(castType == "hex"){
                     this.type = "Hexagram"
@@ -114,6 +164,7 @@
             btnCast(){
                 this.results = "";
                 this.name = "";
+                this.meaning = "",
                 this.transforms = "";
                 this.transformName = "";
                 this.isLoading = true;
@@ -126,8 +177,11 @@
                             this.subscriber = false;
                             this.results = response.data.hexagram[0].code.split("");
                             this.name = response.data.hexagram[0].name;
+                            this.meaning = response.data.hexagram[0].meaning;
                             this.isLoading = false;
+                            this.isCast = true;
                         }else{
+                            this.isCast = true;
                             this.subscriber = true;
                             function getRandomInt(max) {
                                 return Math.floor(Math.random() * Math.floor(max));
@@ -147,6 +201,7 @@
                             }
 
                             this.name = response.data.hexagram[0].name;
+                            this.meaning = response.data.hexagram[0].meaning;
                             this.results = hex;
 
                             var hexTransform = response.data.hexagram[0].code.split("");
@@ -192,11 +247,51 @@
                 axios.post('api/user/transform/name?api_token='+window.token,{transformName:this.transforms})
                 .then(response => {
                     this.transformName = response.data.name;
+                    this.transformMeaning = response.data.meaning;
                 });
+            },
+
+            btnSubscribe(){
+                
+                $('#paymentModal').modal('show');
+                
+            },
+
+            paypal(){
+                paypal.Buttons({
+                createOrder: function(data, actions) {
+                    // This function sets up the details of the transaction, including the amount and line item details.
+                    return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                        value: '15.00'
+                        }
+                    }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    // This function captures the funds from the transaction.
+                    return actions.order.capture().then(function(details) {
+                    // This function shows a transaction success message to your buyer.
+                    // alert('Transaction completed by ' + details.payer.name.given_name);
+                        axios.get('api/user/payment?api_token='+window.token)
+                        .then(response => {
+                            $('#paymentModal').modal('hide');
+                            window.location = "/home";
+                        });
+                    });
+                    
+                }
+                }).render('#paypal-button-container');
+                //This function displays Smart Payment Buttons on your web page.
+            },
+
+            successSubscription(){
+                
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            this.paypal();
         }
     }
 </script>

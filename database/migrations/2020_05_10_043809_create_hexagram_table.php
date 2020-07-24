@@ -17,18 +17,8 @@ class CreateHexagramTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('code')->nullable();
-            $table->text('opening')->nullable();
-            $table->text('nobleman')->nullable();
-            $table->text('weather')->nullable();
-            $table->text('general')->nullable();
-            $table->text('wealth')->nullable();
-            $table->text('relationship')->nullable();
-            $table->text('business')->nullable();
-            $table->text('family')->nullable();
-            $table->text('legal')->nullable();
-            $table->text('travel')->nullable();
-            $table->text('health')->nullable();
-            $table->text('property')->nullable();
+            $table->text('meaning')->nullable();
+            $table->string('photo')->nullable();
             $table->timestamps();
         });
     }

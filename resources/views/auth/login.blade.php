@@ -14,6 +14,7 @@
             </div>
 
             <div class="col-md-7 mt-5 mb-5 pl-5 pr-5">
+                @include('flash')
                 <h3>
                     Login
                 </h3>
@@ -55,9 +56,11 @@
                                     </button>
                                 </div>
                                 <div class="col-md-6">
-                                    <button type="submit" class="button-primary mt-5 w-100">
-                                        {{ __('Sign Up') }}
-                                    </button>
+                                    <a href="/register">
+                                        <button type="button" class="button-primary mt-5 w-100">
+                                            {{ __('Sign Up') }}
+                                        </button>
+                                    </a>
                                 </div>
                                
                             </div>
