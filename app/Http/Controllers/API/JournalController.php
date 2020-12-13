@@ -60,6 +60,7 @@ class JournalController extends Controller
             'type' => request()->type[0],
             'question' => request()->question,
             'details' => request()->details,
+            'comment' => request()->comment,
             'cast_type' => request()->cast_type,
             'original_hex_id' => request()->original_hex_id,
             'hex_focus' => $hex_focus,
@@ -77,7 +78,23 @@ class JournalController extends Controller
      */
     public function show($id)
     {
-        return Journal::with('hex_original','hex_transform','trigram')->where('type',$id)->orderBy('id','desc')->get();  
+        return Journal::with(
+            'hex_original.opening',
+            'hex_original.nobleman',
+            'hex_original.weather',
+            'hex_original.luck',
+            'hex_original.wealth',
+            'hex_original.relationship',
+            'hex_original.business',
+            'hex_original.family',
+            'hex_original.legal',
+            'hex_original.examination',
+            'hex_original.travel',
+            'hex_original.health',
+            'hex_original.properties',
+            'hex_transform',
+            'trigram',
+            )->where('type',$id)->orderBy('id','desc')->get();  
     }
 
     /**
@@ -103,7 +120,14 @@ class JournalController extends Controller
         //
     }
 
-    public function customerJournal($id){
-        return JournalConsultant::with('hex_transform','hex_original')->where('user_id',$id)->get();
+    public function customerJournal($id,$schedule_id){
+        return JournalConsultant::with('hex_transform','hex_original','attribute','trigram')
+                                        ->where('user_id',$id)
+                                        ->where('schedule_user_id',$schedule_id)
+                                        ->get();
+    }
+
+    public function user_consultant_diary(){
+        return JournalConsultant::with('hex_transform','hex_original','attribute','trigram')->where('user_id',\Auth::user()->id)->get();
     }
 }

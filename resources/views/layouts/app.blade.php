@@ -49,6 +49,15 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/diaries">Diaries</a>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Oracle
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <a class="dropdown-item" href="{{url('/oracle/number')}}">Numbers</a>
+                                  <a class="dropdown-item" href="{{url('/oracle/text')}}">Letters</a>
+                                </div>
+                            </li>
                         @else
                         <li class="nav-item">
                             <div class="position-relative">

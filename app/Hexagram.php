@@ -41,8 +41,16 @@ class Hexagram extends Model
         return $this->hasMany(Wealth::class);
     }
 
+    public function mother(){
+        return $this->hasMany(Mother::class);
+    }
+
     public function relationship(){
         return $this->hasMany(Relationship::class);
+    }
+
+    public function examination(){
+        return $this->hasMany(Examination::class);
     }
 
     public function business(){

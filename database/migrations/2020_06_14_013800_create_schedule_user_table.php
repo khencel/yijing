@@ -20,6 +20,7 @@ class CreateScheduleUserTable extends Migration
             $table->string('date');
             $table->string('time');
             $table->string('mode');
+            $table->string('status');
             $table->timestamps();
         });
     }

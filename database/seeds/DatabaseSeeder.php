@@ -25,10 +25,11 @@ use App\Relationship;
 use App\Business;
 use App\Family;
 use App\Legal;
+use App\Examination;
 use App\Travel;
 use App\Health;
 use App\Property;
-
+use App\SystemContent;
 
 class DatabaseSeeder extends Seeder
 {
@@ -64,10 +65,11 @@ class DatabaseSeeder extends Seeder
         $this->createBusiness();
         $this->createFamily();
         $this->createLegal();
+        $this->createexamination();
         $this->createTravel();
         $this->createHealth();
         $this->createProperty();
-        
+        $this->createSystemContent();
         
     }
 
@@ -76,6 +78,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Heaven',
                 'code' => '111111',
+                
             ],
             [
                 'name' => 'Earth',
@@ -442,7 +445,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Dui Gua (West)',
-                'code' => '001',
+                'code' => '011',
             ],
             [
                 'name' => 'Gen Gua (Northeast)',
@@ -1327,6 +1330,18 @@ class DatabaseSeeder extends Seeder
         }
     }
 
+    public function createexamination(){
+        for($i=1;$i<=64;$i++){
+            Examination::insert([
+                [
+                    'hexagram_id' => $i,
+                    'description' => '',
+                    'rating' => 0
+                ]
+            ]);
+        }
+    }
+
     public function createTravel(){
         for($i=1;$i<=64;$i++){
             Travel::insert([
@@ -1361,5 +1376,18 @@ class DatabaseSeeder extends Seeder
                 ]
             ]);
         }
+    }
+
+    public function createSystemContent(){
+        SystemContent::insert([
+            [
+                'content_name' => 'About Us',
+                'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt ea reiciendis quis nostrum magni omnis ab quidem odit quae. Velit perspiciatis eius suscipit aut quae laborum facilis porro iure eveniet!'
+            ],
+            [
+                'content_name' => 'footer',
+                'content' => '©copyright@ jennelcheng.com'
+            ]
+        ]);
     }
 }

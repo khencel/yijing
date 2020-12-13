@@ -16,9 +16,11 @@ use App\Relationship;
 use App\Business;
 use App\Family;
 use App\Legal;
+use App\Examination;
 use App\Travel;
 use App\Health;
 use App\Property;
+use App\Mother;
 
 class HexagramController extends Controller
 {
@@ -51,7 +53,7 @@ class HexagramController extends Controller
      */
     public function show($id)
     {
-        return Hexagram::with('nobleman','opening','weather','luck','wealth','relationship','business','family','legal','travel','health','properties')->find($id);
+        return Hexagram::with('nobleman','opening','weather','luck','wealth','mother','relationship','business','family','legal','travel','health','properties','examination')->find($id);
     }
 
     /**
@@ -67,6 +69,7 @@ class HexagramController extends Controller
 
         $hex = request()->validate([
             'name' => 'required',
+            'poem' => 'required',
             'meaning' => 'required',
             'opening' => 'required',
             'nobleman' => 'required',
@@ -77,6 +80,7 @@ class HexagramController extends Controller
             'business' => 'required',
             'family' => 'required',
             'legal' => 'required',
+            'examination' => 'required',
             'travel' => 'required',
             'health' => 'required',
             'property' => 'required',
@@ -101,6 +105,7 @@ class HexagramController extends Controller
 
         Hexagram::find($id)->update([
             'meaning' => request()->meaning,
+            'poem' => request()->poem,
             'photo' => $name
         ]);
 
@@ -129,6 +134,11 @@ class HexagramController extends Controller
             'rating' => request()->wealth_rating,
         ]);
 
+        Mother::where('hexagram_id',$id)->update([
+            'description' => request()->mothers,
+            'rating' => request()->mothers_rating,
+        ]);
+
         Relationship::where('hexagram_id',$id)->update([
             'description' => request()->relationship,
             'rating' => request()->relationship_rating,
@@ -147,6 +157,11 @@ class HexagramController extends Controller
         Legal::where('hexagram_id',$id)->update([
             'description' => request()->legal,
             'rating' => request()->legal_rating,
+        ]);
+
+        Examination::where('hexagram_id',$id)->update([
+            'description' => request()->examination,
+            'rating' => request()->examination_rating,
         ]);
 
         Travel::where('hexagram_id',$id)->update([
@@ -175,6 +190,10 @@ class HexagramController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function catchHex(){
+        return Hexagram::where('id',1)->first();
     }
 
     public function castHex(){

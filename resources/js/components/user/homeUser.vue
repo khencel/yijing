@@ -27,7 +27,7 @@
         <span><RiseLoader></RiseLoader></span>
     </div>
     <div class="row justify-content-center">
-        <div class="col-md-4 col-7">
+        <div class="col-md-3 col-9">
             <div class="text-center" v-for="(result, index) in results" :key="index">
                 <img :class="index==2?'mb-4 w-100 hex-img':'mb-1 w-100 hex-img'" style="height:50px" v-show="result == 1" src="img/solidLine.png"  alt="">
                 <img :class="index==2?'mb-4 w-100':'mb-1 w-100'" style="height:50px" v-show="result == 0" src="img/brokenLine.png" alt="">
@@ -36,47 +36,73 @@
             </div>
             <div class="text-center">
                 <h1>{{name}}</h1>
-                <p>{{meaning}}</p>
-            </div>
-        </div>
-        <div v-show="isCast && !isLoading" class="col-md-2">
-            <svg class="d-sm-none d-md-block d-none mx-auto" style="width:60%;margin-top:100%;" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z" />
-            </svg>
-
-            <svg class="d-block d-none d-sm-block d-md-none mx-auto" style="width:60%;" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M9,4H15V12H19.84L12,19.84L4.16,12H9V4Z" />
-            </svg>
-        </div>
-        <div v-show="subscriber && type != 'Trigram'" class="col-md-4 col-7">
-            <div class="text-center" v-for="(transform, index) in transforms" :key="index">
-                <img :class="index==2?'mb-4 w-100':'mb-1 w-100'" style="height:50px" v-show="transform == 1" src="img/solidLine.png"  alt="">
-                <img :class="index==2?'mb-4 w-100':'mb-1 w-100'" style="height:50px" v-show="transform == 0" src="img/brokenLine.png" alt="">
-            </div>
-            <div class="text-center">
-                <h1>{{transformName}}</h1>
-                <p>
-                    {{transformMeaning}}
+                <p style="color:gray">
+                    {{meaning == null?'Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, assumenda consequatur, itaque et reprehenderit dignissimos commodi ratione in aliquid architecto quisquam laudantium sunt. Ut, recusandae nulla accusantium deserunt ea cupiditate.':transformMeaning}}
                 </p>
             </div>
         </div>
 
-        <div v-show="isCast && !subscriber && !isLoading" class="col-md-4 col-7 text-center pt-5">
-            <img src="img/password.png" alt="" style="width:50%">
-            <br>
-            <button class="button-primary mt-5 mb-5" @click="btnSubscribe">SUBSCRIBE NOW</button>
+        <div v-show="isCast && !isLoading" class="col-md-1 p-0 position-relative col-4" style="max-height:350px;">
+            <div class=" position-absolute" style="height:100px;top:50%;margin-top:-50px;">
+                <svg class="d-sm-none d-md-block d-none mx-auto" style="width:100%;" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z" />
+                </svg>
+            </div>
+            
+            <svg class="d-block d-none d-sm-block d-md-none mx-auto" style="width:60%;" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M9,4H15V12H19.84L12,19.84L4.16,12H9V4Z" />
+            </svg>
         </div>
 
+        <div v-show="subscriber && type != 'Trigram'" class="col-md-3 col-9 text-center">
+            <div class="mt-4">
+                <h1>{{transformName}}</h1>
+                <p style="color:gray">
+                    {{transformMeaning == null?'Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, assumenda consequatur, itaque et reprehenderit dignissimos commodi ratione in aliquid architecto quisquam laudantium sunt. Ut, recusandae nulla accusantium deserunt ea cupiditate.':transformMeaning}}
+                </p>
+            </div>
+        </div>
+
+        <div v-show="isCast && !isLoading" class="col-md-1 p-0 position-relative col-4" style="max-height:350px;">
+            <div class=" position-absolute" style="height:100px;top:50%;margin-top:-50px;">
+                <svg class="d-sm-none d-md-block d-none mx-auto" style="width:100%;" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z" />
+                </svg>
+            </div>
+            
+            <svg class="d-block d-none d-sm-block d-md-none mx-auto" style="width:60%;" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M9,4H15V12H19.84L12,19.84L4.16,12H9V4Z" />
+            </svg>
+        </div>
+
+        <div v-show="subscriber && type != 'Trigram'" class="col-md-3 col-9">
+            <div class="text-center" v-for="(transform, index) in transforms" :key="index">
+                <img :class="index==2?'mb-4 w-100':'mb-1 w-100'" style="height:50px" v-show="transform == 1" src="img/solidLine.png"  alt="">
+                <img :class="index==2?'mb-4 w-100':'mb-1 w-100'" style="height:50px" v-show="transform == 0" src="img/brokenLine.png" alt="">
+            </div>
+        </div>
+
+        <div v-show="isCast && !subscriber && !isLoading" class="col-md-4 col-7 text-center position-relative">
+            <div class="text-center" v-for="(item,index) in 6" :key="item">
+                <img :class="index==2?'mb-4 w-100':'mb-1 w-100'" style="height:50px;opacity:0.1" src="img/solidLine.png"  alt="">
+            </div>
+            <div>
+                <button class="button-primary mt-2 mb-5" @click="btnSubscribe">SUBSCRIBE NOW</button>
+            </div>
+            <div style="position:absolute;top:0;bottom:0; top: 40%;left: 50%;-ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%);">
+                <img src="img/password.png" alt="" style="width:100%">
+            </div>
+        </div>
     </div>
-    <div class="text-center">
-        <button class="button-primary font-format" @click="btnCast">Cast Now</button>
+    <div class="text-center p-2">
+        <div class="font-format border-2 m-auto background-primary text-white p-3" style="border-radius:50%;cursor:pointer;width:80px;border:solid 1px" @click="btnCast">Cast Now</div>
     </div>
     <div class="row">
         <div class="col-6 text-center">
-            <button class="button-success font-format w-50" @click="btnCastType('tri')">Trigrams</button>
+            <button :class="type!='Trigram'?'button-success font-format w-50':'button-success font-format w-50 bg-dark'" @click="btnCastType('tri')">Trigrams</button>
         </div>
         <div class="col-6 text-center">
-            <button class="button-success font-format w-50" @click="btnCastType('hex')">Hexagrams</button>
+            <button :class="type!='Hexagram'?'button-success font-format w-50':'button-success font-format w-50 bg-dark'" @click="btnCastType('hex')">Hexagrams</button>
         </div>
     </div>
     <div class="mt-5" style="font-size:30px;">
@@ -133,6 +159,7 @@
         data(){
             return{
                 isLoading :false,
+                isActive:false,
                 type:'',
                 results:'',
                 transforms:'',
@@ -285,10 +312,6 @@
                 }).render('#paypal-button-container');
                 //This function displays Smart Payment Buttons on your web page.
             },
-
-            successSubscription(){
-                
-            }
         },
         mounted() {
             this.paypal();

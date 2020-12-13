@@ -21,6 +21,7 @@ class CreateJournalConsultantsTable extends Migration
             $table->string('cast_type');
             $table->string('question');
             $table->text('details');
+            $table->text('comment')->nullable();
             $table->integer('original_hex_id')->nullable();
             $table->string('hex_focus')->nullable();
             $table->integer('transform_hex_id')->nullable();

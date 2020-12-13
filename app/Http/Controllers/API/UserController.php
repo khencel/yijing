@@ -71,7 +71,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Schedule::find($id)->delete();
     }
 
     public function changePassword(){
@@ -110,6 +110,7 @@ class UserController extends Controller
     }
 
     public function bookNow(){
+        
         $date = date_create(request()->date);
         $myDate = date_format($date,"F-d-Y");
 
@@ -124,7 +125,8 @@ class UserController extends Controller
             'consultant_id' => request()->id, 
             'mode' => request()->mode,
             'date' => $myDate,
-            'time' => request()->time
+            'time' => request()->time,
+            'status' => "booked"
         ]);
     }
 
@@ -142,5 +144,11 @@ class UserController extends Controller
     public function payment(){
        $user = \Auth::user();
        $user->update(['is_subscriber'=>1]);
+    }
+
+    public function cancelBooking(){
+        return Schedule::find(request()->schedule_id)->update([
+            'status' => 'canceled'
+        ]);
     }
 }

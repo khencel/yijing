@@ -40,6 +40,7 @@ Route::middleware('auth:api')->group(function(){
     Route::get('hex/index','API\HexagramController@index');
     Route::get('hex/show/{id}','API\HexagramController@show');
     Route::put('hex/update/{id}','API\HexagramController@update');
+    
 
     // admin/trigram
     Route::get('tri/index','API\TrigramController@index');
@@ -55,26 +56,53 @@ Route::middleware('auth:api')->group(function(){
     Route::put('user/profile/update/{id}','API\UserController@update');
     Route::post('user/profile/changePassword','API\UserController@changePassword');
     Route::get('user/consultant','API\UserController@consultant');
+
     Route::post('user/bookNow','API\UserController@bookNow');
+    
     Route::post('user/check','API\UserController@check');
     Route::get('user/schedule','API\UserController@schedule');
     Route::get('user/attribute','API\UserController@attribute');
     Route::get('user/payment','API\UserController@payment');
+    Route::get('user/cancelBooking','API\UserController@cancelBooking');
+    Route::get('user/cancelDelete/{id}','API\UserController@destroy');
 
-    Route::get('consultant/journal/{id}','API\JournalController@customerJournal');
+    Route::get('consultant/journal/{id}/{schedule_id}','API\JournalController@customerJournal');
+    Route::get('consultant-user-diary','API\JournalController@user_consultant_diary');
     // Journal
     Route::resources([
         'journal' => 'API\JournalController',
         'announcement' => 'API\AnnouncementController'
     ]);
-   
+
+    // System Controller
+    Route::put('update/{id}','API\SystemController@update');
+    Route::get('about/management','API\SystemController@aboutUs');
+    Route::post('footer/management','API\SystemController@footer');
+    Route::get('footerContent','API\SystemController@footerContent');
+
+
+    // Oracle
+    Route::post('oracle/number','API\Oracle\NumberController@numberOracle');
+    Route::post('oracle/text','API\Oracle\TextController@textOracle');
+
+    //Diary Oracle
+    Route::group(['prefix' => 'oracle'],function(){
+        Route::post('/store','API\Diary\OracleDiaryController@store');
+        Route::get('/show','API\Diary\OracleDiaryController@show');
+        Route::get('/showText','API\Diary\OracleDiaryController@showText');
+
+        Route::post('/store-oracle-text','API\Diary\OracleDiaryController@storeTextOracle');
+    });
 });
 
+Route::get('about','API\SystemController@aboutUs');
+Route::get('footer','API\SystemController@footerContent');
 Route::post('user/registration','API\RegistrationController@store');
 
 
 // Route::get('hex/index','API\HexagramController@index');
 
 Route::post('user/hexagram','API\HexagramController@dailyHex');
+Route::get('hexagram','API\HexagramController@catchHex');
 
 

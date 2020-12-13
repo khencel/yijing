@@ -1,70 +1,299 @@
 <template>
    <div>
-       <div class="text-right mb-3">
-           <button class="button-success" @click="btnCreate">Create Diary</button>
-       </div>
-        <div class="row">
-            <div class="col-md-2" style="max-height:500px;overflow:auto">
-                
-                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist">
-                    <a v-for="(journal, index) in journals" :key="journal.id" :class="index==0?'nav-link side-tab border active':'nav-link side-tab border'" @click="displayDetails(journal.attribute.id)" :id="'v-pills-'+journal.attribute.attribute+'-tab'" data-toggle="pill" :href="'#v-pills-'+journal.attribute.attribute" role="tab" :aria-controls="'v-pills-'+journal.attribute.attribute" aria-selected="true">    
-                    {{journal.attribute.attribute}}     
-                    </a>
-                </div>
-               
-            </div>
-            <div class="col-md-10 border shadow-sm p-3" style="max-height:500px;overflow:auto">
-                <div v-if="Object.keys(journal_details).length == 0">No record...</div>
-                <div v-else class="" v-for="(item, index) in journal_details" :key="index">
-                    <div class="row">
-                        <div class="col-md-7 border">
-                            <h4>{{item.cast_type}}</h4>
-                            <div v-if="item.hex_focus != ''" class="row text-center">
-                                <div class="col-md-5">
-                                    <div v-for="(item, index) in item.hex_focus.split('')" :key="index">
-                                        <img v-show="item == 1"  :class="index==4?'mb-3':''" src="img/solidLine.png" style="width:90%;height:40px" alt="">
-                                        <img v-show="item == '0'"  :class="index==4?'mb-3':''" src="img/brokenLine.png" style="width:90%;height:40px" alt="">
-                                        <img v-show="item == 3"  :class="index==4?'mb-3':''" src="img/solidLinefocus.png" style="width:90%;height:40px" alt="">
-                                        <img v-show="item == 4"  :class="index==4?'mb-3':''" src="img/brokenCircle.png" style="width:90%;height:40px" alt="">
+        <div class="text-right mb-3">
+           <button class="button-primary" @click="btnCreate">Create Diary(Trigram or Hexagram)</button>
+           <button class="button-success" @click="oracleNumber">Create Oracle(Number or Text)</button>
+        </div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="diary-tab" data-toggle="tab" href="#diary" role="tab" aria-controls="diary" aria-selected="true">My Diary</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="consultant-tab" data-toggle="tab" href="#consultant" role="tab" aria-controls="consultant" aria-selected="false">My Consultant Diary</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="consultant-tab" data-toggle="tab" href="#oracleNumber" role="tab" aria-controls="consultant" aria-selected="false">Oracle Number</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="consultant-tab" data-toggle="tab" href="#oracleText" role="tab" aria-controls="consultant" aria-selected="false">Oracle Text</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="diary" role="tabpanel" aria-labelledby="diary-tab">
+                <div class="row mt-1">
+                    <div class="col-md-2" style="max-height:500px;overflow:auto">
+                        
+                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist">
+                            <a v-for="(journal, index) in journals" :key="journal.id" :class="index==0?'nav-link side-tab border active':'nav-link side-tab border'" @click="displayDetails(journal.attribute.id)" :id="'v-pills-'+journal.attribute.attribute+'-tab'" data-toggle="pill" :href="'#v-pills-'+journal.attribute.attribute" role="tab" :aria-controls="'v-pills-'+journal.attribute.attribute" aria-selected="true">    
+                            {{journal.attribute.attribute}}     
+                            </a>
+                        </div>
+                    
+                    </div>
+                    <div class="col-md-10 shadow-sm p-3">
+                        <div v-if="Object.keys(journal_details).length == 0">No record...</div>
+                        <div v-else class="" v-for="(item, index) in journal_details" :key="index">
+                            <div class="row">
+                                <div class="col-md-7 border">
+                                    <h4>{{item.cast_type}}</h4>
+                                    <div v-if="item.hex_focus != ''" class="row text-center">
+                                        <div class="col-md-5">
+                                            <div v-for="(item, index) in item.hex_focus.split('')" :key="index">
+                                                <img v-show="item == 1"  :class="index==4?'mb-3':''" src="img/solidLine.png" style="width:90%;height:40px" alt="">
+                                                <img v-show="item == '0'"  :class="index==4?'mb-3':''" src="img/brokenLine.png" style="width:90%;height:40px" alt="">
+                                                <img v-show="item == 3"  :class="index==4?'mb-3':''" src="img/solidLinefocus.png" style="width:90%;height:40px" alt="">
+                                                <img v-show="item == 4"  :class="index==4?'mb-3':''" src="img/brokenCircle.png" style="width:90%;height:40px" alt="">
+                                            </div>
+                                            <strong>{{item.hex_original[0].name}}</strong>
+                                        </div>
+                                        <div class="col-md-1">
+                                            =>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div v-for="(item, index) in item.hex_transform[0].code.split('')" :key="index">
+                                                <img v-show="item == 1"  :class="index==2?'mb-3':''" src="img/solidLine.png" style="width:90%;height:40px" alt="">
+                                                <img v-show="item == '0'"  :class="index==2?'mb-3':''" src="img/brokenLine.png" style="width:90%;height:40px" alt="">
+                                            </div>
+                                            <strong>{{item.hex_transform[0].name}}</strong>
+                                        </div>
                                     </div>
-                                    <strong>{{item.hex_original[0].name}}</strong>
-                                </div>
-                                <div class="col-md-1">
-                                    =>
+                                    <div v-else class="row text-center justify-content-center">
+                                        <div class="col-md-5">
+                                            <div v-for="(item, index) in item.trigram[0].code.split('')" :key="index">
+                                                <img v-show="item == 1"  :class="index==2?'mb-3':''" src="img/solidLine.png" style="width:90%;height:40px" alt="">
+                                                <img v-show="item == '0'"  :class="index==2?'mb-3':''" src="img/brokenLine.png" style="width:90%;height:40px" alt="">
+                                            </div>
+                                            <strong>{{item.trigram[0].name}}</strong>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-5">
-                                    <div v-for="(item, index) in item.hex_transform[0].code.split('')" :key="index">
-                                        <img v-show="item == 1"  :class="index==2?'mb-3':''" src="img/solidLine.png" style="width:90%;height:40px" alt="">
-                                        <img v-show="item == '0'"  :class="index==2?'mb-3':''" src="img/brokenLine.png" style="width:90%;height:40px" alt="">
+                                    <div>
+                                        <strong>Rating:</strong>
+                                        
+                                        <span v-for="properties in item.hex_original" :key="properties.id">
+                                            <span v-show="item.type == 1">
+                                                <span v-for="active in properties.opening[0].rating/20" :key="active.id">
+                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                                <span v-for="notActive in (5 - properties.opening[0].rating/20)" :key="notActive.id">
+                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                                
+                                            </span>
+                                            <span v-show="item.type == 2">
+                                                <span v-for="active in properties.nobleman[0].rating/20" :key="active.id">
+                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                                <span v-for="notActive in (5 - properties.nobleman[0].rating/20)" :key="notActive.id">
+                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                            </span>
+
+                                            <span v-show="item.type == 3">
+                                                <span v-for="active in properties.weather[0].rating/20" :key="active.id">
+                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                                <span v-for="notActive in (5 - properties.weather[0].rating/20)" :key="notActive.id">
+                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                            </span>
+
+                                            <span v-show="item.type == 4">
+                                                <span v-for="active in properties.luck[0].rating/20" :key="active.id">
+                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                                <span v-for="notActive in (5 - properties.luck[0].rating/20)" :key="notActive.id">
+                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                            </span>
+
+                                            <span v-show="item.type == 5">
+                                                <span v-for="active in properties.wealth[0].rating/20" :key="active.id">
+                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                                <span v-for="notActive in (5 - properties.wealth[0].rating/20)" :key="notActive.id">
+                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                            </span>
+
+                                            <span v-show="item.type == 6">
+                                                <span v-for="active in properties.relationship[0].rating/20" :key="active.id">
+                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                                <span v-for="notActive in (5 - properties.relationship[0].rating/20)" :key="notActive.id">
+                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                            </span>
+
+                                            <span v-show="item.type == 7">
+                                                <span v-for="active in properties.business[0].rating/20" :key="active.id">
+                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                                <span v-for="notActive in (5 - properties.business[0].rating/20)" :key="notActive.id">
+                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                            </span>
+
+                                            <span v-show="item.type == 8">
+                                                <span v-for="active in properties.family[0].rating/20" :key="active.id">
+                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                                <span v-for="notActive in (5 - properties.family[0].rating/20)" :key="notActive.id">
+                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                            </span>
+
+                                            <span v-show="item.type == 9">
+                                                <span v-for="active in properties.legal[0].rating/20" :key="active.id">
+                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                                <span v-for="notActive in (5 - properties.legal[0].rating/20)" :key="notActive.id">
+                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                            </span>
+
+                                            <span v-show="item.type == 10">
+                                                <span v-for="active in properties.examination[0].rating/20" :key="active.id">
+                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                                <span v-for="notActive in (5 - properties.examination[0].rating/20)" :key="notActive.id">
+                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                            </span>
+
+                                            <span v-show="item.type == 11">
+                                                <span v-for="active in properties.travel[0].rating/20" :key="active.id">
+                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                                <span v-for="notActive in (5 - properties.travel[0].rating/20)" :key="notActive.id">
+                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                            </span>
+
+                                            <span v-show="item.type == 12">
+                                                <span v-for="active in properties.health[0].rating/20" :key="active.id">
+                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                                <span v-for="notActive in (5 - properties.health[0].rating/20)" :key="notActive.id">
+                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                            </span>
+
+                                            <span v-show="item.type == 13">
+                                                <span v-for="active in properties.properties[0].rating/20" :key="active.id">
+                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                                <span v-for="notActive in (5 - properties.properties[0].rating/20)" :key="notActive.id">
+                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                </span>
+                                            </span>
+                        
+                                        </span>
                                     </div>
-                                    <strong>{{item.hex_transform[0].name}}</strong>
+                                    <div>
+                                         <p><strong>{{item.cast_type}} meaning</strong></p>
+                                        <div v-for="meaning in item.hex_original" :key="meaning.id">
+                                            <p>{{meaning.meaning}}</p>
+                                        </div>     
+                                    </div>                   
                                 </div>
                             </div>
-                            <div v-else class="row text-center justify-content-center">
-                                <div class="col-md-5">
-                                    <div v-for="(item, index) in item.trigram[0].code.split('')" :key="index">
-                                        <img v-show="item == 1"  :class="index==2?'mb-3':''" src="img/solidLine.png" style="width:90%;height:40px" alt="">
-                                        <img v-show="item == '0'"  :class="index==2?'mb-3':''" src="img/brokenLine.png" style="width:90%;height:40px" alt="">
+                            <p><strong>Date:</strong>{{item.date}}</p>
+                            <p><strong>Question:</strong>{{item.question}}</p>
+                            <strong>Details</strong>
+                            <p>{{item.details}}</p>
+                            <hr>
+                        </div>
+
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade " id="consultant" role="tabpanel" aria-labelledby="consultant-tab">
+                <div class="border p-2" v-for="diary in consultant_user" :key="diary.id">
+                    <h4>{{diary.cast_type}}</h4>
+                    <div class="row mt-2">
+                        <div class="col-md-7">
+                            <div v-if="diary.cast_type == 'Hexagram'" class="row justify-content-center">
+                                <div class="col-md-5 text-center">
+                                    <div v-for="(hex,index) in diary.hex_focus" :key="index">
+                                            <img v-show="hex == 1"  :class="index==4?'mb-3':''" src="img/solidLine.png" style="width:90%;height:40px" alt="">
+                                            <img v-show="hex == '0'"  :class="index==4?'mb-3':''" src="img/brokenLine.png" style="width:90%;height:40px" alt="">
+                                            <img v-show="hex == 3"  :class="index==4?'mb-3':''" src="img/solidLinefocus.png" style="width:90%;height:40px" alt="">
+                                            <img v-show="hex == 4"  :class="index==4?'mb-3':''" src="img/brokenCircle.png" style="width:90%;height:40px" alt="">
                                     </div>
-                                    <strong>{{item.trigram[0].name}}</strong>
+                                    <span v-for="original_hex in diary.hex_original" :key="original_hex.id" >
+                                        <strong>{{original_hex.name}}</strong>
+                                        <p>{{original_hex.meaning}}</p>
+                                    </span>
+                                </div>
+                                <div class="col-md-1 text-center p-0">
+                                    <svg style="width:24px;height:24px;" viewBox="0 0 24 24">
+                                        <path fill="currentColor" d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
+                                    </svg>
+                                </div>
+                                <div class="col-md-5 text-center">
+                                    <div v-for="transform_hex in diary.hex_transform" :key="transform_hex.id">
+                                        <div v-for="(code, index) in transform_hex.code" :key="code.id">
+                                            <img v-show="code == 1"  :class="index==2?'mb-3':''" src="img/solidLine.png" style="width:90%;height:40px" alt="">
+                                            <img v-show="code == '0'"  :class="index==2?'mb-3':''" src="img/brokenLine.png" style="width:90%;height:40px" alt="">
+                                        </div>
+                                        <strong>{{transform_hex.name}}</strong>
+                                        <p>{{transform_hex.meaning}}</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div v-else class="row justify-content-center">
+                                <div class="col-md-5 text-center">
+                                    <div v-for="trigram in diary.trigram" :key="trigram.id">
+                                        <div v-for="(trigram_code, index) in trigram.code" :key="trigram_code.id">
+                                            <img v-show="trigram_code == 1"  :class="index==2?'mb-3':''" src="img/solidLine.png" style="width:90%;height:40px" alt="">
+                                            <img v-show="trigram_code == '0'"  :class="index==2?'mb-3':''" src="img/brokenLine.png" style="width:90%;height:40px" alt="">
+                                        </div>
+                                        <strong>{{trigram.name}}</strong>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-5">
-                            <p><strong>{{item.cast_type}} meaning</strong></p>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla, corrupti. Sequi dicta, odit non ab consequuntur, incidunt error iste rem nisi, nihil sint molestiae quisquam hic impedit quaerat et culpa!</p>
+                            <div class="position-relative" v-for="transform in diary.hex_transform" :key="transform.id">
+                                <img :src="'storage/img/'+transform.photo" class="img-fluid" alt="">
+                                <div class=" text-center position-absolute" style="bottom:0;right:0;width:30%;background-color:#CCCCCC">
+                                    <div v-for="(code, index) in transform.code" :key="code.id">
+                                        <img v-show="code == 1"  :class="index==2?'mb-1':''" src="img/solidLine.png" style="width:90%;height:20px" alt="">
+                                        <img v-show="code == '0'"  :class="index==2?'mb-1':''" src="img/brokenLine.png" style="width:90%;height:20px" alt="">
+                                    </div>
+                                    <strong>{{transform.name}}</strong>
+                                </div>
+                            </div>
+                            <div>
+                                <strong>Question Type:</strong> {{diary.attribute.attribute}}
+                            </div>
+                            <div>
+                                <strong>Question:</strong> {{diary.question}}
+                            </div>
+                            <div>
+                                <strong>Details:</strong>
+                                <p>{{diary.details}}</p>
+                            </div>
+                            <div>
+                                <strong>Comment:</strong>
+                                <p v-text="diary.comment == null?'No comment...':diary.comment" ></p>
+                            </div>
                         </div>
                     </div>
-                    <p><strong>Date:</strong>{{item.date}}</p>
-                    <p><strong>Question:</strong>{{item.question}}</p>
-                    <strong>Details</strong>
-                    <p>{{item.details}}</p>
-                    <hr>
                 </div>
-
-                
+            </div>
+            <div class="tab-pane fade " id="oracleNumber" role="tabpanel" aria-labelledby="consultant-tab">
+                <JournalOracleNumb ref="oracle-number"></JournalOracleNumb>
+            </div>
+            <div class="tab-pane fade " id="oracleText" role="tabpanel" aria-labelledby="consultant-tab">
+                <JournalOracleText ref="oracle-text"></JournalOracleText>
             </div>
         </div>
+        
         <notifications group="notification" position="bottom right"/>
         <!-- modal -->
         <div class="modal fade" id="createDiaryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -168,11 +397,20 @@
                 </div>
             </div>
         </div>
+        <OracleNumber ref="oracleNumber"></OracleNumber>
    </div>
 </template>
 
 <script>
+    import OracleNumber from '../modal/NumberJournal';
+    import JournalOracleNumb from '../diaries/UserOracleNumber';
+    import JournalOracleText from '../diaries/UserOracleText';
     export default {
+        components:{
+            OracleNumber,
+            JournalOracleNumb,
+            JournalOracleText
+        },
         data(){
             return {
                 attributes:{},
@@ -182,6 +420,7 @@
                 journal_details:{},
                 errors:{},
                 id:'',
+                consultant_user:{},
                 form: new Form({
                     type:'',
                     cast_type:'',
@@ -327,11 +566,20 @@
                     this.trigramDisable = false;
                     this.hexagramDisable = true;
                 }
+            },
+            loadConsultantDiary(){
+                axios.get('api/consultant-user-diary?api_token='+window.token)
+                .then(response => {
+                    this.consultant_user = response.data;
+                });
+            },
+            oracleNumber(){
+                this.$refs.oracleNumber.showModal();
             }
         },
         mounted() {
             this.loadJournal();
+            this.loadConsultantDiary();
         },
-        
     }
 </script>

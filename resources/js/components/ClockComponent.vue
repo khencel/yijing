@@ -32,6 +32,7 @@
 
 </style>
 <template>
+<div>
 <div class="row justify-content-center">
     <div class="col-md-5">
         <div class="row justify-content-center pb-5 mt-2 ml-5 mr-5">
@@ -49,6 +50,7 @@
                 <DigitalClock class="dateFormat glow" style="font-size:40px;" twelveHour="false" :blink="true" />
             </div>
         </div>
+        
     </div>
     <div class="col-md-5 text-white p-5">
         <p><strong>{{dailyHexName}} Meaning</strong></p>
@@ -56,9 +58,8 @@
             {{meaning}}
         </p>
     </div>
-</div>
-                    
-              
+</div>                    
+</div>    
 </template>
 
 <script>
@@ -92,7 +93,14 @@
                     this.dailies = response.data.hexagram.hexagram.code.split("");
                     this.dailyHexName = response.data.hexagram.hexagram.name;
                     this.meaning = response.data.hexagram.hexagram.meaning;
-                    
+                })
+                .catch(error => {
+                    axios.get('api/hexagram')
+                    .then(response => {
+                        this.dailies = response.data.code.split("");
+                        this.dailyHexName = response.data.name;
+                        this.meaning = response.data.meaning;
+                    });
                 });
             }
         },

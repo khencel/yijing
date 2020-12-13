@@ -28,8 +28,27 @@
     </div>
     <div class="mt-5 text-right">
         <button v-show="!available" class="btn btn-primary" @click="check">Check if Available</button>
-        <button v-show="available" class="btn btn-success" @click="bookNow">Book Now</button>
+        <button v-show="available" class="btn btn-success" @click="btnPayment">Book Now</button>
+    </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="consultanPaymentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Schedule Payment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="paypal-button-container"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
     </div>
 </div>
   
@@ -103,6 +122,7 @@
                         value:'22'
                     },
                 ],
+                price: 9.99,
                 currentDate:'',
                 errors:{},
                form: new Form({
@@ -113,6 +133,12 @@
                }),
             }
         },
+
+        mounted() {
+            this.paypal();
+            this.getCurrentDate();
+        },
+
         methods:{
             check(){
                 var current = new Date();
@@ -159,21 +185,21 @@
             },
             
             bookNow(){
-                axios.post('/api/user/bookNow?api_token='+window.token,this.form)
-                .then(response => {
-                    this.errors = [];
-                    
-                    this.$notify({
-                        group: 'notification',
-                        type: 'success',
-                        title: 'Schedule',
-                        text: 'Your Schedule has been booked'
-                    });
-                    window.location = "/schedule";
-                })
-                .catch(error => {
-                    this.errors = error.response.data.errors;
-                });
+                        axios.post('/api/user/bookNow?api_token='+window.token,this.form)
+                        .then(response => {
+                            this.errors = [];
+                            
+                            this.$notify({
+                                group: 'notification',
+                                type: 'success',
+                                title: 'Schedule',
+                                text: 'Your Schedule has been booked'
+                            });
+                            window.location = "/schedule";
+                        })
+                        .catch(error => {
+                            this.errors = error.response.data.errors;
+                        });
             },
 
             getCurrentDate(){
@@ -188,10 +214,34 @@
                 this.currentDate = y+"-"+m+"-"+d
                 
             },
+
+            btnPayment(){
+                $('#consultanPaymentModal').modal('show');
+            },
+
+            paypal(){
+                paypal.Buttons({
+                    createOrder: (data, actions) => {
+                        return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: this.price
+                            }
+                        }]
+                        });
+                    },
+                    onApprove: async(data, actions) => {
+                        this.bookNow();
+                      
+                        return actions.order.capture().then(function(details) {
+                        // alert('Transaction completed by ' + details.payer.name.given_name);
+                        });
+                        
+                    }
+                }).render('#paypal-button-container');
+            },
+
         
-        },
-        mounted() {
-            this.getCurrentDate();
         }
     }
 </script>

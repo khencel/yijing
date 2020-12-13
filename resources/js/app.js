@@ -1,8 +1,3 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 
 require('./bootstrap');
 window.token = document.getElementsByName("user-token")[0].content;
@@ -35,6 +30,8 @@ require("./components/tri/RegistrationComponents");
 require("./components/diaries/RegistrationComponent");
 require("./components/announcement/RegisterComponents");
 require("./components/consultant/RegisterComponents");
+require("./components/system/RegistrationComponents");
+require("./components/oracle/RegistrationComponent");
 const app = new Vue({
     el: '#app',
 });

@@ -49,6 +49,7 @@ class RegistrationController extends Controller
             'lastname' => request()->lastname,
             'country' => request()->country,
             'email' => request()->email,
+            'email_verified_at' => date("Y-m-d"),
             'password' => Hash::make(request()->password),
             'api_token' => Str::random(60),
             'is_subscriber' => 1,

@@ -1,11 +1,32 @@
 <template>
    <div>
-       <div class="card p-2">
-           <button class="button-success w-25 ml-auto" @click="createJournal">Create Journal</button>
+       <div v-show="Object.keys(customer_journal).length == 0" class="card p-2">
+           <button class="button-primary" @click="createJournalOracle">Create Journal(Number or Word)</button>
+           <button class="button-success mt-2" @click="createJournal">Create Journal(Trigram or Hexagram)</button>
        </div>
        <div class="card">
+           
             <div class="row p-4">
-                <div class="col-md-7 border">
+                <div v-if="cast_type == 'Trigram'" class="col-md-7">
+                    <div class="row justify-content-center" v-for="item in customer_journal" :key="item.id">
+                       <div class="col-md-5 text-center">
+                           <div v-for="(trigram, index) in item.trigram" :key="index">
+                               <div v-for="trigram in  trigram.code" :key="trigram.id">
+                                    <img v-show="trigram==1" style="width:90%;height:50px;"  src="/img/solidLine.png" alt="">
+                                    <img v-show="trigram=='0'" style="width:90%;height:50px;"  src="/img/brokenLine.png" alt="">
+                                </div>
+                                <div>
+                                    <strong>
+                                        {{trigram.name}}
+                                    </strong>
+                                </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+                <div v-else class="col-md-7">
+                    <div v-show="Object.keys(customer_journal).length == 0">No record...</div>
+
                     <div class="row justify-content-center" v-for="(item, index) in customer_journal" :key="index">
                         <div class="col-md-5 text-center">
                             <div v-for="(hexagram, index) in  item.hex_focus" :key="index">
@@ -14,46 +35,54 @@
                                 <img v-show="hexagram == 3"  :class="index==4?'mb-3':''" src="/img/solidLinefocus.png" style="width:90%;height:50px" alt="">
                                 <img v-show="hexagram == 4"  :class="index==4?'mb-3':''" src="/img/brokenCircle.png" style="width:90%;height:50px" alt="">
                             </div>
-                            <div>
-                                {{item.hex_original[0].name}} 
+                            <div v-for="orig_hex in item.hex_original" :key="orig_hex.id">
+                                <strong>{{orig_hex.name}}</strong>
+                    
+                                <p>{{orig_hex.meaning}}</p>
                             </div>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis neque sit maiores, culpa harum architecto iure voluptatum, iusto beatae amet quaerat aliquam libero molestias eaque aut odit pariatur laboriosam explicabo?</p>
                             
                         </div>
-                        <div class="col-md-1 text-center">
-                            =>
+                        <div class="col-md-1 text-center " style="height:310px;">
+                            <div class="" style="position:absolute;top:48%">
+                                <svg style="width:24px;height:24px;" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M4,10V14H13L9.5,17.5L11.92,19.92L19.84,12L11.92,4.08L9.5,6.5L13,10H4Z" />
+                                </svg>
+                            </div>
                         </div>
-                        <div class="col-md-5 text-center">
-                            <div v-for="(transform_hex, index) in item.hex_transform[0].code" :key="index">
+                       
+                        <div v-for="hex_transform in item.hex_transform" :key="hex_transform.id" class="col-md-5 text-center">
+                            <div v-for="(transform_hex, index) in hex_transform.code" :key="index">
                                 <img v-show="transform_hex==1"    :class="index==2?'mb-3':''" style="width:90%;height:50px;"  src="/img/solidLine.png" alt="">
                                 <img v-show="transform_hex=='0'"  :class="index==2?'mb-3':''" style="width:90%;height:50px;"  src="/img/brokenLine.png" alt="">
                             </div>
                             <div>
-                                {{item.hex_transform[0].name}}
+                                <strong>{{hex_transform.name}}</strong>
                             </div>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maxime eaque at provident nulla nam incidunt deserunt distinctio iusto aperiam dolore molestias, voluptatum magnam, deleniti natus quod necessitatibus ipsam animi obcaecati?</p>
+                            <p>{{hex_transform.meaning}}</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-5 border">
-                    <div class="position-relative">
-                        <img src="/storage/img/1594979816.jpeg" class="img-fluid" alt="">
-                        <div class="bg-warning w-25 p-1" style="position:absolute;right:0;bottom:0">
-                            <div v-for="(item, index) in customer_journal" :key="index">
-                                <div class="text-center" v-for="(hex, index) in item.hex_transform[0].code" :key="index">
+                <div v-for="item in customer_journal" :key="item.id" class="col-md-5">
+                   
+                    <div v-for="hex_transform in item.hex_transform" :key="hex_transform.id" class="position-relative">
+                        
+                        <img :src="'/storage/img/'+hex_transform.photo" class="img-fluid" alt="">
+                        <div class="w-25 p-1" style="position:absolute;right:0;bottom:0;background-color:#CCCCCC">
+                            <div>
+                                <div class="text-center" v-for="(hex, index) in hex_transform.code" :key="index">
                                     <img v-show="hex==1"    :class="index==2?'mb-2':''" style="width:100%;height:25px;"  src="/img/solidLine.png" alt="">
                                     <img v-show="hex=='0'"  :class="index==2?'mb-2':''" style="width:100%;height:25px;"  src="/img/brokenLine.png" alt="">
                                 </div>
                                 <div class="text-center">
-                                    {{item.hex_transform[0].name}}
+                                    {{hex_transform.name}}
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                     <div v-for="(item, index) in customer_journal" :key="index">
                         <div>
                             <label for="">Question Type:</label>
-                            test
+                            {{item.attribute.attribute}}
                             
                         </div>
                         <div>
@@ -66,12 +95,15 @@
                         </div>
                         <div>
                             <label for="">Comment:</label>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis, illo odit! Velit, eius iste officiis, eum eos sed excepturi, voluptates illo iusto ea cum quasi vel itaque ipsam tempora. Reiciendis.</p>
+                            <p v-if="item.comment == null">No comment...</p>
+                            <p v-else>{{item.comment}}</p>
                         </div>
                     </div>
                 </div>
+                
             </div>
        </div>
+       <NumberJournal ref="oracle"></NumberJournal>
        <div class="modal fade" id="journalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:9999">
             <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
@@ -84,6 +116,7 @@
                 <div class="modal-body">
                    
                 <div class="row">
+                        
                         <div class="col-md-7">
                             <div v-show="Object.keys(form.hex_code).length == 0 && Object.keys(form.tri_code).length == 0" class="border text-center" style="height:300px;background-color:#CCCCCC;">
                                 <img src="/img/default.jpg" class="img-fluid" alt="">
@@ -168,7 +201,7 @@
                         </div>
                     </div>
                     <div>
-                        <textarea class="form-control" placeholder="Comment here..." cols="30" rows="5"></textarea>
+                        <textarea class="form-control" v-model="form.comment" placeholder="Comment here..." cols="30" rows="5"></textarea>
                     </div>
                     <div class="w-100 text-right">
                         <button class="button-success mr-auto mt-2 w-25" @click="btnSave">Save Journal</button>
@@ -187,11 +220,16 @@
 </template>
 
 <script>
+    import NumberJournal from '../modal/NumberJournal';
     export default {
+        components:{
+            NumberJournal
+        },
         props:['user_id'],
         data(){
             return {
                 attributes:{},
+                cast_type:'',
                 trigramDisable:false,
                 hexagramDisable:false,
                 journals:{},
@@ -207,6 +245,7 @@
                     question:'',
                     question:'',
                     details:'',
+                    comment:'',
                     hex_code:'',
                     hex_name:'',
                     transforms:'',
@@ -228,10 +267,10 @@
                 });
             },
             CustomerJournalList(){
-                axios.get('/api/consultant/journal/'+this.user_id[0]+'?api_token='+window.token)
+                axios.get('/api/consultant/journal/'+this.user_id[0]+'/'+this.user_id[1]+'?api_token='+window.token)
                 .then(response => {
                     this.customer_journal = response.data;
-                    console.log(response.data);
+                    this.cast_type = this.cast_type!=""?response.data[0].cast_type:'';
                 });
             },
 
@@ -320,7 +359,13 @@
                 }else{
                     this.form.post('/api/journal?api_token='+window.token)
                     .then(response =>{
-                        console.log(response.data);
+                        this.$notify({
+                            group: 'notification',
+                            type: 'success',
+                            title: 'Journal Created',
+                            text: 'Journal has been Created'
+                        });
+                        $('#journalModal').modal('hide');
                     })
                     .catch(error => {
                         this.errors = error.response.data.errors;
@@ -342,6 +387,9 @@
                     this.trigramDisable = false;
                     this.hexagramDisable = true;
                 }
+            },
+            createJournalOracle(){
+                this.$refs.oracle.showModal();
             }
         },
         mounted() {

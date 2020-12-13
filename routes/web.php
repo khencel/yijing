@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::group(['middleware' => ['auth']],function(){
 // Admin middleware
 Route::group(['middleware' => ['auth' => 'admin']], function(){
     Route::get('/hexagram', function(){
@@ -40,6 +41,7 @@ Route::group(['middleware' => ['auth' => 'admin']], function(){
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+
 
 Route::get('/profile' , function(){
     if(Gate::denies('manage-users')){
@@ -76,6 +78,10 @@ Route::get('/scheduleConsultant', function(){
     return view('scheduleConsultant');
 });
 
+Route::get('/aboutUs', function(){
+    return view('about');
+});
+
 
 Route::get('/dailyHex', 'DailyHexHistoryController@index');
 
@@ -85,10 +91,18 @@ Route::get('/consultan/{id}','ConsultantController@consultants');
 
 Route::get('email/verify/{id}','EmailVerificationController@verify');
 
+Route::get('/oracle/number', function(){
+    return view('oracle.index-number');
+});
 
+Route::get('/oracle/text', function(){
+    return view('oracle.index-text');
+});
 
+});
 
 // Commands
+
 Route::get('/db-seed', function() {
     $output = [];
     \Artisan::call('db:seed', $output);
@@ -134,6 +148,12 @@ Route::get('/cache-clear', function() {
 Route::get('/queue-work', function() {
     $output = [];
     \Artisan::call('queue:work', $output);
+    dd($output);
+});
+
+Route::get('/storage-link', function() {
+    $output = [];
+    \Artisan::call('storage:link', $output);
     dd($output);
 });
 

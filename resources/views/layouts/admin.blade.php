@@ -175,6 +175,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </a>
           </li>
+          <li class="nav-item ">
+            <a href="/aboutUs" class="nav-link {{ request()->is('aboutUs')?'active':''}}">
+              <i class="nav-icon fas fa-cog cyan"></i>
+              <p>
+                System Settings
+              </p>
+            </a>
+          </li>
           @endcan
           <li class="nav-item ">
             <a href="/hex" class="nav-link {{ request()->is('hex')?'active':''}}">

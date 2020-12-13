@@ -171,6 +171,7 @@
 
 </style>
 <body>
+  
     <div id="loader-wrapper">
       <div id="loader"></div>
       <div class="loader-section section-left"></div>
@@ -200,25 +201,20 @@
           </nav>
     </div>  
    
-    
-    <div id="app" class="pb-5">
+<div id="app">
+    <div  class="pb-5">
         <digital-clock></digital-clock>
         @yield('content')
     </div>
     <div style="height: 400px;background-image: url({{ asset('img/bg-min.png') }});background-position:center;background-size:cover;position:relative;" class="p-3">
         <img src="{{ asset('img/shape-min.png') }}" alt="" style="position: absolute;top:-120px;right:0px;">
-        
-        <div class="container mt-5">
-            <h2>About Us</h2>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Harum omnis est impedit ea eveniet asperiores voluptatibus, reprehenderit recusandae officiis repellat, odit dolores maiores illum quis pariatur vel, nobis iure nisi.</p>
-
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum, perferendis dignissimos. Odio consequatur vel consectetur distinctio, laborum, adipisci error accusantium praesentium voluptate sequi pariatur quo recusandae dolorum excepturi facere suscipit.</p>
-        </div>
+        <about-component></about-component>
     </div>
-    <footer class="p-2 text-center">
-      &#169;copyright@ jennelcheng.com
-    </footer>
-    
+  
+  <footer class="p-2 text-center" style="background-color:linen">
+        <footer-component></footer-component>
+  </footer>
+</div>
     <script>
       window.addEventListener('load',function(){
         document.querySelector('body').classList.add("loaded")  

@@ -59,6 +59,11 @@
                                 <span class="font-italic text-danger" v-if="errors.name" v-text="errors.name[0]"></span>
                             </div>
                             <div class="mt-2">
+                                    <label for="name">Poem:</label>
+                                    <textarea class="form-control" v-model="form.poem" id="" cols="20" rows="2"></textarea>
+                                    <span class="font-italic text-danger" v-if="errors.poem" v-text="errors.poem[0]"></span>
+                            </div>
+                            <div class="mt-2">
                                     <label for="name">Meaning:</label>
                                     <textarea class="form-control" v-model="form.meaning" id="" cols="20" rows="2"></textarea>
                                     <span class="font-italic text-danger" v-if="errors.meaning" v-text="errors.meaning[0]"></span>
@@ -147,6 +152,21 @@
 
                             <div class="row mt-2">
                                 <div class="col-md-8">
+                                    <label for="name">Expectant Mothers:</label>
+                                    <textarea class="form-control" v-model="form.mothers" id="" cols="20" rows="2"></textarea>
+                                    <span class="font-italic text-danger" v-if="errors.mothers" v-text="errors.mothers[0]"></span>
+                                </div>
+                                <div class="col-md-4">
+                                     <label for="name">Rating</label>
+                                    <select v-model="form.mothers_rating" class="form-control" name="">
+                                        <option disabled hidden value="">Rate this properties</option>
+                                        <option v-for="(rating, index) in ratings" :key="index" :value="rating.value">{{rating.value}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col-md-8">
                                     <label for="name">Relationship:</label>
                                     <textarea class="form-control" v-model="form.relationship" id="" cols="20" rows="2"></textarea>
                                     <span class="font-italic text-danger" v-if="errors.relationship" v-text="errors.relationship[0]"></span>
@@ -199,6 +219,21 @@
                                 <div class="col-md-4">
                                      <label for="name">Rating</label>
                                     <select v-model="form.legal_rating" class="form-control" name="">
+                                        <option disabled hidden value="">Rate this properties</option>
+                                        <option v-for="(rating, index) in ratings" :key="index" :value="rating.value">{{rating.value}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col-md-8">
+                                    <label for="name">Examination:</label>
+                                    <textarea class="form-control" v-model="form.examination" id="" cols="20" rows="2"></textarea>
+                                    <span class="font-italic text-danger" v-if="errors.examination" v-text="errors.examination[0]"></span>
+                                </div>
+                                <div class="col-md-4">
+                                     <label for="name">Rating</label>
+                                    <select v-model="form.examination_rating" class="form-control" name="">
                                         <option disabled hidden value="">Rate this properties</option>
                                         <option v-for="(rating, index) in ratings" :key="index" :value="rating.value">{{rating.value}}</option>
                                     </select>
@@ -292,6 +327,7 @@
                     photo:'',
                     id:'',
                     name:'',
+                    poem:'',
                     meaning:'',
                     opening:'',
                     opening_rating:'',
@@ -302,6 +338,8 @@
                     general:'',
                     general_rating:'',
                     wealth:'',
+                    mothers:'',
+                    mothers_rating:'',
                     wealth_rating:'',
                     relationship:'',
                     relationship_rating:'',
@@ -311,6 +349,8 @@
                     family_rating:'',
                     legal:'',
                     legal_rating:'',
+                    examination:'',
+                    examination_rating:'',
                     travel:'',
                     travel_rating:'',
                     health:'',
@@ -349,20 +389,22 @@
                     this.url = '/storage/img/'+response.data.photo;
                     this.image = response.data.code.split("");
                     this.form.name = response.data.name;
+                    this.form.poem = response.data.poem;
                     this.form.meaning = response.data.meaning;
                     this.form.nobleman = response.data.nobleman[0].description;
                     this.form.nobleman_rating = response.data.nobleman[0].rating;
                     this.form.opening = response.data.opening[0].description;
                     this.form.opening_rating = response.data.opening[0].rating;
-
                     this.form.weather = response.data.weather[0].description;
                     this.form.weather_rating = response.data.weather[0].rating;
-
                     this.form.general = response.data.luck[0].description;
                     this.form.general_rating = response.data.luck[0].rating;
 
                     this.form.wealth = response.data.wealth[0].description;
                     this.form.wealth_rating = response.data.wealth[0].rating;
+
+                    this.form.mothers = response.data.mother[0].description;
+                    this.form.mothers_rating = response.data.mother[0].rating;
 
                     this.form.relationship = response.data.relationship[0].description;
                     this.form.relationship_rating = response.data.relationship[0].rating;
@@ -375,6 +417,9 @@
 
                     this.form.legal = response.data.legal[0].description;
                     this.form.legal_rating = response.data.legal[0].rating;
+
+                    this.form.examination = response.data.examination[0].description;
+                    this.form.examination_rating = response.data.examination[0].rating;
 
                     this.form.travel = response.data.travel[0].description;
                     this.form.travel_rating = response.data.travel[0].rating;
@@ -393,7 +438,6 @@
                 axios.put('api/hex/update/'+this.form.id+"?api_token="+window.token, this.form)
                 .then(response => {
                     $('#hexagramModal').modal('hide');
-                    console.log(response.data);
                     this.$notify({
                         group: 'notification',
                         type: 'success',
@@ -408,7 +452,6 @@
         },
         mounted() {
             this.hexIndex();
-            console.log('Component mounted.')
         }
     }
 </script>
