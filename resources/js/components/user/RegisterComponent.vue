@@ -26,6 +26,25 @@
         </div>
 
         <div class="form-group row">
+            <label for="name" class="col-md-4 col-form-label">Date of Birth</label>
+
+            <div class="col-md-8">
+                <input type="date" v-model="form.birth_date" class="form-control">
+                <span class="text-danger font-italic" v-if="errors.birth_date" v-text="errors.birth_date[0]"></span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="name" class="col-md-4 col-form-label">Time of Birth</label>
+
+            <div class="col-md-8">
+                <input type="time" v-model="form.birth_time" class="form-control">
+                <span class="text-danger font-italic" v-if="errors.birth_time" v-text="errors.birth_time[0]"></span>
+
+            </div>
+        </div>
+
+        <div class="form-group row">
             <label for="country" class="col-md-4 col-form-label">Country</label>
 
             <div class="col-md-8">
@@ -90,17 +109,18 @@
                     lastname: '',
                     email: '',
                     password: '',
-                    password_confirmation: ''
-                }),
-               
+                    password_confirmation: '',
+                    birth_date:'',
+                    birth_time:''
+                }), 
             }
         },
         methods:{
             register(){
-                
+                this.isLoading = true;
                 axios.post('api/user/registration',this.form)
                 .then(response => {
-                    
+                    this.isLoading = false;
                     this.$swal({
                         icon: 'success',
                         title: 'You are now registered',
@@ -108,10 +128,10 @@
                     }).then((result) => {
                         window.location = "/login";
                     });
-
                 })
                 .catch(error => {
                     this.errors = error.response.data.errors;
+                    this.isLoading = false;
                 });
             }
         },

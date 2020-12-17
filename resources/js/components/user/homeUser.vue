@@ -36,13 +36,10 @@
             </div>
             <div class="text-center">
                 <h1>{{name}}</h1>
-                <p style="color:gray">
-                    {{meaning == null?'Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, assumenda consequatur, itaque et reprehenderit dignissimos commodi ratione in aliquid architecto quisquam laudantium sunt. Ut, recusandae nulla accusantium deserunt ea cupiditate.':transformMeaning}}
-                </p>
             </div>
         </div>
 
-        <div v-show="isCast && !isLoading" class="col-md-1 p-0 position-relative col-4" style="max-height:350px;">
+        <div v-show="subscriber && isCast && !isLoading" class="col-md-1 p-0 position-relative col-4" style="max-height:350px;">
             <div class=" position-absolute" style="height:100px;top:50%;margin-top:-50px;">
                 <svg class="d-sm-none d-md-block d-none mx-auto" style="width:100%;" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z" />
@@ -54,12 +51,9 @@
             </svg>
         </div>
 
-        <div v-show="subscriber && type != 'Trigram'" class="col-md-3 col-9 text-center">
+        <div v-show="subscriber && isCast && type != 'Trigram'" class="col-md-3 col-9 text-center">
             <div class="mt-4">
                 <h1>{{transformName}}</h1>
-                <p style="color:gray">
-                    {{transformMeaning == null?'Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, assumenda consequatur, itaque et reprehenderit dignissimos commodi ratione in aliquid architecto quisquam laudantium sunt. Ut, recusandae nulla accusantium deserunt ea cupiditate.':transformMeaning}}
-                </p>
             </div>
         </div>
 
@@ -82,15 +76,16 @@
             </div>
         </div>
 
-        <div v-show="isCast && !subscriber && !isLoading" class="col-md-4 col-7 text-center position-relative">
+        <div v-show="isCast && !subscriber && !isLoading" class="col-md-3 col-9 text-center position-relative">
             <div class="text-center" v-for="(item,index) in 6" :key="item">
                 <img :class="index==2?'mb-4 w-100':'mb-1 w-100'" style="height:50px;opacity:0.1" src="img/solidLine.png"  alt="">
             </div>
+            
+            <div style="height:200px;position:absolute;top:0;bottom:0; top: 30%;left: 50%;-ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%);">
+                <img src="img/password.png" alt="" style="width:100%">
+            </div>
             <div>
                 <button class="button-primary mt-2 mb-5" @click="btnSubscribe">SUBSCRIBE NOW</button>
-            </div>
-            <div style="position:absolute;top:0;bottom:0; top: 40%;left: 50%;-ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%);">
-                <img src="img/password.png" alt="" style="width:100%">
             </div>
         </div>
     </div>
@@ -200,7 +195,7 @@
                     axios.get('/api/user/cast?api_token=' +window.token)
                     .then(response => {
                         this.subscriber = true;
-                        if(response.data.user == 0){
+                        if(response.data.user == null){
                             this.subscriber = false;
                             this.results = response.data.hexagram[0].code.split("");
                             this.name = response.data.hexagram[0].name;
@@ -264,11 +259,11 @@
                 }
             },
 
-            btnSubscribe(){
-                axios.get('/api/user/subscribe?api_token='+window.token)
-                .then(response => {
-                });
-            },
+            // btnSubscribe(){
+            //     axios.get('/api/user/subscribe?api_token='+window.token)
+            //     .then(response => {
+            //     });
+            // },
 
             getTransformname(){
                 axios.post('api/user/transform/name?api_token='+window.token,{transformName:this.transforms})

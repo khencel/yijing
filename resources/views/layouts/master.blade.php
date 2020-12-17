@@ -178,7 +178,8 @@
       <div class="loader-section section-right"></div>
     </div>
     <div class="">
-        <nav class="navbar navbar-expand-lg navbar-light w-100" style="position: absolute !important;z-index: 1">
+      @include('partial.navigation')
+        {{-- <nav class="navbar navbar-expand-lg navbar-light w-100" style="position: absolute !important;z-index: 1">
             <a class="navbar-brand" href="/"><img id="mobileLogo" src="{{ asset('img/logo.png') }}" alt="" srcset="" style="width:200px;"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <svg style="width:24px;height:24px" viewBox="0 0 24 24">
@@ -198,7 +199,7 @@
                 </li>
               </ul>
             </div>
-          </nav>
+          </nav> --}}
     </div>  
    
 <div id="app">

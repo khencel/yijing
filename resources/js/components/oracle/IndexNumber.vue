@@ -21,7 +21,10 @@
                 <div v-show="!cast" class="w-100 text-center">
                     <span class="p-2 badge badge-success" @click="generateNumber">Generate random number</span>
                 </div>
-                <div class="row mt-5">
+                <div class="mb-5" v-show="isLoading">
+                    <span><RiseLoader></RiseLoader></span>
+                </div>
+                <div v-show="!isLoading" class="row mt-5">
                     <div class="col-md-4">
                         <span class="numb-format font-weight-bold">
                             {{oracle.number}}
@@ -67,9 +70,14 @@
 </template>
 
 <script>
+import RiseLoader from 'vue-spinner/src/RiseLoader.vue'
     export default {
+        components: {
+            RiseLoader
+        },
         data(){
             return{
+                isLoading:false,
                 journal:false,
                 diary:false,
                 cast:false,
@@ -135,6 +143,7 @@
                 this.form.oracle_number = ""+this.form.numb1+this.form.numb2+this.form.numb3+this.form.numb4;
             },
             generate(){
+                this.isLoading = true;
                 if(this.diary == false){
                     this.castOnly();
                 }else{
@@ -172,6 +181,7 @@
                         this.question = true;
                         this.details = true;
                         this.numb = true;
+                        this.isLoading = false;
                     })
                 }
             },
@@ -180,6 +190,7 @@
                     this.form.post('/api/oracle/number?api_token='+window.token)
                     .then(res => {
                         this.oracle = res.data;
+                        this.isLoading = false;
                     })
             }
         }
@@ -203,5 +214,8 @@
         font-family: 'Lobster', cursive;
         color: gray;
         text-indent: 50px;
+    }
+    .v-spinner{
+        text-align: center;
     }
 </style>

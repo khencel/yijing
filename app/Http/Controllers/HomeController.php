@@ -24,8 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // return auth()->logout();
-        // return \Auth::user();
         if(\Auth::user()->email_verified_at != null){
             if(Gate::denies('manage-users')){
                 return view('home');
@@ -33,7 +31,6 @@ class HomeController extends Controller
             return view('homeAdmin');
         }
         auth()->logout();
-        
         return view('notVerify');
         
     }
