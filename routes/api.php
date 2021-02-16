@@ -95,6 +95,8 @@ Route::middleware('auth:api')->group(function(){
     });
 });
 
+Route::get('hexagram/list','API\HexagramController@getAll');
+
 Route::get('about','API\SystemController@aboutUs');
 Route::get('footer','API\SystemController@footerContent');
 Route::post('user/registration','API\RegistrationController@store');

@@ -1,10 +1,11 @@
 <template>
-   <div>
-       <div class="container mt-5">
-            <h2>About Us</h2>
-            <p>{{content}}</p>
+   <div id="about" class="">
+       <div class="row p-5 justify-content-center" style="min-height:300px;">
+           <div class="col-md-6 text-center">
+                <h2>About Us</h2>
+                <p>{{content}}</p>
+           </div>
         </div>
-        
    </div>
 </template>
 

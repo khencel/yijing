@@ -20,24 +20,25 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => ['auth']],function(){
-// Admin middleware
-Route::group(['middleware' => ['auth' => 'admin']], function(){
-    Route::get('/hexagram', function(){
-        return view('hex/index');
-    });
+    // Admin middleware
+    Route::group(['middleware' => ['auth' => 'admin']], function(){
+        Route::get('/hexagram', function(){
+            return view('hex/index');
+        });
 
-    Route::get('/trigram', function(){
-        return view('tri/index');
-    });
+        Route::get('/trigram', function(){
+            return view('tri/index');
+        });
 
-    Route::get('/announcement', function(){
-        return view('announcement');
-    });
+        Route::get('/announcement', function(){
+            return view('announcement');
+        });
 
-    Route::get('user/users',function(){
-        return view('user-management/user/index');
+        Route::get('user/users',function(){
+            return view('user-management/user/index');
+        });
     });
-});
+    // admin
 
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -62,10 +63,21 @@ Route::get('/hex', function(){
 Route::get('/tri', function(){
     return view('tri/trigram');
 });
+    // User Subscriber middleware
+    Route::group(['middleware' => ['auth' => 'subscribe']], function(){
+        Route::get('/diaries', function(){
+            return view('diary');
+        });
 
-Route::get('/diaries', function(){
-    return view('diary');
-});
+        Route::get('/oracle/number', function(){
+            return view('oracle.index-number');
+        });
+        
+        Route::get('/oracle/text', function(){
+            return view('oracle.index-text');
+        });
+    });
+    // subscriber
 
 Route::get('/consult/user/{id}/{schedule_id}', 'ConsultantController@consultUser');
 
@@ -89,18 +101,21 @@ Route::get('/hex/{id}', 'ConsultantController@hex');
 
 Route::get('/consultan/{id}','ConsultantController@consultants');
 
+
+
+
+
+});
+
 Route::get('email/verify/{id}','EmailVerificationController@verify');
 
-Route::get('/oracle/number', function(){
-    return view('oracle.index-number');
+Route::get('privacy',function(){
+    return view('privacy');
 });
 
-Route::get('/oracle/text', function(){
-    return view('oracle.index-text');
+Route::get('copyright',function(){
+    return view('copyright');
 });
-
-});
-
 // Commands
 
 Route::get('/db-seed', function() {

@@ -141,7 +141,7 @@
             },
             
             castOnly(){
-                if(Object.keys(this.form.oracle_text).length != 0){
+                if(Object.keys(this.form.oracle_text).length == 4){
                     this.form.post('/api/oracle/text?api_token='+window.token)
                     .then(res => {
                         this.oracle = res.data;

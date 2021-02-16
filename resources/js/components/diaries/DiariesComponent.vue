@@ -320,7 +320,9 @@
                                         <img v-show="item == 4"  :class="index==2?'mb-3':''" src="img/brokenCircle.png" style="width:80%;height:40px" alt="">
                                     </div>
                                     <strong>{{form.hex_name}}</strong>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, ut expedita? Tempora nulla voluptatem omnis consequatur nemo quibusdam blanditiis, adipisci atque. Saepe impedit quidem delectus sapiente odit quae optio nisi.</p>
+                                    <p>
+                                        {{form.meaning}}
+                                    </p>
                                 </div>
                                 <div class="col-md-1" style="padding-top:15%">
                                     <svg style="width:24px;height:24px;" viewBox="0 0 24 24">
@@ -333,7 +335,9 @@
                                         <img v-show="item == 0"  :class="index==2?'mb-3':''" src="img/brokenLine.png" style="width:80%;height:40px" alt="">
                                     </div>
                                     <strong>{{form.transform_name}}</strong>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam obcaecati, nam quod eos nobis minus ea hic dolorem quos id dicta dolores reprehenderit natus non, voluptatem mollitia animi? Blanditiis, cum.</p>
+                                    <p>
+                                        {{form.transMeaning}}
+                                    </p>
                                 </div>
                             </div>
                             <div class="row justify-content-center text-center" style="min-height:300px;" v-show="Object.keys(form.tri_code).length != 0">
@@ -429,8 +433,10 @@
                     details:'',
                     hex_code:'',
                     hex_name:'',
+                    meaning:'',
                     transforms:'',
                     transform_name:'',
+                    transMeaning:'',
                     tri_code:'',
                     tri_name:'',
                     original_hex_id:'',
@@ -468,6 +474,7 @@
                 .then(response => {
                     this.form.original_hex_id = response.data.hexagram[0].id;
                     this.form.hex_name = response.data.hexagram[0].name;
+                    this.form.meaning = response.data.hexagram[0].meaning;
                     
                     function getRandomInt(max) {
                         return Math.floor(Math.random() * Math.floor(max));
@@ -504,6 +511,7 @@
                 .then(response => {
                     this.form.transform_hex_id = response.data.id;
                     this.form.transform_name = response.data.name;
+                    this.form.transMeaning = response.data.meaning
                 });
             },
             castTri(){

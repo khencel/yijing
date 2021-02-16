@@ -15,6 +15,15 @@
             <a href="/login" class="nav-link text-white nav-Font" style="cursor: pointer">Login</a>
             </li>
             <li class="nav-item">
+                <a href="{{ url('/') }}" class="nav-link text-white nav-Font" style="cursor: pointer">About Us</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('privacy') }}" class="nav-link text-white nav-Font" style="cursor: pointer">Data Privacy</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('copyright') }}" class="nav-link text-white nav-Font" style="cursor: pointer">Copyright Notice</a>
+            </li>
+            <li class="nav-item">
             <a class="nav-link text-white nav-Font" href="/register">Sign Up</a>
             </li>
         </ul>

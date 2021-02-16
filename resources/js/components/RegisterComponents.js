@@ -3,7 +3,6 @@ Vue.component(
     require('../components/ClockComponent.vue').default
 );
 
-
 Vue.component(
     'schedule-consultant', 
     require('../components/ScheduleConsultantComponent.vue').default
@@ -12,4 +11,9 @@ Vue.component(
 Vue.component(
     'about-us', 
     require('../components/AboutComponent.vue').default
+);
+
+Vue.component(
+    'meaning-hex', 
+    require('../components/Meaning.vue').default
 );

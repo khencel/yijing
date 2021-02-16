@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="user-token" content="{{ auth()->check() ? auth()->user()->api_token: '' }}">
     <meta name="user-id" content="{{ auth()->check() ? auth()->user()->id: '' }}">
-    
     <script src="{{ asset('js/app.js') }}" defer></script>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@1,700&display=swap" rel="stylesheet">
@@ -21,15 +20,6 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-#app{
-  background-image: url('/img/universe.jpg');
-  background-position: center;
-  background-size: cover;
-  background-color: rgba( 0, 0, 0, 0.3);
-  background-blend-mode: overlay;
-  padding-top: 200px;
 }
 
 .nav-Font{
@@ -54,11 +44,13 @@
   }
 }
 
-@media only screen and (max-width: 500px) {
+/* @media only screen and (max-width: 500px) {
   #app{
     padding-bottom: 100px;
   }
-}
+} */
+
+
 
 #loader-wrapper {
   position:fixed;
@@ -168,7 +160,13 @@
   transform:translateY(-100%);
   transition: all 1s 1s ease-out;
 } 
-
+html {
+            scroll-behavior: smooth;
+        }
+#footerList{
+  list-style-type: none;
+  padding: 0;
+}
 </style>
 <body>
   
@@ -179,41 +177,50 @@
     </div>
     <div class="">
       @include('partial.navigation')
-        {{-- <nav class="navbar navbar-expand-lg navbar-light w-100" style="position: absolute !important;z-index: 1">
-            <a class="navbar-brand" href="/"><img id="mobileLogo" src="{{ asset('img/logo.png') }}" alt="" srcset="" style="width:200px;"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-              <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />
-            </svg>
-            </button>
-            <div class="collapse navbar-collapse pr-5" id="navbarNavDropdown">
-              <ul class="navbar-nav ml-auto ">
-                <li class="nav-item active">
-                  <a class="nav-link text-white nav-Font" href="/">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a href="/login" class="nav-link text-white nav-Font" style="cursor: pointer">Login</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link text-white nav-Font" href="/register">Sign Up</a>
-                </li>
-              </ul>
-            </div>
-          </nav> --}}
     </div>  
    
 <div id="app">
-    <div  class="pb-5">
+    <div  class="" >
         <digital-clock></digital-clock>
         @yield('content')
     </div>
-    <div style="height: 400px;background-image: url({{ asset('img/bg-min.png') }});background-position:center;background-size:cover;position:relative;" class="p-3">
+    <div style="position:relative;" class="p-3 bg-white {{request()->is('privacy')?'d-none':''}} {{request()->is('copyright')?'d-none':''}}">
         <img src="{{ asset('img/shape-min.png') }}" alt="" style="position: absolute;top:-120px;right:0px;">
-        <about-component></about-component>
+          <about-component></about-component>
     </div>
   
-  <footer class="p-2 text-center" style="background-color:linen">
-        <footer-component></footer-component>
+  <footer class="p-2 text-center bg-dark">
+    <div class="row pt-3">
+      <div class="col-md-6">
+          <img src="{{ asset('img/logo.png') }}" style="width:25%" alt="">
+      </div>
+      <div class="col-md-6">
+        <ul id="footerList">
+          <a href="{{ url('/') }}">
+              <li>Home</li>
+          </a>
+          <a href="{{ url('/login') }}">
+              <li>Login</li>
+          </a>
+          <a href="{{ url('/') }}">
+              <li>About Us</li>
+          </a>
+          <a href="{{ url('/privacy') }}">
+              <li>Data Privacy</li>
+          </a>
+          <a href="{{ url('/copyright') }}">
+              <li>Copyright Notice</li>
+          </a>
+          <a href="{{ url('/register') }}">
+              <li>Sign Up</li>
+          </a>
+        </ul>
+      </div>
+    </div>
+
+    <footer-component></footer-component>
+    
+        
   </footer>
 </div>
     <script>

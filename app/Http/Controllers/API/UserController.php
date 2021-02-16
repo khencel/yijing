@@ -143,7 +143,7 @@ class UserController extends Controller
 
     public function payment(){
        $user = \Auth::user();
-       $user->update(['is_subscriber'=>1]);
+       $user->update(['is_subscriber'=>NOW()]);
     }
 
     public function cancelBooking(){

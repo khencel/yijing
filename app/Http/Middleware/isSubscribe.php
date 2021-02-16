@@ -3,9 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\UserRole;
 
-class isAdmin
+class isSubscribe
 {
     /**
      * Handle an incoming request.
@@ -16,10 +15,9 @@ class isAdmin
      */
     public function handle($request, Closure $next)
     {
-        if(\Auth::check() && \Auth::user()->userRole[0]->role_id == 1){
+        if(\Auth::check() && \Auth::user()->is_subscriber != null){
             return $next($request);
         }
-        return redirect('login');
-        
+        return abort(403, 'Unauthorized action.');
     }
 }

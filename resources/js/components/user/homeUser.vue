@@ -26,7 +26,7 @@
     <div class="" v-show="isLoading" style="height:300px;">
         <span><RiseLoader></RiseLoader></span>
     </div>
-    <div class="row justify-content-center">
+    <div  class="row justify-content-center">
         <div class="col-md-3 col-9">
             <div class="text-center" v-for="(result, index) in results" :key="index">
                 <img :class="index==2?'mb-4 w-100 hex-img':'mb-1 w-100 hex-img'" style="height:50px" v-show="result == 1" src="img/solidLine.png"  alt="">
@@ -36,6 +36,7 @@
             </div>
             <div class="text-center">
                 <h1>{{name}}</h1>
+                <p>{{meaning}}</p>
             </div>
         </div>
 
@@ -54,6 +55,7 @@
         <div v-show="subscriber && isCast && type != 'Trigram'" class="col-md-3 col-9 text-center">
             <div class="mt-4">
                 <h1>{{transformName}}</h1>
+                <p>{{transformMeaning}}</p>
             </div>
         </div>
 
@@ -122,16 +124,16 @@
                 <div class=" p-2"><h3>Premium</h3></div>
                 <div class="p-2">
                     <ul>
-                        <li>Sample included</li>
-                        <li>Sample included</li>
-                        <li>Sample included</li>
-                        <li>Sample included</li>
-                        <li>Sample included</li>
+                        <li>Personalized Divination Diary</li>
+                        <li>Professional Hexagram Transformation</li>
+                        <li>Oracle Number Divination</li>
+                        <li>Oracle Text Divination</li>
+                        <li>Plumblossom Divination</li>
                     </ul>
                 </div>
                 <div class="pl-2" >
                     <span class="font-weight-bold">$</span>
-                    <span class="font-weight-bold" style="font-size:25px;">15/</span>
+                    <span class="font-weight-bold" style="font-size:25px;">69.99/</span>
                     <span><strong>year</strong></span>
                 </div>
                 <div id="paypal-button-container"></div>
@@ -286,7 +288,7 @@
                     return actions.order.create({
                     purchase_units: [{
                         amount: {
-                        value: '15.00'
+                        value: '69.99'
                         }
                     }]
                     });

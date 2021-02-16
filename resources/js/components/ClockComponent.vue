@@ -8,32 +8,23 @@
         letter-spacing: 0.2em;
     }
 
-    /* .glow {
-        text-align: center;
-        -webkit-animation: glow 3s ease-in-out infinite alternate;
-        -moz-animation: glow 3s ease-in-out infinite alternate;
-        animation: glow 3s ease-in-out infinite alternate;
-        }
-
-        @-webkit-keyframes glow {
-        from {
-            text-shadow: 0 0 2px #fff, 0 0 20px #fff, 0 0 30px #0ae741, 0 0 40px #0ae741, 0 0 50px #0ae741, 0 0 60px #0ae741, 0 0 70px #0ae741;
-        }
-        
-        to {
-            text-shadow: 1 0 0px #fff, 0 0 30px #04f804, 0 0 40px #04f804, 0 0 50px #04f804, 0 0 60px #04f804, 0 0 70px #04f804, 0 0 80px #04f804;
-        }
-    } */
-
     .hex-name{
         font-family:'Anton', sans-serif;
         color:black;
+    }
+    #test{
+        background-image: url('/img/universe.jpg');
+        background-position: center;
+        background-size: cover;
+        background-color: rgba( 0, 0, 0, 0.3);
+        background-blend-mode: overlay;
+        padding-top: 200px;
     }
 
 </style>
 <template>
 <div>
-<div class="row justify-content-center">
+<div class="row justify-content-center" id="test">
     <div class="col-md-5">
         <div class="row justify-content-center pb-5 mt-2 ml-5 mr-5">
             <div class="col-xl-4 text-center p-3 mb-2 col-6" style="background-color: rgba(255,255,255,0.8);border-radius:20px;box-shadow:0px 2px 5px white;">
@@ -53,9 +44,9 @@
         
     </div>
     <div class="col-md-5 text-white p-5">
-        <p><strong>{{dailyHexName}} Meaning</strong></p>
-        <p>
-            {{meaning}}
+        <p><strong>{{dailyHexName}}</strong></p>
+        <p class="poem-style">
+            {{poem}}
         </p>
     </div>
 </div>                    
@@ -73,6 +64,7 @@
                 dailies:'',
                 dailyHexName:'',
                 meaning:'',
+                poem:'',
                 month:'',
                 date:'',
                 day:'',
@@ -93,6 +85,7 @@
                     this.dailies = response.data.hexagram.hexagram.code.split("");
                     this.dailyHexName = response.data.hexagram.hexagram.name;
                     this.meaning = response.data.hexagram.hexagram.meaning;
+                    this.poem = response.data.hexagram.hexagram.poem;
                 })
                 .catch(error => {
                     axios.get('api/hexagram')
@@ -100,6 +93,7 @@
                         this.dailies = response.data.code.split("");
                         this.dailyHexName = response.data.name;
                         this.meaning = response.data.meaning;
+                        this.poem = response.data.poem;
                     });
                 });
             }

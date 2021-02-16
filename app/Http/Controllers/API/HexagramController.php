@@ -34,6 +34,10 @@ class HexagramController extends Controller
         return Hexagram::latest()->paginate(10);
     }
 
+    public function getAll(){
+        return Hexagram::all(); 
+    }
+
     /**
      * Store a newly created resource in storage.
      *

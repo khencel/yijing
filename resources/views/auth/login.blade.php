@@ -2,17 +2,10 @@
 
 @section('content')
 <div class="container">
-    <div class="card">
-        <div class="row shadow-lg">
+        <div class="row shadow-lg mt-5 mb-5">
             <div class="col-md-5 pt-5 pb-5 pl-5 pr-5 border-right">
-                <h3>
-                    Sample Text
-                </h3>
-                <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, quos? Quo officiis doloremque, hic ea aperiam, porro quae distinctio perspiciatis ad quam adipisci non natus? Quod commodi fugit tenetur velit?
-                </p>
+                    <meaning-hex></meaning-hex>
             </div>
-
             <div class="col-md-7 mt-5 mb-5 pl-5 pr-5">
                 @include('flash')
                 <h3>
@@ -41,8 +34,6 @@
                         @enderror
                       
                     </div>
-        
-                   
                         <div class="">
                             
                             <a style="font-size: 13px;" class="text-dark font-weight-bold" href="{{ route('password.request') }}">
@@ -71,13 +62,9 @@
                 </form>
             </div>
         </div>
-        
-    </div>
-               
-
-                    
-       
+   
 </div>
 @endsection
+
 
 

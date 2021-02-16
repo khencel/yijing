@@ -6,16 +6,16 @@
             <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-3 border p-1">
-                        <input class="form-control num-size text-center" :readonly="numb" type="text" v-model="form.numb1">
+                        <input class="form-control num-size text-center" :readonly="numb" type="text" v-model="form.numb1" maxlength="1">
                     </div>
                     <div class="col-md-3 border p-1">
-                        <input class="form-control num-size text-center" :readonly="numb" type="text" v-model="form.numb2">
+                        <input class="form-control num-size text-center" :readonly="numb" type="text" v-model="form.numb2" maxlength="1">
                     </div>
                     <div class="col-md-3 border p-1">
-                        <input class="form-control num-size text-center" :readonly="numb" type="text" v-model="form.numb3">
+                        <input class="form-control num-size text-center" :readonly="numb" type="text" v-model="form.numb3" maxlength="1">
                     </div>
                      <div class="col-md-3 border p-1">
-                        <input class="form-control num-size text-center" :readonly="numb" type="text" v-model="form.numb4">
+                        <input class="form-control num-size text-center" :readonly="numb" type="text" v-model="form.numb4" maxlength="1">
                     </div>
                 </div>
                 <div v-show="!cast" class="w-100 text-center">
@@ -186,12 +186,23 @@ import RiseLoader from 'vue-spinner/src/RiseLoader.vue'
                 }
             },
             castOnly(){
-                // this.generateNumber();
+                this.form.oracle_number = ""+this.form.numb1+this.form.numb2+this.form.numb3+this.form.numb4;
+                if(this.form.numb1,this.form.numb2,this.form.numb3,this.form.numb4 != null){
                     this.form.post('/api/oracle/number?api_token='+window.token)
                     .then(res => {
                         this.oracle = res.data;
                         this.isLoading = false;
                     })
+                }else{
+                    this.isLoading = false;
+                    this.$notify({
+                        group: 'notification',
+                        type: 'error',
+                        title: 'Invalid Input',
+                        text: 'Oracle Number, Question and Details are required'
+                    });
+                }
+                    
             }
         }
     }

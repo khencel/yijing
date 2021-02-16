@@ -1,29 +1,29 @@
 Vue.component(
     'home-user',
-    require("../user/homeUser").default
+    ()=>import("../user/homeUser")
 );
 
 Vue.component(
     'registration-user',
-    require("../user/RegisterComponent").default
+    ()=>import("../user/RegisterComponent")
 );
 
 Vue.component(
     'profile-user',
-    require("../user/ProfileComponent").default
+    ()=>import("../user/ProfileComponent")
 );
 
 Vue.component(
     'booking-user',
-    require("../user/BookComponent").default
+    ()=>import("../user/BookComponent")
 );
 
 Vue.component(
     'consultant-user',
-    require("../user/ConsultantComponent").default
+    ()=>import("../user/ConsultantComponent")
 );
 
 Vue.component(
     'schedule-user',
-    require("../user/ScheduleComponent").default
+    ()=>import("../user/ScheduleComponent")
 );
