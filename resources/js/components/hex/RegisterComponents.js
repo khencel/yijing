@@ -13,3 +13,8 @@ Vue.component(
     require('../hex/HexInfoComponent.vue').default
 );
 
+Vue.component(
+    'view-hexagram-yao', 
+    require('../hex/HexYao.vue').default
+);
+

@@ -166,6 +166,8 @@
                 transformMeaning:'',
                 subscriber: false,
                 isCast: false,
+                focus:null,
+                original_gua:null
             }
         },
         methods:{
@@ -207,10 +209,9 @@
                         }else{
                             this.isCast = true;
                             this.subscriber = true;
-                            function getRandomInt(max) {
+                             function getRandomInt(max) {
                                 return Math.floor(Math.random() * Math.floor(max));
                             }
-
                             var hex = response.data.hexagram[0].code.split("");
                             var focus = getRandomInt(6);
 
@@ -223,10 +224,12 @@
                             }else{
                                 hex[focus-1] = 4;
                             }
+                            this.focus = focus;
 
                             this.name = response.data.hexagram[0].name;
                             this.meaning = response.data.hexagram[0].meaning;
                             this.results = hex;
+                            this.original_gua = response.data.hexagram[0].id;
 
                             var hexTransform = response.data.hexagram[0].code.split("");
 
@@ -268,17 +271,16 @@
             // },
 
             getTransformname(){
-                axios.post('api/user/transform/name?api_token='+window.token,{transformName:this.transforms})
+                axios.post('api/user/transform/name?api_token='+window.token,{transformName:this.transforms,focus:this.focus,gua:this.original_gua})
                 .then(response => {
-                    this.transformName = response.data.name;
-                    this.transformMeaning = response.data.meaning;
+                    console.log(response.data);
+                    this.transformName = response.data.name.name;
+                    this.transformMeaning = response.data.meaning.yao_text;
                 });
             },
 
             btnSubscribe(){
-                
                 $('#paymentModal').modal('show');
-                
             },
 
             paypal(){

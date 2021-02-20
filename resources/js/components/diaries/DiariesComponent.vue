@@ -425,6 +425,8 @@
                 errors:{},
                 id:'',
                 consultant_user:{},
+                focus:null,
+                original_gua:null,
                 form: new Form({
                     type:'',
                     cast_type:'',
@@ -492,8 +494,10 @@
                     }else{
                         hex[focus-1] = 4;
                     }
-                    
+
+                    this.focus = focus;
                     this.form.hex_code = hex;
+                    this.original_gua = response.data.hexagram[0].id;
                     
                     var hexTransform = response.data.hexagram[0].code.split("");
                     
@@ -507,11 +511,11 @@
                 });
             },
             getTransformname(){
-                axios.post('api/user/transform/name?api_token='+window.token,{transformName:this.form.transforms})
+                axios.post('api/user/transform/name?api_token='+window.token,{transformName:this.form.transforms,focus:this.focus,gua:this.original_gua})
                 .then(response => {
-                    this.form.transform_hex_id = response.data.id;
-                    this.form.transform_name = response.data.name;
-                    this.form.transMeaning = response.data.meaning
+                    this.form.transform_hex_id = response.data.name.id;
+                    this.form.transform_name = response.data.name.name;
+                    this.form.transMeaning = response.data.meaning.yao_text;
                 });
             },
             castTri(){

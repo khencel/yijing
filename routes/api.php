@@ -37,6 +37,13 @@ Route::middleware('auth:api')->group(function(){
 
 
     // admin/hexagram
+    Route::prefix('hexagram')->group(function(){
+        Route::get('/{id}','API\HexagramYaoController@hexagram');
+        Route::get('/gua/{gua}','API\HexagramYaoController@transformGua');
+        Route::post('/yao','API\HexagramYaoController@hexYao');
+        Route::get('/{id}/{yao}','API\HexagramYaoController@show');
+    });
+
     Route::get('hex/index','API\HexagramController@index');
     Route::get('hex/show/{id}','API\HexagramController@show');
     Route::put('hex/update/{id}','API\HexagramController@update');

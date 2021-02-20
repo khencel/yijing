@@ -22,10 +22,11 @@ Auth::routes();
 Route::group(['middleware' => ['auth']],function(){
     // Admin middleware
     Route::group(['middleware' => ['auth' => 'admin']], function(){
-        Route::get('/hexagram', function(){
-            return view('hex/index');
+        Route::prefix('/hexagram')->group(function(){
+            Route::get('/', 'HexagramController@hexagram');
+            Route::get('/{id}', 'HexagramController@hexagramInfo');
+            Route::get('/{id}/{yao}', 'HexagramController@hexagramYao');
         });
-
         Route::get('/trigram', function(){
             return view('tri/index');
         });
