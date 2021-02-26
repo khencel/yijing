@@ -5,9 +5,9 @@
             <div class="col-md-6 text-center">
                 <div class="w-50 float-left">
                     <strong>Original Gua</strong>
-                    <div class="w-100" v-for="item in codes" :key="item.id">
-                        <img v-if="item == 1" src="/img/solidLine.png" width="80%" alt="">
-                        <img v-else src="/img/brokenLine.png" width="80%" alt="">
+                    <div class="w-100" v-for="(item,index) in codes" :key="item.id">
+                        <img :class="index == 2?'mb-4':''" v-if="item == 1" src="/img/solidLine.png" width="80%" alt="">
+                        <img :class="index == 2?'mb-4':''" v-else src="/img/brokenLine.png" width="80%" alt="">
                     </div>
                     <div>
                         {{hexagram.name}}
@@ -15,9 +15,11 @@
                 </div>
                 <div class="w-50 float-left">
                     <strong>Transformed Gua</strong>
-                    <div class="w-100" v-for="item in code_transform" :key="item.id">
-                        <img v-if="item == 1" src="/img/solidLine.png" width="80%" alt="">
-                        <img v-else src="/img/brokenLine.png" width="80%" alt="">
+                    <div class="w-100" v-for="(item,index) in code_transform" :key="item.id">
+                        <img :class="index == 2?'mb-4':''" v-show="item == 1" src="/img/solidLine.png" width="80%" alt="">
+                        <img :class="index == 2?'mb-4':''" v-show="item == 0" src="/img/brokenLine.png" width="80%" alt="">
+                        <img :class="index == 2?'mb-4':''" v-show="item == 4" src="/img/solidLineFocus1.png" width="80%" alt="">
+                        <img :class="index == 2?'mb-4':''" v-show="item == 3" src="/img/brokenLineFocus.png" width="80%" alt="">
                     </div>
                     <div>
                         {{transform_gua.name}}
@@ -196,9 +198,10 @@ export default {
             });
             
             if(this.code_transform[this.focus] == 1){
-                this.code_transform[this.focus] = 0;
-            }else{
-                this.code_transform[this.focus] = 1
+                this.code_transform[this.focus] = 3;
+            }
+            if(this.code_transform[this.focus] == 0){
+                this.code_transform[this.focus] = 4
             }
             
             axios.get('/api/hexagram/gua/'+this.code_transform+'?api_token='+window.token)

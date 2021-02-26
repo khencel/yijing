@@ -20,7 +20,17 @@ class HexagramYaoController extends Controller
 
     public function transformGua($gua){
         $gua = explode(',',$gua);
-        $code = implode('',$gua);
+        $code = array();
+        foreach ($gua as $value) {
+            if($value == 3){
+                $value = "0"; 
+            }
+            if($value == 4){
+                $value = "1"; 
+            }
+            $code[] = $value;
+        }
+        $code = implode('',$code);
         return Hexagram::where('code',$code)->first();
     }
 

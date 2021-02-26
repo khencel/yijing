@@ -13,24 +13,20 @@
             return{
                 name:'',
                 meaning:'',
+                current_date:new Date(),
             }
         },
         methods:{
             loadDailyHex(){
-                var date = new Date().getDate();
-                axios.post('/api/user/hexagram',{date:date})
+                axios.post('https://qimen.jennelcheng.com/api/get-home-chart',{month:this.current_date.getMonth()+1,day:this.current_date.getDate(),year:this.current_date.getFullYear()})
                 .then(response => {
-                    this.meaning = response.data.hexagram.hexagram.meaning;
-                    this.name = response.data.hexagram.hexagram.name;
-                })
-                .catch(error => {
-                    axios.get('api/hexagram')
-                    .then(response => {
-                        this.meaning = response.data.meaning;
-                        this.name = response.data.name;
+                    axios.post('/api/user/hexagram',{element:response.data.day_chart.element.name,english:response.data.day_chart.english.name})
+                    .then(res => {
+                        this.name = res.data.name;
+                        this.meaning = res.data.meaning;
                     });
                 });
-            }
+            },
         },
         mounted() {
             this.loadDailyHex();

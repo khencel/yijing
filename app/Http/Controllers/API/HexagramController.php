@@ -229,17 +229,10 @@ class HexagramController extends Controller
         ]);
     }
 
-    public function dailyHex(){
-        
-        $hex = DailyHex::where('id',request()->date)->with('hexagram')->first();
-        $attr = $hex->hexagram;
-
-        $x = rand(1,12);
-
-
-        return response()->json([
-            'hexagram' => $hex,
-        ]);
+    public function dailyHex(Request $request){
+        return Hexagram::where('element',$request->element)
+                        ->where('english',$request->english)
+                        ->first();
     }
 
     public function getFocus($num){

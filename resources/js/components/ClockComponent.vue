@@ -70,33 +70,27 @@
                 day:'',
                 months:["January","February","March","April","May","June","July","August","September","October","November","December"],
                 days:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                current_date:new Date(),
             }
         },
         methods:{
+            loadDailyHex(){
+                axios.post('https://qimen.jennelcheng.com/api/get-home-chart',{month:this.current_date.getMonth()+1,day:this.current_date.getDate(),year:this.current_date.getFullYear()})
+                .then(response => {
+                    axios.post('/api/user/hexagram',{element:response.data.day_chart.element.name,english:response.data.day_chart.english.name})
+                    .then(res => {
+                        this.dailies = res.data.code;
+                        this.dailyHexName = res.data.name;
+                        this.meaning = res.data.meaning;
+                        this.poem = res.data.poem;
+                    });
+                });
+            },
             showClock(){
                 this.day = this.days[new Date().getDay()]
                 this.month = this.months[new Date().getMonth()];
                 this.date = new Date().getDate();
             },
-
-            loadDailyHex(){
-                axios.post('/api/user/hexagram',{date:this.date})
-                .then(response => {
-                    this.dailies = response.data.hexagram.hexagram.code.split("");
-                    this.dailyHexName = response.data.hexagram.hexagram.name;
-                    this.meaning = response.data.hexagram.hexagram.meaning;
-                    this.poem = response.data.hexagram.hexagram.poem;
-                })
-                .catch(error => {
-                    axios.get('api/hexagram')
-                    .then(response => {
-                        this.dailies = response.data.code.split("");
-                        this.dailyHexName = response.data.name;
-                        this.meaning = response.data.meaning;
-                        this.poem = response.data.poem;
-                    });
-                });
-            }
         },
         mounted() {
             this.showClock();
