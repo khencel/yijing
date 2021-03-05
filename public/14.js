@@ -1,1 +1,969 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[14],{63:function(t,e,a){"use strict";a.r(e);var s={data:function(){return{schedules:{},id:"",date:"",time:""}},methods:{loadSchedule:function(){var t=this;axios.get("api/user/schedule?api_token="+window.token).then((function(e){t.schedules=e.data}))},btnCancel:function(t,e,a){$("#cancelModal").modal("show"),this.id=t,this.date=e,this.time=a},check:function(){var t=new Date,e=new Date(this.date),a=t.getHours()+2;t.getDate()==e.getDate()&&a>=this.time?this.$notify({group:"notification",type:"error",title:"Cancelation not success",text:"Please time must be at least 2 hours before."}):this.cancelBooking()},cancelBooking:function(){var t=this;axios.get("api/user/cancelBooking?api_token="+window.token+"&schedule_id="+this.id).then((function(e){$("#cancelModal").modal("hide"),t.$notify({group:"notification",type:"success",title:"Cancelation Success",text:"Schedule has been cancel"}),t.loadSchedule()}))},btnDelete:function(t){var e=this;axios.get("api/user/cancelDelete/"+t+"?api_token="+window.token).then((function(t){e.loadSchedule()}))}},mounted:function(){this.loadSchedule()}},n=a(0),i=Object(n.a)(s,(function(){var t=this,e=t.$createElement,a=t._self._c||e;return a("div",[a("notifications",{attrs:{group:"notification",position:"bottom right"}}),t._v(" "),a("div",{staticClass:"card"},[a("div",{staticClass:"card-header"},[t._v("Schedule")]),t._v(" "),a("div",{staticClass:"card-body position-relative"},[a("table",{staticClass:"table table-hover"},[t._m(0),t._v(" "),a("tbody",[0==Object.keys(t.schedules).length?a("tr",[a("td",{staticClass:"text-center",attrs:{colspan:"5"}},[t._v("No schedule")])]):t._l(t.schedules,(function(e,s){return a("tr",{key:s,class:"booked"==e.status?"":"bg-danger"},[a("td",[t._v(t._s(e.date))]),t._v(" "),a("td",[t._v(t._s(e.time)+":00")]),t._v(" "),a("td",[t._v(t._s(e.mode))]),t._v(" "),a("td",[t._l(e.consultant,(function(e,s){return a("span",{key:s},[t._v("\n                                "+t._s(e.firstname)+" "+t._s(e.lastname)+"\n                            ")])})),t._v(" "),t._l(e.appointment_user,(function(e,s){return a("span",{key:s},[t._v("\n                                "+t._s(e.firstname)+" "+t._s(e.lastname)+"\n                            ")])}))],2),t._v(" "),"booked"==e.status?a("td",[a("a",{attrs:{href:"/consult/user/"+e.appointment_user[0].api_token+"/"+e.id}},[t._m(1,!0)]),t._v(" "),a("span",{staticClass:"badge badge-danger p-2",staticStyle:{cursor:"pointer"},on:{click:function(a){return t.btnCancel(e.id,e.date,e.time)}}},[t._v("X Decline")])]):a("td",[t._v("\n                                Schedule has been canceled\n                                "),a("button",{staticClass:"button-primary",on:{click:function(a){return t.btnDelete(e.id)}}},[t._v("OK")])])])}))],2)])])]),t._v(" "),a("div",{staticClass:"modal fade",attrs:{id:"cancelModal",tabindex:"-1",role:"dialog","aria-labelledby":"exampleModalLabel","aria-hidden":"true"}},[a("div",{staticClass:"modal-dialog",attrs:{role:"document"}},[a("div",{staticClass:"modal-content"},[t._m(2),t._v(" "),t._m(3),t._v(" "),a("div",{staticClass:"modal-footer"},[a("button",{staticClass:"btn btn-secondary",attrs:{type:"button","data-dismiss":"modal"}},[t._v("Close")]),t._v(" "),a("button",{staticClass:"btn btn-primary",attrs:{type:"button"},on:{click:t.check}},[t._v("Cancel Schedule")])])])])])],1)}),[function(){var t=this,e=t.$createElement,a=t._self._c||e;return a("thead",[a("th",[t._v("Date")]),t._v(" "),a("th",[t._v("Time")]),t._v(" "),a("th",[t._v("Mode")]),t._v(" "),a("th",[t._v("Appointment To")]),t._v(" "),a("th",[t._v("Action")])])},function(){var t=this.$createElement,e=this._self._c||t;return e("span",{staticClass:"badge badge-success p-2"},[e("i",{staticClass:"fas fa-check-circle"}),this._v("Accept")])},function(){var t=this.$createElement,e=this._self._c||t;return e("div",{staticClass:"modal-header"},[e("h5",{staticClass:"modal-title",attrs:{id:"exampleModalLabel"}},[this._v("Schedule Cancelation")]),this._v(" "),e("button",{staticClass:"close",attrs:{type:"button","data-dismiss":"modal","aria-label":"Close"}},[e("span",{attrs:{"aria-hidden":"true"}},[this._v("×")])])])},function(){var t=this.$createElement,e=this._self._c||t;return e("div",{staticClass:"modal-body"},[e("div",[e("label",{attrs:{for:""}},[this._v("Reason for cancelation")]),this._v(" "),e("textarea",{staticClass:"form-control",attrs:{placeholder:"Reason here...",name:"",id:"",cols:"30",rows:"5"}})]),this._v(" "),e("div",{staticClass:"text-right"},[e("small",[e("span",{staticClass:"font-weight-bold text-danger font-italic"},[this._v("Note:")]),this._v("\n                        You can cancel schedule 2 hours before your meeting \n                    ")])])])}],!1,null,null,null);e.default=i.exports}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[14],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/hex/HexYao.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/hex/HexYao.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['id', 'yao'],
+  data: function data() {
+    return {
+      hexagram: {},
+      codes: {},
+      code_transform: [],
+      transform_gua: {},
+      focus: "",
+      ratings: ["Auspicious", "Fair", "Inauspicious"],
+      form: new Form({
+        yao: this.yao,
+        hexagram_id: this.id,
+        hex_transformation_id: '',
+        yao_poem: '',
+        yao_text: '',
+        rating: '',
+        gen_luck: '',
+        health: '',
+        relationships: '',
+        career_wealth: '',
+        expectant_mothers: '',
+        examinations: '',
+        lost_property: '',
+        missing_persons: '',
+        travel: '',
+        legal_matters: '',
+        weather: '',
+        overall_forecast: ''
+      })
+    };
+  },
+  methods: {
+    hexYao: function hexYao() {
+      var _this = this;
+
+      axios.get('/api/hexagram/' + this.id + '?api_token=' + window.token).then(function (res) {
+        _this.hexagram = res.data;
+        _this.codes = res.data.code.split("");
+
+        _this.transformFocus();
+
+        _this.transformGua();
+      });
+    },
+    saveYao: function saveYao() {
+      var _this2 = this;
+
+      this.form.post('/api/hexagram/yao?api_token=' + window.token).then(function (res) {
+        _this2.$notify({
+          group: 'notification',
+          type: 'success',
+          title: 'Update Hexagram',
+          text: 'Hexagram record has been updated'
+        });
+      })["catch"]();
+    },
+    showYao: function showYao() {
+      var _this3 = this;
+
+      axios.get('/api/hexagram/' + this.id + '/' + this.yao + '?api_token=' + window.token).then(function (res) {
+        _this3.form.yao_poem = res.data.yao_poem;
+        _this3.form.yao_text = res.data.yao_text;
+        _this3.form.rating = res.data.rating != null ? res.data.rating : "";
+        _this3.form.gen_luck = res.data.gen_luck;
+        _this3.form.health = res.data.health;
+        _this3.form.relationships = res.data.relationships;
+        _this3.form.career_wealth = res.data.career_wealth;
+        _this3.form.expectant_mothers = res.data.expectant_mothers;
+        _this3.form.examinations = res.data.examinations;
+        _this3.form.lost_property = res.data.lost_property;
+        _this3.form.missing_persons = res.data.missing_persons;
+        _this3.form.travel = res.data.travel;
+        _this3.form.legal_matters = res.data.legal_matters;
+        _this3.form.weather = res.data.weather;
+        _this3.form.overall_forecast = res.data.overall_forecast;
+      });
+    },
+    transformGua: function transformGua() {
+      var _this4 = this;
+
+      this.codes.forEach(function (element) {
+        _this4.code_transform.push(element);
+      });
+
+      if (this.code_transform[this.focus] == 1) {
+        this.code_transform[this.focus] = 3;
+      }
+
+      if (this.code_transform[this.focus] == 0) {
+        this.code_transform[this.focus] = 4;
+      }
+
+      axios.get('/api/hexagram/gua/' + this.code_transform + '?api_token=' + window.token).then(function (response) {
+        _this4.transform_gua = response.data;
+        _this4.form.hex_transformation_id = response.data.id;
+      });
+    },
+    transformFocus: function transformFocus() {
+      if (this.yao == 1) {
+        this.focus = 5;
+      }
+
+      if (this.yao == 2) {
+        this.focus = 4;
+      }
+
+      if (this.yao == 3) {
+        this.focus = 3;
+      }
+
+      if (this.yao == 4) {
+        this.focus = 2;
+      }
+
+      if (this.yao == 5) {
+        this.focus = 1;
+      }
+
+      if (this.yao == 6) {
+        this.focus = 0;
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.hexYao();
+    this.showYao();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/hex/HexYao.vue?vue&type=template&id=ed1b992a&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/hex/HexYao.vue?vue&type=template&id=ed1b992a& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("notifications", {
+        attrs: { group: "notification", position: "bottom right" }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "row border mt-2 pt-3 pb-3" }, [
+        _c("div", { staticClass: "col-md-6 text-center" }, [
+          _c(
+            "div",
+            { staticClass: "w-50 float-left" },
+            [
+              _c("strong", [_vm._v("Original Gua")]),
+              _vm._v(" "),
+              _vm._l(_vm.codes, function(item, index) {
+                return _c("div", { key: item.id, staticClass: "w-100" }, [
+                  item == 1
+                    ? _c("img", {
+                        class: index == 2 ? "mb-4" : "",
+                        attrs: {
+                          src: "/img/solidLine.png",
+                          width: "80%",
+                          alt: ""
+                        }
+                      })
+                    : _c("img", {
+                        class: index == 2 ? "mb-4" : "",
+                        attrs: {
+                          src: "/img/brokenLine.png",
+                          width: "80%",
+                          alt: ""
+                        }
+                      })
+                ])
+              }),
+              _vm._v(" "),
+              _c("div", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.hexagram.name) +
+                    "\n                "
+                )
+              ])
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "w-50 float-left" },
+            [
+              _c("strong", [_vm._v("Transformed Gua")]),
+              _vm._v(" "),
+              _vm._l(_vm.code_transform, function(item, index) {
+                return _c("div", { key: item.id, staticClass: "w-100" }, [
+                  _c("img", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: item == 1,
+                        expression: "item == 1"
+                      }
+                    ],
+                    class: index == 2 ? "mb-4" : "",
+                    attrs: { src: "/img/solidLine.png", width: "80%", alt: "" }
+                  }),
+                  _vm._v(" "),
+                  _c("img", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: item == 0,
+                        expression: "item == 0"
+                      }
+                    ],
+                    class: index == 2 ? "mb-4" : "",
+                    attrs: { src: "/img/brokenLine.png", width: "80%", alt: "" }
+                  }),
+                  _vm._v(" "),
+                  _c("img", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: item == 4,
+                        expression: "item == 4"
+                      }
+                    ],
+                    class: index == 2 ? "mb-4" : "",
+                    attrs: {
+                      src: "/img/solidLineFocus1.png",
+                      width: "80%",
+                      alt: ""
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("img", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: item == 3,
+                        expression: "item == 3"
+                      }
+                    ],
+                    class: index == 2 ? "mb-4" : "",
+                    attrs: {
+                      src: "/img/brokenLineFocus.png",
+                      width: "80%",
+                      alt: ""
+                    }
+                  })
+                ])
+              }),
+              _vm._v(" "),
+              _c("div", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.transform_gua.name) +
+                    "\n                "
+                )
+              ])
+            ],
+            2
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", [
+            _c("label", { attrs: { for: "yao_text" } }, [_vm._v("Yao Poem")]),
+            _vm._v(" "),
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.yao_poem,
+                  expression: "form.yao_poem"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { placeholder: "Enter Yao Poem", cols: "30", rows: "5" },
+              domProps: { value: _vm.form.yao_poem },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "yao_poem", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mt-2" }, [
+            _c("label", { attrs: { for: "yao_text" } }, [_vm._v("Yao Text")]),
+            _vm._v(" "),
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.yao_text,
+                  expression: "form.yao_text"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { placeholder: "Enter Yao Text", cols: "30", rows: "5" },
+              domProps: { value: _vm.form.yao_text },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "yao_text", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mt-2" }, [
+            _c("label", { attrs: { for: "yao_text" } }, [_vm._v("Rating")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.rating,
+                    expression: "form.rating"
+                  }
+                ],
+                staticClass: "form-control",
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.form,
+                      "rating",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              [
+                _c(
+                  "option",
+                  { attrs: { value: "", hidden: "", selected: "" } },
+                  [_vm._v("Select Rating")]
+                ),
+                _vm._v(" "),
+                _vm._l(_vm.ratings, function(item, index) {
+                  return _c(
+                    "option",
+                    { key: index, domProps: { value: item } },
+                    [_vm._v(_vm._s(item))]
+                  )
+                })
+              ],
+              2
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mt-2" }, [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("label", { attrs: { for: "gen_luck" } }, [_vm._v("General Luck")]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.gen_luck,
+                expression: "form.gen_luck"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { placeholder: "Enter General Luck", cols: "30", rows: "5" },
+            domProps: { value: _vm.form.gen_luck },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "gen_luck", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("label", { attrs: { for: "health" } }, [_vm._v("Health")]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.health,
+                expression: "form.health"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { placeholder: "Enter Health", cols: "30", rows: "5" },
+            domProps: { value: _vm.form.health },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "health", $event.target.value)
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mt-2" }, [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("label", { attrs: { for: "relationships" } }, [
+            _vm._v("Relationships")
+          ]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.relationships,
+                expression: "form.relationships"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              placeholder: "Enter Relationships",
+              cols: "30",
+              rows: "5"
+            },
+            domProps: { value: _vm.form.relationships },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "relationships", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("label", { attrs: { for: "career_wealth" } }, [
+            _vm._v("Career & Wealth")
+          ]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.career_wealth,
+                expression: "form.career_wealth"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              placeholder: "Enter Career & Wealth",
+              cols: "30",
+              rows: "5"
+            },
+            domProps: { value: _vm.form.career_wealth },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "career_wealth", $event.target.value)
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mt-2" }, [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("label", { attrs: { for: "expectant_mothers" } }, [
+            _vm._v("Expectant Mothers")
+          ]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.expectant_mothers,
+                expression: "form.expectant_mothers"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              placeholder: "Enter Expectant Mothers",
+              cols: "30",
+              rows: "5"
+            },
+            domProps: { value: _vm.form.expectant_mothers },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "expectant_mothers", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("label", { attrs: { for: "examinations" } }, [
+            _vm._v("Examinations")
+          ]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.examinations,
+                expression: "form.examinations"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { placeholder: "Enter Examinations", cols: "30", rows: "5" },
+            domProps: { value: _vm.form.examinations },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "examinations", $event.target.value)
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mt-2" }, [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("label", { attrs: { for: "lost_property" } }, [
+            _vm._v("Lost Property")
+          ]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.lost_property,
+                expression: "form.lost_property"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              placeholder: "Enter Lost Property",
+              cols: "30",
+              rows: "5"
+            },
+            domProps: { value: _vm.form.lost_property },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "lost_property", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("label", { attrs: { for: "missing_persons" } }, [
+            _vm._v("Missing Persons")
+          ]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.missing_persons,
+                expression: "form.missing_persons"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              placeholder: "Enter Missing Persons",
+              cols: "30",
+              rows: "5"
+            },
+            domProps: { value: _vm.form.missing_persons },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "missing_persons", $event.target.value)
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mt-2" }, [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("label", { attrs: { for: "travel" } }, [_vm._v("Travel")]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.travel,
+                expression: "form.travel"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { placeholder: "Enter Travel", cols: "30", rows: "5" },
+            domProps: { value: _vm.form.travel },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "travel", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("label", { attrs: { for: "legal_matters" } }, [
+            _vm._v("Legal Matters")
+          ]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.legal_matters,
+                expression: "form.legal_matters"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              placeholder: "Enter Legal Matters",
+              cols: "30",
+              rows: "5"
+            },
+            domProps: { value: _vm.form.legal_matters },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "legal_matters", $event.target.value)
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mt-2" }, [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("label", { attrs: { for: "weather" } }, [_vm._v("Weather")]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.weather,
+                expression: "form.weather"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { placeholder: "Enter Weather", cols: "30", rows: "5" },
+            domProps: { value: _vm.form.weather },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "weather", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("label", { attrs: { for: "overall_forecast" } }, [
+            _vm._v("Overall Forecast")
+          ]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.overall_forecast,
+                expression: "form.overall_forecast"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              placeholder: "Enter Overall Forecast",
+              cols: "30",
+              rows: "5"
+            },
+            domProps: { value: _vm.form.overall_forecast },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.form, "overall_forecast", $event.target.value)
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row justify-content-end mt-2" }, [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-success w-25 float-right",
+              on: { click: _vm.saveYao }
+            },
+            [_vm._v("Save")]
+          )
+        ])
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/hex/HexYao.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/hex/HexYao.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _HexYao_vue_vue_type_template_id_ed1b992a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HexYao.vue?vue&type=template&id=ed1b992a& */ "./resources/js/components/hex/HexYao.vue?vue&type=template&id=ed1b992a&");
+/* harmony import */ var _HexYao_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HexYao.vue?vue&type=script&lang=js& */ "./resources/js/components/hex/HexYao.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _HexYao_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _HexYao_vue_vue_type_template_id_ed1b992a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _HexYao_vue_vue_type_template_id_ed1b992a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/hex/HexYao.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/hex/HexYao.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/hex/HexYao.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_HexYao_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./HexYao.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/hex/HexYao.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_HexYao_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/hex/HexYao.vue?vue&type=template&id=ed1b992a&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/hex/HexYao.vue?vue&type=template&id=ed1b992a& ***!
+  \*******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HexYao_vue_vue_type_template_id_ed1b992a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./HexYao.vue?vue&type=template&id=ed1b992a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/hex/HexYao.vue?vue&type=template&id=ed1b992a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HexYao_vue_vue_type_template_id_ed1b992a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HexYao_vue_vue_type_template_id_ed1b992a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);
