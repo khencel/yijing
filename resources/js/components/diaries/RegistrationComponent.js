@@ -1,4 +1,4 @@
 Vue.component(
     'diaries-component', 
-    require('../diaries/DiariesComponent.vue').default
+    ()=>import('../diaries/DiariesComponent.vue')
 );

@@ -91,6 +91,60 @@
             </div>
         </div>
     </div>
+    <div v-show="isCast && !isLoading" >
+        <table class="table table-hover table-bordered">
+            <tbody>
+                <tr>
+                    <td class="font-weight-bold">General Luck</td>
+                    <td>{{gen_luck}}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Health</td>
+                    <td>{{health}}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Relationships</td>
+                    <td>{{relationships}}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Career & Wealth</td>
+                    <td>{{career_wealth}}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Expectant Mothers</td>
+                    <td>{{expectant_mothers}}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Examinations</td>
+                    <td>{{examinations}}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Lost Property</td>
+                    <td>{{lost_property}}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Missing Persons</td>
+                    <td>{{missing_persons}}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Travel</td>
+                    <td>{{travel}}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Legal Matters</td>
+                    <td>{{legal_matters}}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Weather</td>
+                    <td>{{weather}}</td>
+                </tr>
+                <tr>
+                    <td class="font-weight-bold">Overall Forecast</td>
+                    <td>{{overall_forecast}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <div class="text-center p-2">
         <div class="font-format border-2 m-auto background-primary text-white p-3" style="border-radius:50%;cursor:pointer;width:80px;border:solid 1px" @click="btnCast">Cast Now</div>
     </div>
@@ -164,6 +218,18 @@
                 meaning:'',
                 transformName:'',
                 transformMeaning:'',
+                gen_luck:'',
+                health:'',
+                relationships:'',
+                career_wealth:'',
+                expectant_mothers:'',
+                examinations:'',
+                lost_property:'',
+                missing_persons:'',
+                travel:'',
+                legal_matters:'',
+                weather:'',
+                overall_forecast:'',
                 subscriber: false,
                 isCast: false,
                 focus:null,
@@ -276,6 +342,18 @@
                     console.log(response.data);
                     this.transformName = response.data.name.name;
                     this.transformMeaning = response.data.meaning.yao_text;
+                    this.gen_luck = response.data.meaning.gen_luck;
+                    this.health = response.data.meaning.health;
+                    this.relationships = response.data.meaning.relationships;
+                    this.career_wealth = response.data.meaning.career_wealth;
+                    this.expectant_mothers = response.data.meaning.expectant_mothers;
+                    this.examinations = response.data.meaning.examinations;
+                    this.lost_property = response.data.meaning.lost_property;
+                    this.missing_persons = response.data.meaning.missing_persons;
+                    this.travel = response.data.meaning.travel;
+                    this.legal_matters = response.data.meaning.legal_matters;
+                    this.weather = response.data.meaning.weather;
+                    this.overall_forecast = response.data.meaning.overall_forecast;
                 });
             },
 

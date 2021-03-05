@@ -1,10 +1,10 @@
 Vue.component(
     'about-component', 
-    require('../system/AboutComponent.vue').default
+    ()=>import('../system/AboutComponent.vue')
 );
 
 Vue.component(
     'footer-component', 
-    require('../system/FooterComponent.vue').default
+    ()=>import('../system/FooterComponent.vue')
 );
 

@@ -1,19 +1,19 @@
 Vue.component(
     'digital-clock', 
-    require('../components/ClockComponent.vue').default
+    ()=>import('../components/ClockComponent.vue')
 );
 
 Vue.component(
     'schedule-consultant', 
-    require('../components/ScheduleConsultantComponent.vue').default
+    ()=>import('../components/ScheduleConsultantComponent.vue')
 );
 
 Vue.component(
     'about-us', 
-    require('../components/AboutComponent.vue').default
+    ()=>import('../components/AboutComponent.vue')
 );
 
 Vue.component(
     'meaning-hex', 
-    require('../components/Meaning.vue').default
+    ()=>import('../components/Meaning.vue')
 );
