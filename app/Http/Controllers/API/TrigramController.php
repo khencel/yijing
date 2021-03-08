@@ -102,6 +102,12 @@ class TrigramController extends Controller
 
     public function castTrigram(){
         $trigram = Trigram::all()->random(1)->first();
-        return Trigram::with('natureTrigram','triPeople','triBodyPart','triAnimal','triSickness','triColor','triDeity')->where('id',$trigram->id)->first();
+        $tri = Trigram::with('natureTrigram','triPeople','triBodyPart','triAnimal','triSickness','triColor','triDeity')->where('id',$trigram->id)->first();
+        $user = \Auth::user()->is_subscriber;
+        
+        return response()->json([
+            'tri' => $tri,
+            'user' => $user,
+        ]);
     }
 }

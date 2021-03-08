@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <div v-show="subscriber && isCast && !isLoading" class="col-md-1 p-0 position-relative col-4" style="max-height:350px;">
+        <div v-show="subscriber && isCast && !isLoading && type != 'Trigram'" class="col-md-1 p-0 position-relative col-4" style="max-height:350px;">
             <div class=" position-absolute" style="height:100px;top:50%;margin-top:-50px;">
                 <svg class="d-sm-none d-md-block d-none mx-auto" style="width:100%;" viewBox="0 0 24 24">
                     <path fill="currentColor" d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z" />
@@ -91,7 +91,7 @@
             </div>
         </div>
     </div>
-    <div v-show="type == 'Trigram' && isCast == true">
+    <div v-show="type == 'Trigram' && isCast == true && subscriber">
         <table class="table table-hover table-bordered">
             <tbody>
                 <tr>
@@ -117,40 +117,40 @@
                 <tr>
                     <td class="font-weight-bold">People</td>
                     <td>
-                        <span class="badge badge-success p-1 mr-1" v-for="(item, index) in trigram.tri_people" :key="index">
-                            {{item.people_id}}
+                        <span v-for="(item, index) in trigram.tri_people" :key="index">
+                            {{item.people_id}},
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="font-weight-bold">Body Part</td>
                     <td>
-                        <span class="badge badge-success p-1 mr-1" v-for="(item, index) in trigram.tri_body_part" :key="index">
-                            {{item.body_part_id}}
+                        <span v-for="(item, index) in trigram.tri_body_part" :key="index">
+                            {{item.body_part_id}},
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="font-weight-bold">Animal</td>
                     <td>
-                        <span class="badge badge-success p-1 mr-1" v-for="(item, index) in trigram.tri_animal" :key="index">
-                            {{item.animal_id}}
+                        <span v-for="(item, index) in trigram.tri_animal" :key="index">
+                            {{item.animal_id}},
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="font-weight-bold">Sickness</td>
                     <td>
-                        <span class="badge badge-success p-1 mr-1" v-for="(item, index) in trigram.tri_sickness" :key="index">
-                            {{item.sickness_id}}
+                        <span v-for="(item, index) in trigram.tri_sickness" :key="index">
+                            {{item.sickness_id}},
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="font-weight-bold">Color</td>
                     <td>
-                        <span class="badge badge-success p-1 mr-1" v-for="(item, index) in trigram.tri_color" :key="index">
-                            {{item.color_id}}
+                        <span v-for="(item, index) in trigram.tri_color" :key="index">
+                            {{item.color_id}},
                         </span>
                     </td>
                 </tr>
@@ -158,26 +158,6 @@
                     <td class="font-weight-bold">Shape</td>
                     <td>
                         {{trigram.shape}}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="font-weight-bold">Deity</td>
-                    <td>
-                        <span class="badge badge-success p-1 mr-1" v-for="(item, index) in trigram.tri_deity" :key="index">
-                            {{item.deity_id}}
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="font-weight-bold">Door</td>
-                    <td>
-                        {{trigram.door}}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="font-weight-bold">Star</td>
-                    <td>
-                        {{trigram.star}}
                     </td>
                 </tr>
                 <tr>
@@ -189,7 +169,7 @@
             </tbody>
         </table>
     </div>
-    <div v-show="isCast && !isLoading && type != 'Trigram'" >
+    <div v-show="isCast && !isLoading && type != 'Trigram' && subscriber" >
         <table class="table table-hover table-bordered">
             <tbody>
                 <tr>
@@ -336,12 +316,12 @@
             }
         },
         methods:{
-            
             btnCastType(castType){
                 this.isCast = false;
                 this.results = "";
                 this.transforms = "";
                 this.name = "";
+                this.meaning = "";
                 this.transformName = "";
                 this.transformMeaning = "";
                 this.subscriber = false;
@@ -412,11 +392,16 @@
 
                 if(this.type == "Trigram"){
                     this.isLoading = true;
+                    this.subscriber = true;
                     axios.get('api/user/trigram?api_token='+window.token)
                     .then(response => {
-                        this.results = response.data.code.split("");
-                        this.name = response.data.name;
-                        this.trigram = response.data;
+                        this.results = response.data.tri.code.split("");
+                        this.name = response.data.tri.name;
+                        if(response.data.user == null){
+                            this.subscriber = false;
+                            
+                        }
+                        this.trigram = response.data.tri;
                         this.isLoading = false;
                         this.isCast = true;
                     });
