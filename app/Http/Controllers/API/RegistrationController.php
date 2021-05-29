@@ -41,7 +41,6 @@ class RegistrationController extends Controller
             'lastname' => 'required|string|max:255',
             'country' => 'required',
             'birth_date' => 'required',
-            'birth_time' => 'required',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => ['required','confirmed',new PasswordFormat],
         ]);

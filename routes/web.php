@@ -102,10 +102,6 @@ Route::get('/hex/{id}', 'ConsultantController@hex');
 
 Route::get('/consultan/{id}','ConsultantController@consultants');
 
-
-
-
-
 });
 
 Route::get('email/verify/{id}','EmailVerificationController@verify');

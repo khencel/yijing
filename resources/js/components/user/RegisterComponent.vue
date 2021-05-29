@@ -30,7 +30,6 @@
 
             <div class="col-md-8">
                 <input type="date" v-model="form.birth_date" class="form-control">
-                <span class="text-danger font-italic" v-if="errors.birth_date" v-text="errors.birth_date[0]"></span>
             </div>
         </div>
 
