@@ -134,6 +134,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -143,6 +146,7 @@ __webpack_require__.r(__webpack_exports__);
       roles: {},
       userType: '',
       filterUser: [],
+      is_subsciber: '',
       form: new Form({
         id: '',
         firstname: '',
@@ -166,12 +170,18 @@ __webpack_require__.r(__webpack_exports__);
       this.editMode = true;
       this.form.role = [];
       axios.get('/api/admin/show/' + id + "?api_token=" + window.token).then(function (response) {
-        console.log(response.data);
         _this2.form.id = response.data.user.id;
         _this2.form.firstname = response.data.user.firstname;
         _this2.form.lastname = response.data.user.lastname;
         _this2.form.country = response.data.user.country;
         _this2.roles = response.data.role;
+
+        if (response.data.user.is_subscriber != null) {
+          _this2.is_subsciber = true;
+        } else {
+          _this2.is_subsciber = false;
+        }
+
         response.data.user.roles.forEach(function (element) {
           _this2.form.role.push(element.id);
         });
@@ -279,11 +289,38 @@ __webpack_require__.r(__webpack_exports__);
           _this8.$swal(status == 0 ? 'Deactivated!' : 'Activated', status == 0 ? 'This user has been Deactivated.' : 'This user has been Activated', 'success');
         }
       });
+    },
+    btnSubscribe: function btnSubscribe() {
+      var _this9 = this;
+
+      this.$swal({
+        title: 'Are you sure?',
+        text: "You want to change status this user",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+      }).then(function (result) {
+        if (result.value) {
+          _this9.userStatusChange();
+        }
+      });
+    },
+    userStatusChange: function userStatusChange() {
+      var _this10 = this;
+
+      axios.get('/api/user/change-status/' + this.form.id + '/?api_token=' + window.token).then(function (res) {
+        $('#userModal').modal('hide');
+
+        _this10.$swal("Status Change Success");
+
+        _this10.loadUser();
+      });
     }
   },
   mounted: function mounted() {
     this.loadUser();
-    console.log('Component mounted.');
   }
 });
 
@@ -445,13 +482,10 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("td", {
-                    class:
-                      user.is_subscriber == 1 ? "text-success" : "text-danger",
+                    class: user.is_subscriber ? "text-success" : "text-danger",
                     domProps: {
                       textContent: _vm._s(
-                        user.is_subscriber == 1
-                          ? "Subscriber"
-                          : "Not Subscriber"
+                        user.is_subscriber ? "Subscriber" : "Not Subscriber"
                       )
                     }
                   }),
@@ -760,6 +794,21 @@ var render = function() {
                       ],
                       2
                     )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "p-1" }, [
+                    _c("button", {
+                      staticClass: "btn w-100",
+                      class: _vm.is_subsciber ? "btn-danger" : "btn-success",
+                      domProps: {
+                        textContent: _vm._s(
+                          _vm.is_subsciber
+                            ? "Unsubscibe this User"
+                            : "Subscribe this User"
+                        )
+                      },
+                      on: { click: _vm.btnSubscribe }
+                    })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "modal-footer" }, [

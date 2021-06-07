@@ -73,6 +73,8 @@ Route::middleware('auth:api')->group(function(){
     Route::get('user/cancelBooking','API\UserController@cancelBooking');
     Route::get('user/cancelDelete/{id}','API\UserController@destroy');
 
+    Route::get('user/change-status/{id}','API\UserController@userChangeStatus');
+
     Route::get('consultant/journal/{id}/{schedule_id}','API\JournalController@customerJournal');
     Route::get('consultant-user-diary','API\JournalController@user_consultant_diary');
     // Journal

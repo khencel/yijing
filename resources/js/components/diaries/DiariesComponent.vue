@@ -544,6 +544,7 @@
                 }
             },
             btnSave(){
+                
                 if(this.form.cast_type == ""){
                     this.$notify({
                         group: 'notification',

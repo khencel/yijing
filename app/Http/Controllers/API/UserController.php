@@ -151,4 +151,11 @@ class UserController extends Controller
             'status' => 'canceled'
         ]);
     }
+
+    public function userChangeStatus($id){
+        $user = User::find($id);
+        $user->update([
+            'is_subscriber' => $user->is_subscriber?null:now()
+        ]);
+    }
 }

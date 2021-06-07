@@ -102,7 +102,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 Vue.use(vue_sweetalert2__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -347,14 +346,7 @@ var render = function() {
                 _vm.$set(_vm.form, "birth_date", $event.target.value)
               }
             }
-          }),
-          _vm._v(" "),
-          _vm.errors.birth_date
-            ? _c("span", {
-                staticClass: "text-danger font-italic",
-                domProps: { textContent: _vm._s(_vm.errors.birth_date[0]) }
-              })
-            : _vm._e()
+          })
         ])
       ]),
       _vm._v(" "),
