@@ -1,15 +1,20 @@
 Vue.component(
     'hexagram-component', 
-    require('../hex/HexagramComponent.vue').default
+    ()=>import('../hex/HexagramComponent.vue')
 );
 
 Vue.component(
     'view-hexagram-component', 
-    require('../hex/ViewHexagramComponent.vue').default
+    ()=>import('../hex/ViewHexagramComponent.vue')
 );
 
 Vue.component(
     'view-hexagram-info', 
-    require('../hex/HexInfoComponent.vue').default
+    ()=>import('../hex/HexInfoComponent.vue')
+);
+
+Vue.component(
+    'view-hexagram-yao', 
+    ()=>import('../hex/HexYao.vue')
 );
 

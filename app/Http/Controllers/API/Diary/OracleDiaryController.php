@@ -17,7 +17,8 @@ class OracleDiaryController extends Controller
             'is_number' => 1,
             'derivation' => $request->oracle_number,
             'question' => $request->question,
-            'details' => $request->details
+            'details' => $request->details,
+            'date'    =>    $request->date
         ]);
     }
 
@@ -52,6 +53,7 @@ class OracleDiaryController extends Controller
             'question' => $request->question,
             'details' => $request->details,
             'text' => implode('',$request->oracle_text),
+            'date'    =>    $request->date
         ]);
     }
 

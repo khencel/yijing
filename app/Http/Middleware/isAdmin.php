@@ -16,7 +16,6 @@ class isAdmin
      */
     public function handle($request, Closure $next)
     {
-        
         if(\Auth::check() && \Auth::user()->userRole[0]->role_id == 1){
             return $next($request);
         }

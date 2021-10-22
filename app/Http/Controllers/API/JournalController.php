@@ -93,8 +93,9 @@ class JournalController extends Controller
             'hex_original.health',
             'hex_original.properties',
             'hex_transform',
-            'trigram',
-            )->where('type',$id)->orderBy('id','desc')->get();  
+            'trigram'
+            )->where('type',$id)
+            ->where('user_id',\Auth::user()->id)->orderBy('id','desc')->get();   
     }
 
     /**

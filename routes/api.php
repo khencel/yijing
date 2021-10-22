@@ -37,6 +37,13 @@ Route::middleware('auth:api')->group(function(){
 
 
     // admin/hexagram
+    Route::prefix('hexagram')->group(function(){
+        Route::get('/{id}','API\HexagramYaoController@hexagram');
+        Route::get('/gua/{gua}','API\HexagramYaoController@transformGua');
+        Route::post('/yao','API\HexagramYaoController@hexYao');
+        Route::get('/{id}/{yao}','API\HexagramYaoController@show');
+    });
+
     Route::get('hex/index','API\HexagramController@index');
     Route::get('hex/show/{id}','API\HexagramController@show');
     Route::put('hex/update/{id}','API\HexagramController@update');
@@ -66,6 +73,8 @@ Route::middleware('auth:api')->group(function(){
     Route::get('user/cancelBooking','API\UserController@cancelBooking');
     Route::get('user/cancelDelete/{id}','API\UserController@destroy');
 
+    Route::get('user/change-status/{id}','API\UserController@userChangeStatus');
+
     Route::get('consultant/journal/{id}/{schedule_id}','API\JournalController@customerJournal');
     Route::get('consultant-user-diary','API\JournalController@user_consultant_diary');
     // Journal
@@ -93,7 +102,11 @@ Route::middleware('auth:api')->group(function(){
 
         Route::post('/store-oracle-text','API\Diary\OracleDiaryController@storeTextOracle');
     });
+
+    Route::get('print/{id}','API\PrintController@printOracle');
 });
+
+Route::get('hexagram/list','API\HexagramController@getAll');
 
 Route::get('about','API\SystemController@aboutUs');
 Route::get('footer','API\SystemController@footerContent');

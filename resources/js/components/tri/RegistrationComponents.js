@@ -1,10 +1,10 @@
 Vue.component(
     'trigram-component', 
-    require('../tri/TrigramComponent.vue').default
+    ()=>import('../tri/TrigramComponent.vue')
 );
 
 
 Vue.component(
     'trigram-consultant', 
-    require('../tri/ConsultantTrigramComponent.vue').default
+    ()=>import('../tri/ConsultantTrigramComponent.vue')
 );

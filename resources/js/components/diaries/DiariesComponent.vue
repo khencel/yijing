@@ -31,181 +31,189 @@
                     
                     </div>
                     <div class="col-md-10 shadow-sm p-3">
-                        <div v-if="Object.keys(journal_details).length == 0">No record...</div>
-                        <div v-else class="" v-for="(item, index) in journal_details" :key="index">
-                            <div class="row">
-                                <div class="col-md-7 border">
-                                    <h4>{{item.cast_type}}</h4>
-                                    <div v-if="item.hex_focus != ''" class="row text-center">
-                                        <div class="col-md-5">
-                                            <div v-for="(item, index) in item.hex_focus.split('')" :key="index">
-                                                <img v-show="item == 1"  :class="index==4?'mb-3':''" src="img/solidLine.png" style="width:90%;height:40px" alt="">
-                                                <img v-show="item == '0'"  :class="index==4?'mb-3':''" src="img/brokenLine.png" style="width:90%;height:40px" alt="">
-                                                <img v-show="item == 3"  :class="index==4?'mb-3':''" src="img/solidLinefocus.png" style="width:90%;height:40px" alt="">
-                                                <img v-show="item == 4"  :class="index==4?'mb-3':''" src="img/brokenCircle.png" style="width:90%;height:40px" alt="">
+                            <div v-if="Object.keys(journal_details).length == 0">No record...</div>
+                            <div v-else class="background-diary-image" v-for="(item, index) in journal_details" :key="index" :id="item.id">
+                                <div class="background-diary">
+                                    <div class="row">
+                                        <div class="col-md-7 border">
+                                            <h4>{{item.cast_type}}</h4>
+                                            <div v-if="item.hex_focus != ''" class="row text-center" id="print-hex-div">
+                                                <div class="col-md-5" id="orig-hex">
+                                                    <div v-for="(item, index) in item.hex_focus.split('')" :key="index">
+                                                        <img v-show="item == 1"  :class="index==4?'mb-3':''" src="img/solidLine.png" style="width:90%;height:40px" alt="">
+                                                        <img v-show="item == '0'"  :class="index==4?'mb-3':''" src="img/brokenLine.png" style="width:90%;height:40px" alt="">
+                                                        <img v-show="item == 3"  :class="index==4?'mb-3':''" src="img/solidLinefocus.png" style="width:90%;height:40px" alt="">
+                                                        <img v-show="item == 4"  :class="index==4?'mb-3':''" src="img/brokenCircle.png" style="width:90%;height:40px" alt="">
+                                                    </div>
+                                                    <strong>{{item.hex_original[0].name}}</strong>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    =>
+                                                </div>
+                                                <div class="col-md-5" id="trans-hex">
+                                                    <div v-for="(item, index) in item.hex_transform[0].code.split('')" :key="index">
+                                                        <img v-show="item == 1"  :class="index==2?'mb-3':''" src="img/solidLine.png" style="width:90%;height:40px" alt="">
+                                                        <img v-show="item == '0'"  :class="index==2?'mb-3':''" src="img/brokenLine.png" style="width:90%;height:40px" alt="">
+                                                    </div>
+                                                    <strong>{{item.hex_transform[0].name}}</strong>
+                                                </div>
                                             </div>
-                                            <strong>{{item.hex_original[0].name}}</strong>
-                                        </div>
-                                        <div class="col-md-1">
-                                            =>
+                                            <div v-else class="row text-center justify-content-center">
+                                                <div class="col-md-5">
+                                                    <div v-for="(item, index) in item.trigram[0].code.split('')" :key="index">
+                                                        <img v-show="item == 1"  :class="index==2?'mb-3':''" src="img/solidLine.png" style="width:90%;height:40px" alt="">
+                                                        <img v-show="item == '0'"  :class="index==2?'mb-3':''" src="img/brokenLine.png" style="width:90%;height:40px" alt="">
+                                                    </div>
+                                                    <strong>{{item.trigram[0].name}}</strong>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-md-5">
-                                            <div v-for="(item, index) in item.hex_transform[0].code.split('')" :key="index">
-                                                <img v-show="item == 1"  :class="index==2?'mb-3':''" src="img/solidLine.png" style="width:90%;height:40px" alt="">
-                                                <img v-show="item == '0'"  :class="index==2?'mb-3':''" src="img/brokenLine.png" style="width:90%;height:40px" alt="">
-                                            </div>
-                                            <strong>{{item.hex_transform[0].name}}</strong>
-                                        </div>
-                                    </div>
-                                    <div v-else class="row text-center justify-content-center">
-                                        <div class="col-md-5">
-                                            <div v-for="(item, index) in item.trigram[0].code.split('')" :key="index">
-                                                <img v-show="item == 1"  :class="index==2?'mb-3':''" src="img/solidLine.png" style="width:90%;height:40px" alt="">
-                                                <img v-show="item == '0'"  :class="index==2?'mb-3':''" src="img/brokenLine.png" style="width:90%;height:40px" alt="">
-                                            </div>
-                                            <strong>{{item.trigram[0].name}}</strong>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <div>
-                                        <strong>Rating:</strong>
-                                        
-                                        <span v-for="properties in item.hex_original" :key="properties.id">
-                                            <span v-show="item.type == 1">
-                                                <span v-for="active in properties.opening[0].rating/20" :key="active.id">
-                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                                <span v-for="notActive in (5 - properties.opening[0].rating/20)" :key="notActive.id">
-                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
+                                            <div>
+                                                <strong>Rating:</strong>
                                                 
-                                            </span>
-                                            <span v-show="item.type == 2">
-                                                <span v-for="active in properties.nobleman[0].rating/20" :key="active.id">
-                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                                <span v-for="notActive in (5 - properties.nobleman[0].rating/20)" :key="notActive.id">
-                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                            </span>
+                                                <span v-for="properties in item.hex_original" :key="properties.id">
+                                                    <span v-show="item.type == 1">
+                                                        <span v-for="active in properties.opening[0].rating/20" :key="active.id">
+                                                            <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                        <span v-for="notActive in (5 - properties.opening[0].rating/20)" :key="notActive.id">
+                                                            <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                        
+                                                    </span>
+                                                    <span v-show="item.type == 2">
+                                                        <span v-for="active in properties.nobleman[0].rating/20" :key="active.id">
+                                                            <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                        <span v-for="notActive in (5 - properties.nobleman[0].rating/20)" :key="notActive.id">
+                                                            <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                    </span>
 
-                                            <span v-show="item.type == 3">
-                                                <span v-for="active in properties.weather[0].rating/20" :key="active.id">
-                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                                <span v-for="notActive in (5 - properties.weather[0].rating/20)" :key="notActive.id">
-                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                            </span>
+                                                    <span v-show="item.type == 3">
+                                                        <span v-for="active in properties.weather[0].rating/20" :key="active.id">
+                                                            <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                        <span v-for="notActive in (5 - properties.weather[0].rating/20)" :key="notActive.id">
+                                                            <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                    </span>
 
-                                            <span v-show="item.type == 4">
-                                                <span v-for="active in properties.luck[0].rating/20" :key="active.id">
-                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                                <span v-for="notActive in (5 - properties.luck[0].rating/20)" :key="notActive.id">
-                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                            </span>
+                                                    <span v-show="item.type == 4">
+                                                        <span v-for="active in properties.luck[0].rating/20" :key="active.id">
+                                                            <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                        <span v-for="notActive in (5 - properties.luck[0].rating/20)" :key="notActive.id">
+                                                            <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                    </span>
 
-                                            <span v-show="item.type == 5">
-                                                <span v-for="active in properties.wealth[0].rating/20" :key="active.id">
-                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                                <span v-for="notActive in (5 - properties.wealth[0].rating/20)" :key="notActive.id">
-                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                            </span>
+                                                    <span v-show="item.type == 5">
+                                                        <span v-for="active in properties.wealth[0].rating/20" :key="active.id">
+                                                            <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                        <span v-for="notActive in (5 - properties.wealth[0].rating/20)" :key="notActive.id">
+                                                            <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                    </span>
 
-                                            <span v-show="item.type == 6">
-                                                <span v-for="active in properties.relationship[0].rating/20" :key="active.id">
-                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                                <span v-for="notActive in (5 - properties.relationship[0].rating/20)" :key="notActive.id">
-                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                            </span>
+                                                    <span v-show="item.type == 6">
+                                                        <span v-for="active in properties.relationship[0].rating/20" :key="active.id">
+                                                            <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                        <span v-for="notActive in (5 - properties.relationship[0].rating/20)" :key="notActive.id">
+                                                            <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                    </span>
 
-                                            <span v-show="item.type == 7">
-                                                <span v-for="active in properties.business[0].rating/20" :key="active.id">
-                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                                <span v-for="notActive in (5 - properties.business[0].rating/20)" :key="notActive.id">
-                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                            </span>
+                                                    <span v-show="item.type == 7">
+                                                        <span v-for="active in properties.business[0].rating/20" :key="active.id">
+                                                            <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                        <span v-for="notActive in (5 - properties.business[0].rating/20)" :key="notActive.id">
+                                                            <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                    </span>
 
-                                            <span v-show="item.type == 8">
-                                                <span v-for="active in properties.family[0].rating/20" :key="active.id">
-                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                                <span v-for="notActive in (5 - properties.family[0].rating/20)" :key="notActive.id">
-                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                            </span>
+                                                    <span v-show="item.type == 8">
+                                                        <span v-for="active in properties.family[0].rating/20" :key="active.id">
+                                                            <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                        <span v-for="notActive in (5 - properties.family[0].rating/20)" :key="notActive.id">
+                                                            <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                    </span>
 
-                                            <span v-show="item.type == 9">
-                                                <span v-for="active in properties.legal[0].rating/20" :key="active.id">
-                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                                <span v-for="notActive in (5 - properties.legal[0].rating/20)" :key="notActive.id">
-                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                            </span>
+                                                    <span v-show="item.type == 9">
+                                                        <span v-for="active in properties.legal[0].rating/20" :key="active.id">
+                                                            <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                        <span v-for="notActive in (5 - properties.legal[0].rating/20)" :key="notActive.id">
+                                                            <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                    </span>
 
-                                            <span v-show="item.type == 10">
-                                                <span v-for="active in properties.examination[0].rating/20" :key="active.id">
-                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                                <span v-for="notActive in (5 - properties.examination[0].rating/20)" :key="notActive.id">
-                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                            </span>
+                                                    <span v-show="item.type == 10">
+                                                        <span v-for="active in properties.examination[0].rating/20" :key="active.id">
+                                                            <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                        <span v-for="notActive in (5 - properties.examination[0].rating/20)" :key="notActive.id">
+                                                            <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                    </span>
 
-                                            <span v-show="item.type == 11">
-                                                <span v-for="active in properties.travel[0].rating/20" :key="active.id">
-                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                                <span v-for="notActive in (5 - properties.travel[0].rating/20)" :key="notActive.id">
-                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                            </span>
+                                                    <span v-show="item.type == 11">
+                                                        <span v-for="active in properties.travel[0].rating/20" :key="active.id">
+                                                            <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                        <span v-for="notActive in (5 - properties.travel[0].rating/20)" :key="notActive.id">
+                                                            <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                    </span>
 
-                                            <span v-show="item.type == 12">
-                                                <span v-for="active in properties.health[0].rating/20" :key="active.id">
-                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                                <span v-for="notActive in (5 - properties.health[0].rating/20)" :key="notActive.id">
-                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                            </span>
+                                                    <span v-show="item.type == 12">
+                                                        <span v-for="active in properties.health[0].rating/20" :key="active.id">
+                                                            <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                        <span v-for="notActive in (5 - properties.health[0].rating/20)" :key="notActive.id">
+                                                            <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                    </span>
 
-                                            <span v-show="item.type == 13">
-                                                <span v-for="active in properties.properties[0].rating/20" :key="active.id">
-                                                    <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                    <span v-show="item.type == 13">
+                                                        <span v-for="active in properties.properties[0].rating/20" :key="active.id">
+                                                            <img src="/img/active-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                        <span v-for="notActive in (5 - properties.properties[0].rating/20)" :key="notActive.id">
+                                                            <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
+                                                        </span>
+                                                    </span>
+                                
                                                 </span>
-                                                <span v-for="notActive in (5 - properties.properties[0].rating/20)" :key="notActive.id">
-                                                    <img src="/img/not-rate.png" class="mr-1" style="width:25px;" alt="">
-                                                </span>
-                                            </span>
-                        
-                                        </span>
+                                            </div>
+                                            <div>
+                                                <p><strong>{{item.cast_type}} {{item.hex_original[0] != null?item.hex_original[0].name:item.trigram[0].name}} meaning</strong></p>
+                                                <div v-for="meaning in item.hex_original" :key="meaning.id">
+                                                    <p>{{meaning.meaning}}</p>
+                                                </div>   
+                                                <!-- <p>{{item.trigram[0] != null?item.trigram:''}}</p>   -->
+                                            </div>                   
+                                        </div>
                                     </div>
-                                    <div>
-                                         <p><strong>{{item.cast_type}} meaning</strong></p>
-                                        <div v-for="meaning in item.hex_original" :key="meaning.id">
-                                            <p>{{meaning.meaning}}</p>
-                                        </div>     
-                                    </div>                   
+                                    <br>
+                                    <strong>{{item.hex_transform[0] != null?item.hex_transform[0].name:''}} Meaning</strong>
+                                    <br>
+                                    <p>{{item.hex_transform[0] != null?item.hex_transform[0].meaning:''}}</p>
+                                    <p><strong>Date:</strong>{{item.date}}</p>
+                                    <p><strong>Question:</strong>{{item.question}}</p>
+                                    <strong>Details</strong>
+                                    <p>{{item.details}}</p>
+                                    <button id="btnPrint" @click="print(item.id)" class="btn btn-success">Print PDF or Download</button>
+                                    <hr>
                                 </div>
                             </div>
-                            <p><strong>Date:</strong>{{item.date}}</p>
-                            <p><strong>Question:</strong>{{item.question}}</p>
-                            <strong>Details</strong>
-                            <p>{{item.details}}</p>
-                            <hr>
-                        </div>
-
+                        
                         
                     </div>
                 </div>
@@ -320,7 +328,9 @@
                                         <img v-show="item == 4"  :class="index==2?'mb-3':''" src="img/brokenCircle.png" style="width:80%;height:40px" alt="">
                                     </div>
                                     <strong>{{form.hex_name}}</strong>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam, ut expedita? Tempora nulla voluptatem omnis consequatur nemo quibusdam blanditiis, adipisci atque. Saepe impedit quidem delectus sapiente odit quae optio nisi.</p>
+                                    <p>
+                                        {{form.meaning}}
+                                    </p>
                                 </div>
                                 <div class="col-md-1" style="padding-top:15%">
                                     <svg style="width:24px;height:24px;" viewBox="0 0 24 24">
@@ -333,7 +343,9 @@
                                         <img v-show="item == 0"  :class="index==2?'mb-3':''" src="img/brokenLine.png" style="width:80%;height:40px" alt="">
                                     </div>
                                     <strong>{{form.transform_name}}</strong>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam obcaecati, nam quod eos nobis minus ea hic dolorem quos id dicta dolores reprehenderit natus non, voluptatem mollitia animi? Blanditiis, cum.</p>
+                                    <p>
+                                        {{form.transMeaning}}
+                                    </p>
                                 </div>
                             </div>
                             <div class="row justify-content-center text-center" style="min-height:300px;" v-show="Object.keys(form.tri_code).length != 0">
@@ -421,6 +433,8 @@
                 errors:{},
                 id:'',
                 consultant_user:{},
+                focus:null,
+                original_gua:null,
                 form: new Form({
                     type:'',
                     cast_type:'',
@@ -429,8 +443,10 @@
                     details:'',
                     hex_code:'',
                     hex_name:'',
+                    meaning:'',
                     transforms:'',
                     transform_name:'',
+                    transMeaning:'',
                     tri_code:'',
                     tri_name:'',
                     original_hex_id:'',
@@ -441,6 +457,28 @@
             }
         },
         methods:{   
+            print(id){
+                var divContents = document.getElementById(id).innerHTML;
+                var a = window.open('', '', 'height=500, width=500');
+                a.document.write('<div class="background-diary-image">')
+                a.document.write(divContents);
+                a.document.write('<div>')
+                a.document.write(
+                                '<style>'
+                                    +'#btnPrint{display:none !important;}'
+                                    +'#print-hex-div{display:flex !important; justify-content:center}'
+                                    +'#orig-hex{width:30% !important}'
+                                    +'#trans-hex{width:30% !important}'
+                                    +'body{background-image:url("/img/poenixTrans.png");background-repeat: no-repeat;background-size: 50%;background-position: center;}'+
+                                '</style>'
+                                );
+                setInterval(function(){
+                    a.print();
+                    a.close();
+                }.bind(this), 1000);
+                
+                
+            },
             loadAttribute(){
                 axios.get('api/user/attribute?api_token='+window.token)
                 .then(response => {
@@ -468,6 +506,7 @@
                 .then(response => {
                     this.form.original_hex_id = response.data.hexagram[0].id;
                     this.form.hex_name = response.data.hexagram[0].name;
+                    this.form.meaning = response.data.hexagram[0].meaning;
                     
                     function getRandomInt(max) {
                         return Math.floor(Math.random() * Math.floor(max));
@@ -485,8 +524,10 @@
                     }else{
                         hex[focus-1] = 4;
                     }
-                    
+
+                    this.focus = focus;
                     this.form.hex_code = hex;
+                    this.original_gua = response.data.hexagram[0].id;
                     
                     var hexTransform = response.data.hexagram[0].code.split("");
                     
@@ -500,19 +541,21 @@
                 });
             },
             getTransformname(){
-                axios.post('api/user/transform/name?api_token='+window.token,{transformName:this.form.transforms})
+                axios.post('api/user/transform/name?api_token='+window.token,{transformName:this.form.transforms,focus:this.focus,gua:this.original_gua})
                 .then(response => {
-                    this.form.transform_hex_id = response.data.id;
-                    this.form.transform_name = response.data.name;
+                    this.form.transform_hex_id = response.data.name.id;
+                    this.form.transform_name = response.data.name.name;
+                    this.form.transMeaning = response.data.meaning.yao_text;
                 });
             },
             castTri(){
                 this.form.cast_type = "Trigram";
                 axios.get('api/user/trigram?api_token='+window.token)
                 .then(response => {
-                    this.form.trigram_id = response.data[0].id;
-                    this.form.tri_code = response.data[0].code.split("");
-                    this.form.tri_name = response.data[0].name;
+                    console.log(response.data);
+                    this.form.trigram_id = response.data['tri'].id;
+                    this.form.tri_code = response.data['tri'].code.split("");
+                    this.form.tri_name = response.data['tri'].name;
                 });
             },
             castValidation(castType){
@@ -556,8 +599,10 @@
                 this.form.get('api/journal/'+id+"?api_token="+window.token)
                 .then(response => {
                     this.journal_details = response.data;
+                    console.log(response.data);
                 });
             },
+
             propertiesSelected(){
                 if(this.form.type[1] == 1){
                     this.trigramDisable = true;
@@ -583,3 +628,16 @@
         },
     }
 </script>
+
+<style scoped>
+    .background-diary-image{
+        background-image:url('/img/poenix.png');
+        background-repeat: no-repeat;
+        background-size: 50%;
+        background-position: center;
+       
+    }
+    .background-diary{
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+</style>

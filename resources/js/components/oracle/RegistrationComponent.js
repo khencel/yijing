@@ -1,9 +1,9 @@
 Vue.component(
     'index-number', 
-    require('../oracle/IndexNumber.vue').default
+    ()=>import('../oracle/IndexNumber.vue')
 );
 
 Vue.component(
     'index-text', 
-    require('../oracle/IndexText.vue').default
+    ()=>import('../oracle/IndexText.vue')
 );

@@ -22,6 +22,8 @@ Vue.use(VueSweetalert2);
 Vue.component(HasError.name, HasError)
 Vue.component('pagination', require('laravel-vue-pagination'));
 
+Vue.component('pdf-print', require('./components/print-pdf/PrintPdfOracleNumber.vue').default);
+
 require("./components/RegisterComponents");
 require("./components/user/RegisterComponents");
 require("./components/user-management/RegisterComponents");

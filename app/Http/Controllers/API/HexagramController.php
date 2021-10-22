@@ -21,6 +21,12 @@ use App\Travel;
 use App\Health;
 use App\Property;
 use App\Mother;
+use App\HexagramYao;
+use App\HexagramYao2;
+use App\HexagramYao3;
+use App\HexagramYao4;
+use App\HexagramYao5;
+use App\HexagramYao6;
 
 class HexagramController extends Controller
 {
@@ -32,6 +38,10 @@ class HexagramController extends Controller
     public function index()
     {
         return Hexagram::latest()->paginate(10);
+    }
+
+    public function getAll(){
+        return Hexagram::all(); 
     }
 
     /**
@@ -199,7 +209,6 @@ class HexagramController extends Controller
     public function castHex(){
         $hex = Hexagram::all()->random(1);
         $user = \Auth::user()->is_subscriber;
-
         return response()->json([
             'hexagram' => $hex, 
             'user' => $user,
@@ -211,21 +220,74 @@ class HexagramController extends Controller
     }
 
     public function transformName(){
+        $focus = $this->getFocus(request()->focus);
         $name = Hexagram::where('code',implode(request()->transformName))->first();
-        return $name;
-    }
-
-    public function dailyHex(){
-        
-        $hex = DailyHex::where('id',request()->date)->with('hexagram')->first();
-        $attr = $hex->hexagram;
-
-        $x = rand(1,12);
-
-
+        $meaning = $this->getMeaning($focus,request()->gua,$name->id);
         return response()->json([
-            'hexagram' => $hex,
+            'name' => $name,
+            'meaning' => $meaning
         ]);
     }
 
+    public function dailyHex(Request $request){
+        return Hexagram::where('element',$request->element)
+                        ->where('english',$request->english)
+                        ->first();
+    }
+
+    public function getFocus($num){
+        switch ($num) {
+            case 1:
+                return 6;
+                break;
+            case 2:
+                return 5;
+                break;
+            case 3:
+                return 4;
+                break;
+            case 4:
+                return 3;
+                break;
+            case 5:
+                return 2;
+                break;
+            case 6:
+                return 1;
+                break;
+        }
+    }
+
+    public function getMeaning($focus,$gua,$transform_gua){
+        if($focus == 1){
+            return HexagramYao::where('hexagram_id',$gua)
+                                ->where('hex_transformation_id',$transform_gua)
+                                ->first();
+        };
+        if($focus == 2){
+            return HexagramYao2::where('hexagram_id',$gua)
+                                ->where('hex_transformation_id',$transform_gua)
+                                ->first();
+        };
+        if($focus == 3){
+            return HexagramYao3::where('hexagram_id',$gua)
+                                ->where('hex_transformation_id',$transform_gua)
+                                ->first();
+        };
+        if($focus == 4){
+            return HexagramYao4::where('hexagram_id',$gua)
+            ->where('hex_transformation_id',$transform_gua)
+            ->first();
+        };
+        if($focus == 5){
+            return HexagramYao5::where('hexagram_id',$gua)
+            ->where('hex_transformation_id',$transform_gua)
+            ->first();
+        };
+        if($focus == 6){
+            return HexagramYao6::where('hexagram_id',$gua)
+            ->where('hex_transformation_id',$transform_gua)
+            ->first();
+        };
+    }
 }

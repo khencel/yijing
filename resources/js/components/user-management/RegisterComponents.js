@@ -1,4 +1,4 @@
 Vue.component(
     'user-users', 
-    require('../user-management/UserComponent.vue').default
+    ()=>import('../user-management/UserComponent.vue')
 );

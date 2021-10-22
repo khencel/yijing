@@ -29,7 +29,10 @@
             </div>
             <div>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti, sint! Natus iure dolor vel, ipsa nobis quia aperiam. Quae repudiandae molestias fuga architecto eligendi sapiente dolor assumenda beatae asperiores aliquid.
+                    Please check your inbox for the email confirmation and kindly click Verify Account. If the
+                    message arrive a little later in your mailbox, please do bear with it up to 30 minutes. In case you
+                    cannot find the Verification from your inbox, please check it at Promotions, Bulk Mail or Spam
+                    mail of your email client.
                 </p>
             </div>
             <div>

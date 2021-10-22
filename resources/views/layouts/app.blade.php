@@ -14,7 +14,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script
-        src="https://www.paypal.com/sdk/js?client-id=Aa4HB9c_b6IaGT2nF--4_H6DgWUPdDebU9yJzQAbMrjL-JoA6SomG6ePGzbvXeT790O3bwoZLpQBsonj"> // Required. Replace SB_CLIENT_ID with your sandbox client ID.
+        src="https://www.paypal.com/sdk/js?client-id=AWoeQCFYVLzPdeXe6GyT0ImYx2_MGIwVDfaflPZrjY5K9Egizy53cYShq37g0M9u04q6zmyaqXPCoV50"> // Required. Replace SB_CLIENT_ID with your sandbox client ID.
     </script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

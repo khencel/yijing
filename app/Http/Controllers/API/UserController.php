@@ -143,12 +143,19 @@ class UserController extends Controller
 
     public function payment(){
        $user = \Auth::user();
-       $user->update(['is_subscriber'=>1]);
+       $user->update(['is_subscriber'=>NOW()]);
     }
 
     public function cancelBooking(){
         return Schedule::find(request()->schedule_id)->update([
             'status' => 'canceled'
+        ]);
+    }
+
+    public function userChangeStatus($id){
+        $user = User::find($id);
+        $user->update([
+            'is_subscriber' => $user->is_subscriber?null:now()
         ]);
     }
 }

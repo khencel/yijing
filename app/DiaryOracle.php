@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class DiaryOracle extends Model
 {
     protected $fillable = [
-        'user_id','derivation','question','details','is_number','text'
+        'user_id','derivation','question','details','is_number','text','date'
     ];
 
     public function derivation(){
